@@ -1,0 +1,320 @@
+/* page.module.css - Dark Theme with Side-by-Side Desktop Layout & Left-Aligned Labels */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #1a202c; /* Deep dark blue-gray */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #e2e8f0; /* Light text for dark background */
+}
+
+/* Adjustments for h1 and h2 to be outside main for full-width headers */
+.title { /* Changed from h1 to class .title */
+  color: #63b3ed; /* A brighter, more prominent blue */
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  font-size: 2.5em;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.subtitle { /* Changed from h2 to class .subtitle */
+  color: #a0aec0;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1.2em;
+}
+
+.main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row; /* Desktop: arrange children (list and form) in a row */
+  align-items: flex-start; /* Align items to the top if they have different heights */
+  justify-content: center; /* Center the list + form block horizontally */
+  gap: 3rem; /* Space between the list and the form */
+  max-width: 1400px; /* Limit the overall width of the main content on large screens */
+  width: 100%; /* Ensure it takes full width up to max-width */
+  margin: 0 auto; /* Center the main content block */
+  padding: 2rem;
+}
+
+.list {
+  list-style: none; /* Remove bullet points */
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column; /* Keep it as row to allow wrapping */
+  flex-wrap: wrap; /* Allow items to wrap to the next line */
+  justify-content: center; /* Center the list items within the list container */
+  gap: 1rem; /* Space between list items */
+  
+  flex: 1; /* Allow it to grow and shrink */
+  max-width: 400px; /* Limit its maximum width */
+  align-self: flex-start; /* Align with the form */
+}
+
+.item {
+  background-color: #2d3748; /* Dark background */
+  color: #e2e8f0; /* Light text */
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease, border 0.3s ease;
+  border: 1px solid transparent; /* Default transparent border */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  /* Adjusted flex-basis to ensure two items per row, accommodating gap */
+  flex-basis: calc(50% - 0.5rem); /* Two items per row, accounting for gap */
+  text-align: center;
+  min-width: 150px; /* Ensure a minimum width */
+}
+
+.item:hover {
+  background-color: #3a475a; /* Slightly lighter on hover */
+  transform: translateY(-2px);
+  border-color: #4299e1; /* Accent border on hover */
+}
+
+.selectedItem {
+  background-color: #4299e1; /* Accent color when selected */
+  border-color: #63b3ed; /* Brighter accent border */
+  transform: translateY(-2px); /* Keep the slight lift */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Stronger shadow when selected */
+}
+
+.form {
+  flex: 1; /* Allow it to grow and shrink */
+   /* Keep form's max-width for readability */
+
+  background-color: #2d3748; /* Darker background for the form card */
+  padding: 2.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* Gap between major form sections (MAC field, port groups, button) */
+}
+
+.form h3 {
+  color: #63b3ed;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Style for the single MAC address field container */
+.macField {
+  display: flex;
+  flex-direction: row; /* Default row for label and input */
+  flex-wrap: wrap; /* Allow elements to wrap to the next line (for error message) */
+  align-items: center; /* Vertically center label and input */
+  gap: 1rem; /* Space between label and input */
+}
+
+.errorMessage {
+  color: #e53e3e; /* Red text for error message */
+  font-size: 0.85em;
+  margin-top: 0.5rem; /* Space above message */
+  /* Position the error message below the input, aligned with its start */
+  padding-left: calc(120px + 1rem); /* Aligns with the start of the input field */
+  text-align: left;
+  width: 100%; /* Take full width of its flex parent to appear on new line */
+  box-sizing: border-box; /* Include padding in width */
+}
+
+/* Style for individual port group inputs */
+.portGroup {
+  border: 1px dashed #4a5568; /* Dashed border to separate port groups */
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: #242b38; /* Slightly darker background for port group */
+  display: flex; /* Make portGroup a flex container too */
+  flex-direction: column; /* Stack its internal divs vertically */
+  gap: 1rem; /* Space between the port heading and the field divs */
+}
+
+.portGroup:last-child {
+  margin-bottom: 0; /* No margin after the last port group, if needed outside .form's gap */
+}
+
+.portHeading {
+  color: #63b3ed; /* Accent color for port headings */
+  margin-top: 0;
+  margin-bottom: 0.5rem; /* Small margin below heading within port group */
+  /* --- MODIFIED --- */
+  text-align: left; /* Align to the left */
+  padding-left: calc(120px + 1rem); /* Aligns with the start of the input fields (label-width + gap) */
+  /* --- END MODIFIED --- */
+  font-size: 1.2em;
+}
+
+.portInfo {
+  color: #a0aec0;
+  text-align: center;
+  margin-bottom: 0.5rem; /* Adjust if needed */
+  font-size: 0.95em;
+}
+
+
+/* Base style for div containers of label+input pairs within the form AND port groups */
+/* These are the generic divs like <div><label>...<input></div> */
+.form > div:not(.macField):not(.portGroup), /* Direct divs in form, excluding macField and portGroup */
+.portGroup > div { /* Divs directly inside .portGroup */
+  display: flex; /* Make it a flex container */
+  flex-direction: row; /* Arrange label and input in a row */
+  align-items: center; /* Vertically center label and input */
+  gap: 1rem; /* Space between label and input */
+  /* No margin-bottom here, let the parent .form's gap (or .portGroup's gap) handle it */
+}
+
+.main form label {
+  /* Set a fixed width for labels for alignment */
+  flex-basis: 120px; /* Adjust this value to your preference */
+  min-width: 100px; /* Ensure a minimum width */
+  text-align: right; /* Align label text to the right */
+  margin-bottom: 0; /* Remove default bottom margin */
+  font-weight: 600;
+  color: #a0aec0; /* Lighter color for labels */
+  font-size: 1.1em;
+}
+
+.main form input[type="text"],
+.main form input[type="password"],
+.main form input[type="tel"] {
+  flex: 1; /* Allow input to take remaining space */
+  /* --- MODIFIED --- */
+  padding: 0.6rem 0.8rem; /* Reduced padding */
+  /* --- END MODIFIED --- */
+  border: 1px solid #4a5568; /* Medium dark gray for borders */
+  border-radius: 5px;
+  font-size: 1em;
+  color: #e2e8f0; /* Light text color for input values */
+  background-color: #2d3748; /* Match form background */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.main form input[type="text"]:focus,
+.main form input[type="password"]:focus,
+.main form input[type="tel"]:focus {
+  border-color: #63b3ed; /* Bright blue for focus */
+  box-shadow: 0 0 8px rgba(99, 179, 237, 0.4);
+  outline: none;
+}
+
+.inputError {
+  border-color: #e53e3e !important; /* Red border for error */
+  box-shadow: 0 0 0 1px #e53e3e !important; /* Optional: Red outline-like shadow */
+}
+
+.main form button[type="submit"] {
+  background-color: #4299e1; /* A strong, clear blue */
+  color: white;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 1rem;
+}
+
+.main form button[type="submit"]:hover {
+  background-color: #3182ce;
+  transform: translateY(-2px);
+}
+
+.main form button[type="submit"]:active {
+  background-color: #2b6cb0;
+  transform: translateY(0);
+}
+
+.footer {
+  padding: 1rem;
+  text-align: center;
+  color: #a0aec0; /* Lighter text color for footer */
+  font-size: 0.9em;
+  border-top: 1px solid #2d3748;
+  background-color: #1a202c; /* Matches page background */
+}
+
+/* --- Responsive Adjustments --- */
+
+/* For screens smaller than 992px (typical tablet/mobile breakpoint) */
+@media (max-width: 992px) {
+  .main {
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    gap: 2rem; /* Adjust gap when stacked */
+  }
+
+  .list,
+  .form {
+    width: 100%; /* Take full width */
+    max-width: 450px; /* Constrain their individual max-width */
+    margin-left: auto; /* Ensure they are centered */
+    margin-right: auto;
+  }
+
+  .list {
+    padding: 0 1rem; /* Add some horizontal padding for the list on smaller screens */
+    flex-direction: row; /* Ensure list items can wrap horizontally */
+    justify-content: center;
+  }
+
+  .item {
+    flex-basis: calc(50% - 1rem); /* Two items per row on tablets */
+  }
+
+  /* On smaller screens, revert labels to stack above inputs */
+  .macField,
+  .form > div:not(.macField):not(.portGroup),
+  .portGroup > div {
+    flex-direction: column; /* Stack label above input */
+    align-items: flex-start; /* Align text to the left */
+    gap: 0.6rem; /* Adjust gap for stacking */
+  }
+
+  .main form label {
+    flex-basis: auto; /* Remove fixed width */
+    min-width: auto; /* Remove min-width */
+    text-align: left; /* Align text to the left */
+    margin-bottom: 0.2rem; /* Small margin when stacked */
+  }
+
+  /* Reset portHeading alignment on smaller screens */
+  .portHeading {
+    text-align: left;
+    padding-left: 0; /* Remove custom padding */
+  }
+}
+
+/* For screens smaller than 600px (typical phone breakpoint) */
+@media (max-width: 600px) {
+  .title {
+    font-size: 2em;
+  }
+  .subtitle {
+    font-size: 1em;
+  }
+  .main {
+    padding: 1rem;
+  }
+
+  .form {
+    padding: 1.5rem; /* Reduce form padding */
+  }
+
+  .item {
+    flex-basis: 100%; /* One item per row on phones */
+    min-width: auto;
+  }
+
+  .main form label,
+  .main form input,
+  .main form button[type="submit"] {
+    font-size: 1em; /* Adjust font sizes for smaller screens */
+    padding: 0.7rem 1rem;
+  }
+}

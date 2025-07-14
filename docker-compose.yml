@@ -1,0 +1,61 @@
+
+#Dockerfile: This is like a blueprint for a single Docker image. 
+#It contains instructions on how to build one specific image 
+#(e.g., your Next.js application image, a database image, etc.). 
+#Each Dockerfile typically results in one container image.
+
+#docker-compose.yml: This is like an orchestrator or conductor for a 
+#group of related Docker containers (services). It defines how multiple services 
+#that make up your application (e.g., a web app, a database, a cache) should be built, 
+#configured, linked, and run together. It's a way to define your entire application stack 
+#in a single, easy-to-read YAML file.
+
+
+#Without docker-compose.yml, you'd have to manually run a very long docker 
+#run command with all the necessary flags:
+
+#docker run -p 3000:3000 -v /path/to/your/host/xml-configs:/app/xmlconfigs your-nextjs-image-name npm start
+
+#In essence, docker-compose.yml is your declarative manifest for running an 
+#entire Docker-based application stack, making complex setups manageable and reproducible.
+
+version:  '3.8'
+
+services:
+  nextjs-app:
+    build:
+      context: . # Build context is the current directory (where your Dockerfile is)
+      dockerfile: Dockerfile
+      #The default naming convention for the image will be:<project_name>-<service_name>
+      #<project_name> folder name of project
+      #<service_name> in this case nextjs-app
+    #overide with image name with this image atribute
+    image:  cpe-sip-nextjs-app:latest
+    ports:
+      - "3000:3000" # Map host port 3000 to container port 3000
+    volumes:
+      # Map the 'xmlconfigs' directory *inside* the container
+      # to a directory on your *host machine*.
+      #./host-xml-configs: This is the path on your host server 
+      #(relative to where you run docker compose up). 
+      #Docker will create this folder if it doesn't exist.
+      - ./host-xml-configs:/app/xmlconfigs
+    restart: always # Keep the container running
+    environment:
+      # Add any environment variables your Next.js app needs
+      # e.g., DATABASE_URL, NEXT_PUBLIC_API_URL etc.
+      PORT: 3000 # Specify port for Next.js
+  
+
+#docker compose up
+
+#Automatic Build on First Run: The very first time you run docker compose up for a 
+#service with a build directive, Docker Compose will automatically look for the Dockerfile 
+#in the specified context and build the image.
+
+#On subsequent runs, docker compose up will check if the Dockerfile or any files in its build 
+#context (e.g., your source code) have changed.
+
+#If changes are detected, it will automatically rebuild the image before starting the container.
+
+#If no relevant changes are detected, it will use the existing, cached image, which saves a lot of time.
