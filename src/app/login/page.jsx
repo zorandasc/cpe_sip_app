@@ -40,6 +40,8 @@ export default function LoginPage() {
   return (
     <div className={styles.pageContainer}>
       <div className={styles.container}>
+        <h1 className={styles.title}>Dobro došli u CPE SIP Aplikaciju</h1>
+
         <form onSubmit={handleSubmit} className={styles.form}>
           <input
             type="text"

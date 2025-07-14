@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import styles from "./page.module.css";
-import Notification from "./components/Notification";
+import Notification from "../components/Notification";
 
 export default function Home() {
   const [selectedPhone, setSelectedPhone] = useState({
