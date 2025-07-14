@@ -2,13 +2,13 @@
 
 .notification {
   position: fixed; /* Position relative to the viewport */
-  top: 20px; /* Distance from the top */
-  right: 20px; /* Distance from the right */
+  top: 40px; /* Distance from the top */
+  right: 60px; /* Distance from the right */
   padding: 1rem 1.5rem;
   border-radius: 8px;
   color: white;
   font-weight: 600;
-  font-size: 1em;
+  font-size: 1.5em;
   z-index: 1000; /* Ensure it's above other content */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   opacity: 0; /* Start hidden */
@@ -28,12 +28,12 @@
 
 /* Notification Types */
 .success {
-  background-color: #4CAF50; /* Green */
+  background-color: #62d966; /* Green */
   border: 1px solid #388E3C;
 }
 
 .error {
-  background-color: #F44336; /* Red */
+  background-color: tomato; /* Red */
   border: 1px solid #D32F2F;
 }
 

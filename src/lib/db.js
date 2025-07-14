@@ -19,7 +19,7 @@ function openDb() {
     // Create tables if they don't exist
     db.exec(`
         CREATE TABLE IF NOT EXISTS users (
-            if INTEGER PRIMARY KEY AUTOINCREMENT,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT UNIQUE NOT NULL,
             password TEXT NOT NULL,
             role TEXT DEFAULT 'user'

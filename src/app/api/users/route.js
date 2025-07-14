@@ -1,11 +1,12 @@
-import { openDb } from "@/app/lib/db";
+import { openDb } from "@/lib/db";
+
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 
 export async function GET() {
   const db = openDb();
   try {
-    const users = db.prepare("SELECT is,username,role FROM users").all();
+    const users = db.prepare("SELECT id, username, role FROM users").all();
     return NextResponse.json(users);
   } catch (error) {
     console.error("Error fetching users:", error);

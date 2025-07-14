@@ -9,6 +9,7 @@ const Notification = ({ message, type, duration = 3000, onDismiss }) => {
   useEffect(() => {
     if (message) {
       setShouldRender(true); // Start rendering the component
+      
       const timer = setTimeout(() => {
         setIsVisible(true); // Start fade-in
       }, 50); // Small delay to allow CSS transition
