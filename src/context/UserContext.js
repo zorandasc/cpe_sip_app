@@ -54,6 +54,7 @@ export function UserProvider({ children }) {
           justifyContent: "center",
           alignItems: "center",
           minHeight: "100vh",
+          fontSize: "1.2rem",
         }}
       >
         Loading application...

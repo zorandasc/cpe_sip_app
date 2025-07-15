@@ -1,25 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-
 import styles from "./page.module.css";
 import { useUserContext } from "@/context/UserContext";
-
 import toast from "react-hot-toast";
 
 //FRONTEND STRANICA ZA LOGOVANJE
 export default function LoginPage() {
-  const router = useRouter();
   const { setUser } = useUserContext();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
 
     try {
       const res = await fetch("/api/login", {
@@ -31,7 +25,6 @@ export default function LoginPage() {
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.error || "Login failed");
         toast.error(`Login failed: ${data.error}`);
 
         return;
@@ -39,15 +32,16 @@ export default function LoginPage() {
 
       toast.success(`${data.message}. 'Happy Hunting'`);
 
-      // OPTIMIZATION: update CONTEXT
+      // OPTIMIZATION: update CONTEXT LOGOVANIM KORISNIKOM
       setUser(data.user);
 
-      //router.push("/");
-      window.location.href = "/";
+      //NAVIGACIJA PREMA HOME PAGE
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1500);
     } catch (err) {
       console.log("Something went wrong", err);
       toast.error(`Something went wrong", ${err}`);
-      setError("Something went wrong");
     }
   };
 

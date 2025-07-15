@@ -19,7 +19,7 @@ const NavbarBottom = () => {
 
   const { user } = useUserContext();
 
-  //POSALJI REQUEST SERVERU PREMA API RUTI /api/logout
+  //LOGOUT, POSALJI REQUEST SERVERU PREMA API RUTI /api/logout
   //KOJA CE DA OBRISE JWT TOKEN
   const handleLogout = async () => {
     try {
@@ -31,9 +31,9 @@ const NavbarBottom = () => {
       });
 
       if (res.ok) {
-        // Redirect to login page or home page after successful logout
         toast.success("Buy, buy.");
 
+        //NAVIGACIJA PREMA LOGIN PAGE
         setTimeout(() => {
           window.location.href = "/login";
         }, 1500);
@@ -42,6 +42,7 @@ const NavbarBottom = () => {
       }
     } catch (error) {
       console.error("Error during logout:", error);
+      toast.error(`Error during logout: ${error}`);
     }
   };
 
