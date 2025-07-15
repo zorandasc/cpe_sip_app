@@ -42,7 +42,8 @@ export default function LoginPage() {
       // OPTIMIZATION: update CONTEXT
       setUser(data.user);
 
-      router.push("/");
+      //router.push("/");
+      window.location.href = "/";
     } catch (err) {
       console.log("Something went wrong", err);
       toast.error(`Something went wrong", ${err}`);
