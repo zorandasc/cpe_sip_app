@@ -18,7 +18,7 @@ export async function middleware(req) {
 
 export const config = {
   matcher: [
-    //"/", // protect root page
+    "/", // protect root page
     "/users", // protect users page
     "/api/save-config",
     "/api/users",

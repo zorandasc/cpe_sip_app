@@ -37,6 +37,8 @@ export default function UsersPage() {
     fetchUsers(); // Call the fetch function when the component mounts
   }, []); // Empty dependency array means this effect runs once after the initial render
 
+  const handleNewUserForm = () => {};
+
   if (loading) {
     return (
       <div className={styles.loadingContainer}>
@@ -82,6 +84,9 @@ export default function UsersPage() {
             </table>
           </div>
         )}
+        <button onClick={handleNewUserForm} className={styles.loginButton}>
+          Novi korisnik
+        </button>
       </div>
     </div>
   );

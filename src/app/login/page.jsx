@@ -41,7 +41,7 @@ export default function LoginPage() {
       });
       setTimeout(() => {
         router.push("/");
-      }, 2000);
+      }, 1500);
     } catch (err) {
       console.log("Something went wrong", err);
       setError("Something went wrong");

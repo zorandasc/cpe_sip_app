@@ -46,13 +46,13 @@ export async function POST(req) {
     { id: user.id, username: user.username, role: user.role },
     JWT_SECRET,
     {
-      expiresIn: "1h",
+      expiresIn: "30min",
     }
   );
 
   //POSALJI FRONTENDU VALIDAN TOKEN UNUTAR HEADERA
   const response = NextResponse.json({
-    message: "Login successful",
+    message: `Dobro došli ${user.username}`,
     user: { id: user.id, username: user.username, role: user.role },
   });
   response.cookies.set("token", token, {
