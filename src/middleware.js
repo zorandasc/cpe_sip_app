@@ -3,6 +3,9 @@ import { jwtVerify } from "jose";
 
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
 
+//FILE KOJI PRESRECE SVE REQUESTE
+// OD FRONTENDA PREMA BECKENDU
+// AKO REQUEST ODGOVARAJU matcheru
 export async function middleware(req) {
   const token = req.cookies.get("token")?.value;
   if (!token) return NextResponse.redirect(new URL("/login", req.url));

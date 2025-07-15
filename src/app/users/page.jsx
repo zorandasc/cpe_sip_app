@@ -4,6 +4,7 @@
 import { useState, useEffect } from "react";
 import styles from "./page.module.css"; // Import the CSS module
 
+//FRONTEND STRANICA SVIH KORISNIKA
 export default function UsersPage() {
   const [users, setUsers] = useState([]); // State to store the fetched users
   const [loading, setLoading] = useState(true); // State to manage loading status
@@ -58,7 +59,7 @@ export default function UsersPage() {
   return (
     <div className={styles.pageContainer}>
       <div className={styles.contentWrapper}>
-        <h1 className={styles.title}>User Management</h1>
+        <h1 className={styles.title}>Baza Korisnika</h1>
 
         {users.length === 0 ? (
           <p className={styles.noUsersMessage}>No users found.</p>

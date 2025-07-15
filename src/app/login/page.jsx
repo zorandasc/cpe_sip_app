@@ -4,15 +4,18 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import styles from "./page.module.css";
-import Notification from "../../components/Notification";
+import { useUserContext } from "@/context/UserContext";
 
+import toast from "react-hot-toast";
+
+//FRONTEND STRANICA ZA LOGOVANJE
 export default function LoginPage() {
   const router = useRouter();
+  const { setUser } = useUserContext();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  //notification je oblika { message: '', type: '' }
-  const [notification, setNotification] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,34 +32,26 @@ export default function LoginPage() {
 
       if (!res.ok) {
         setError(data.error || "Login failed");
-        setNotification({
-          message: data.error || "Login failed",
-          type: "error",
-        });
+        toast.error(`Login failed: ${data.error}`);
+
         return;
       }
-      setNotification({
-        message: `${data.message}. "Happy Hunting".`,
-        type: "success",
-      });
-      setTimeout(() => {
-        router.push("/");
-      }, 1500);
+
+      toast.success(`${data.message}. 'Happy Hunting'`);
+
+      // OPTIMIZATION: update CONTEXT
+      setUser(data.user);
+
+      router.push("/");
     } catch (err) {
       console.log("Something went wrong", err);
+      toast.error(`Something went wrong", ${err}`);
       setError("Something went wrong");
     }
   };
 
   return (
     <div className={styles.pageContainer}>
-      {notification && (
-        <Notification
-          message={notification.message}
-          type={notification.type}
-          onDismiss={() => setNotification(null)} // Clear notification state when it dismisses itself
-        />
-      )}
       <div className={styles.container}>
         <h1 className={styles.title}>Dobro došli u CPE SIP Aplikaciju</h1>
 

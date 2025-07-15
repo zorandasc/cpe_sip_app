@@ -8,6 +8,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 // they could still use that token to access protected resources until it
 // naturally expires.
 
+//BECKEND RUTA ZA LOGOUT, OBRISE JWT TOKEN IZ BROWSERA
 export async function POST(req) {
   const response = NextResponse.json({ message: "Logout successful" });
 

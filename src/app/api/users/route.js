@@ -3,6 +3,8 @@ import { openDb } from "@/lib/db";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 
+//BECKEND API RUTE ZA DOBVLJANJE SVIH KORISNIKA, DEFINISANJE
+//NOVOG KORISNIKA I BRISANJE KORISNIKA
 export async function GET() {
   const db = openDb();
   try {

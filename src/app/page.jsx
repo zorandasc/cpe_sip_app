@@ -1,8 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import styles from "./page.module.css";
-import Notification from "../components/Notification";
+import toast from "react-hot-toast";
 
+//FRONTEND HOME STRANICA
 export default function Home() {
   const [selectedPhone, setSelectedPhone] = useState({
     name: "Grandstream",
@@ -20,9 +21,6 @@ export default function Home() {
       brojTelefona: "",
     },
   ]);
-
-  //notification je oblika { message: '', type: '' }
-  const [notification, setNotification] = useState(null);
 
   const phones = [
     { name: "Grandstream", port: 1 },
@@ -64,10 +62,8 @@ export default function Home() {
     if (originalValue !== value) {
       currentErrorMessage =
         "Dozvoljeni su samo heksadecimalni karakteri (0-9, A-F), dvotačke (:) ili crtice (-).";
-      setNotification({
-        message: "Nevažeći karakteri uklonjeni.",
-        type: "info",
-      });
+
+      toast("Nevažeći karakteri uklonjeni.");
     }
 
     const cleanedMacLength = getCleanMac(value).length;
@@ -106,10 +102,7 @@ export default function Home() {
     e.preventDefault();
 
     if (!selectedPhone) {
-      setNotification({
-        message: "Molimo odaberite model telefona.",
-        type: "error",
-      });
+      toast.error("Molimo odaberite model telefona.");
       return;
     }
 
@@ -126,7 +119,7 @@ export default function Home() {
         .getElementById("mac")
         .scrollIntoView({ behavior: "smooth", block: "center" });
 
-      setNotification({ message: "MAC adresa je nevažeća.", type: "error" });
+      toast.error("MAC adresa je nevažeća.");
       return;
     } else {
       // AKO VALIDACIJA PRODJE, OBRISI GRESKU
@@ -149,10 +142,8 @@ export default function Home() {
 
       if (response.ok) {
         const data = await response.json();
-        setNotification({
-          message: data.message || "Konfiguracija uspešno sačuvana!",
-          type: "success",
-        });
+
+        toast.success(`${data.message}. Konfiguracija uspešno sačuvana!`);
         console.log("Server response:", data);
 
         //reset form after successful save
@@ -161,18 +152,14 @@ export default function Home() {
         //setSelectedPhone(null);
       } else {
         const errorData = await response.json();
-        setNotification({
-          message: errorData.message || "Greška pri čuvanju konfiguracije.",
-          type: "error",
-        });
+
+        toast.error(`Greška pri čuvanju konfiguracije: ${errorData.message}`);
         console.error("Server error:", errorData);
       }
     } catch (error) {
       console.error("Network or client-side error:", error);
-      setNotification({
-        message: "Došlo je do greške pri komunikaciji sa serverom.",
-        type: "error",
-      });
+
+      toast.error(`Došlo je do greške pri komunikaciji sa serverom:${error}`);
     }
   };
 
@@ -183,13 +170,6 @@ export default function Home() {
         Kreiranje konfiguracionih .xml fajlova za sip telefone
       </h2>
       <main className={styles.main}>
-        {notification && (
-          <Notification
-            message={notification.message}
-            type={notification.type}
-            onDismiss={() => setNotification(null)} // Clear notification state when it dismisses itself
-          />
-        )}
         {/* List of phone models for selection */}
         <ul className={styles.list}>
           {phones.map((item) => (

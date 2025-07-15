@@ -1,6 +1,9 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+
 import NavbarBottom from "../components/NavbarBottom";
+import { UserProvider } from "@/context/UserContext";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,8 +24,37 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
-        <NavbarBottom></NavbarBottom>
+        <UserProvider>
+          {children}
+          <NavbarBottom></NavbarBottom>
+          <Toaster
+            position="top-center"
+            toastOptions={{
+              success: {
+                iconTheme: {
+                  primary: "whitesmoke",
+                  secondary: "black",
+                },
+                style: {
+                  background: "green",
+                  color: "whitesmoke",
+                  fontSize: "1.5rem",
+                },
+              },
+              error: {
+                iconTheme: {
+                  primary: "whitesmoke",
+                  secondary: "red",
+                },
+                style: {
+                  background: "tomato",
+                  color: "whitesmoke",
+                  fontSize: "1.5rem",
+                },
+              },
+            }}
+          />
+        </UserProvider>
       </body>
     </html>
   );

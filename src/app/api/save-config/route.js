@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import fs from "fs/promises"; // For file system operations
 import path from "path"; // For path manipulation
 
-//APU ROUTA JOJU GADJA FRONTEND: api/save-config
+//BECKEND API ROUTA ZA CUVANJE .XML KONFIG FAJLOVA
 export async function POST(request) {
   try {
     const { selectedPhone, mac, portConfigs } = await request.json();

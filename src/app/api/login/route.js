@@ -5,6 +5,8 @@ import { openDb } from "@/lib/db";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
+//BECKEND ROUTA ZA LOGIN, VALIDACIJA USERNAM I PASS
+//I VRACA VALIDAN JWT TOKEN BROWSERU
 export async function POST(req) {
   const { username, password } = await req.json();
 

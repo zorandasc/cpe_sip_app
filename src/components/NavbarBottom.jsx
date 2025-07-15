@@ -1,19 +1,26 @@
 "use client";
 import React from "react";
 import styles from "./navbarBottom.module.css"; // Adjust the path as necessary
+
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
+
+import toast from "react-hot-toast";
 
 import HomeIcon from "./HomeIcon";
 import UsersIcon from "./UsersIcon";
 import ExitIcon from "./ExitIcon";
+import UserIcon from "./UserIcon";
+
+import { useUserContext } from "@/context/UserContext";
 
 const NavbarBottom = () => {
-  const router = useRouter();
   const pathname = usePathname();
 
-  //POSALJI REQUEST SERVERU DA OBRISE TOKEN
+  const { user } = useUserContext();
+
+  //POSALJI REQUEST SERVERU PREMA API RUTI /api/logout
+  //KOJA CE DA OBRISE JWT TOKEN
   const handleLogout = async () => {
     try {
       const res = await fetch("/api/logout", {
@@ -25,7 +32,11 @@ const NavbarBottom = () => {
 
       if (res.ok) {
         // Redirect to login page or home page after successful logout
-        router.push("/login");
+        toast.success("Buy, buy.");
+
+        setTimeout(() => {
+          window.location.href = "/login";
+        }, 1500);
       } else {
         console.error("Logout failed");
       }
@@ -37,6 +48,12 @@ const NavbarBottom = () => {
   return (
     <nav className={styles.nav}>
       <ul className={styles.menu}>
+        {user && (
+          <li className={styles.user}>
+            <UserIcon></UserIcon>
+            <p>{user?.username}</p>
+          </li>
+        )}
         <li
           className={`${styles.link} ${pathname === "/" ? styles.active : ""}`}
         >
@@ -54,15 +71,17 @@ const NavbarBottom = () => {
             <UsersIcon></UsersIcon>
           </Link>
         </li>
-        <li
-          className={`${styles.link} ${
-            pathname === "/login" ? styles.active : ""
-          }`}
-        >
-          <button onClick={handleLogout}>
-            <ExitIcon></ExitIcon>
-          </button>
-        </li>
+        {user && (
+          <li
+            className={`${styles.link} ${
+              pathname === "/login" ? styles.active : ""
+            }`}
+          >
+            <button onClick={handleLogout}>
+              <ExitIcon></ExitIcon>
+            </button>
+          </li>
+        )}
       </ul>
     </nav>
   );
