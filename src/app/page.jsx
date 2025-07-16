@@ -145,7 +145,7 @@ export default function Home() {
         const data = await response.json();
 
         toast.success(`${data.message}.`, {
-          duration: 40000,
+          duration: 4000,
           position: "top-left",
         });
         console.log("Server response:", data);
