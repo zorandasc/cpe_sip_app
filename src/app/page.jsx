@@ -134,7 +134,7 @@ export default function Home() {
     };
 
     try {
-      const response = await fetch("/api/save-config", {
+      const response = await fetch("/api/save-xml-config", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

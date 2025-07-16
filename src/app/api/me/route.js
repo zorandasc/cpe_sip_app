@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 const JWT_SECRET = process.env.JWT_SECRET;
 
 //BECKEND RUTA ZA DOBAVLJANJE USERA IZ TOKENA. KO JE LOGOVAN
+//KORISTI JE CONTEXT
 export async function GET(req) {
   const token = req.cookies.get("token")?.value;
 
