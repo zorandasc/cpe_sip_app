@@ -83,7 +83,7 @@ export default function Home() {
 
   // Function to get a cleaned MAC address (12 hex digits)
   const getCleanMac = (rawMac) => {
-    return rawMac.replace(/[^0-9a-fA-F]/g, "").toUpperCase();
+    return rawMac.replace(/[^0-9a-fA-F]/g, "").toLowerCase();
   };
 
   const handlePortInputChange = (index, fieldName, value) => {

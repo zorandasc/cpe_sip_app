@@ -120,7 +120,7 @@ export default function UsersPage() {
   return (
     <div className={styles.pageContainer}>
       <div className={styles.contentWrapper}>
-        <h1 className={styles.title}>Baza Korisnika</h1>
+        <h1 className={styles.title}>SQLite Baza Korisnika</h1>
 
         {users.length === 0 ? (
           <p className={styles.noUsersMessage}>No users found.</p>

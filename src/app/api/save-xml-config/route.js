@@ -16,22 +16,35 @@ export async function POST(request) {
     }
 
     //KREIRAJ XML FAJL
-    let xmlContent = `<?xml version="1.0" encoding="UTF-8"?>\n`;
-    xmlContent += `<SIPPhoneConfig>\n`;
-    xmlContent += `  <PhoneModel>${selectedPhone.name}</PhoneModel>\n`;
-    xmlContent += `  <MACAddress>${mac}</MACAddress>\n`;
+    let xmlContent = `<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n`;
+    xmlContent += `<!-- Grandstream XML Provisioning Configuration -->\n`;
+    xmlContent += `<gs_provision version=\"1\">\n`;
+    xmlContent += `<mac>${mac}</mac>\n`;
+
+    xmlContent += `  <config version=\"1\">\n`;
+
+    xmlContent += `    <!-- ########################################### -->\n`;
+    xmlContent += `    <!-- ########################################### -->\n`;
+
+    xmlContent += `    <!-- ##prvi SIP nalog## -->\n`;
+    xmlContent += `    <!-- #prvi nalog je po default-u uvijek aktivan# -->\n`;
 
     if (selectedPhone.port > 0) {
-      xmlContent += `  <Ports>\n`;
-      portConfigs.forEach((config, index) => {
-        xmlContent += `    <Port id="${index + 1}">\n`;
-        xmlContent += `      <Sifra>${config.sifra}</Sifra>\n`;
-        xmlContent += `      <BrojTelefona>${config.brojTelefona}</BrojTelefona>\n`;
-        xmlContent += `    </Port>\n`;
+      portConfigs.forEach((config) => {
+        xmlContent += `    <!-- #SIP password npr. abc123+*# -->\n`;
+        xmlContent += `    <P34>${config.sifra}</P34>\n`;
+
+        xmlContent += `    <!-- #SIP username npr. +38751490227 # -->\n`;
+        xmlContent += `    <P35>+387${config.brojTelefona}</P35>\n`;
+
+        xmlContent += `    <!-- #SIP authenticate ID npr. +38751490227@mtel.ba # -->\n`;
+        xmlContent += `    <P35>${config.brojTelefona}@mtel.ba</P35>\n`;
+
+        xmlContent += `    <!-- #String koji ce biti prikazan na displeju telefona # -->\n`;
+        xmlContent += `    <!-- #ovaj string moze biti duzine max 9 znakova, npr 051490227# -->\n`;
+        xmlContent += `    <P270>0${config.brojTelefona}</P270>\n`;
       });
-      xmlContent += `  </Ports>\n`;
     }
-    xmlContent += `</SIPPhoneConfig>\n`;
 
     // Define the directory where files will be saved
     // IMPORTANT: This path is relative to where your Next.js app is running
@@ -45,7 +58,7 @@ export async function POST(request) {
     // Sanitize MAC for filename
     const filename = `cfg${mac.replace(/[^a-zA-Z0-9]/g, "_")}.xml`;
 
-    const mac1 = mac.toLowerCase();
+    const mac1 = mac.toUpperCase();
     const filename1 = `cfg${mac1.replace(/[^a-zA-Z0-9]/g, "_")}.xml`;
 
     const filePath = path.join(saveDirectory, filename);
