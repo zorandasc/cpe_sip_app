@@ -53,7 +53,7 @@ export async function POST(request) {
     console.log(`Successfully saved XML to: ${filePath}`);
 
     return NextResponse.json({
-      message: `Konfiguracija uspešno sačuvana za ${filename}!`,
+      message: `Konfiguracija uspešno sačuvana za: ${filename}!`,
       filePath,
     });
   } catch (error) {

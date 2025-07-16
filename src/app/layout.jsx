@@ -38,7 +38,7 @@ export default function RootLayout({ children }) {
                 style: {
                   background: "green",
                   color: "whitesmoke",
-                  fontSize: "1.5rem",
+                  fontSize: "1.3rem",
                 },
               },
               error: {
@@ -49,7 +49,7 @@ export default function RootLayout({ children }) {
                 style: {
                   background: "tomato",
                   color: "whitesmoke",
-                  fontSize: "1.5rem",
+                  fontSize: "1.3rem",
                 },
               },
             }}

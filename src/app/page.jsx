@@ -96,11 +96,12 @@ export default function Home() {
     setPortConfigs(updatedPortConfigs);
   };
 
-  //POSALJI PODATKE PREMA API RUTI /api/save-config
+  //POSALJI PODATKE PREMA API RUTI /api/save-xml-config
   //TA RUTA CE SACUVATI .xml FAJL U LOKALNI FOLDER
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    //VALIDACIJA
     if (!selectedPhone) {
       toast.error("Molimo odaberite model telefona.");
       return;
@@ -143,13 +144,14 @@ export default function Home() {
       if (response.ok) {
         const data = await response.json();
 
-        toast.success(`${data.message}. Konfiguracija uspešno sačuvana!`);
+        toast.success(`${data.message}.`, {
+          duration: 40000,
+          position: "top-left",
+        });
         console.log("Server response:", data);
 
         //reset form after successful save
-        //setMac("");
-        //setPortConfigs([]);
-        //setSelectedPhone(null);
+        handlePhoneSelect(selectedPhone);
       } else {
         const errorData = await response.json();
 
