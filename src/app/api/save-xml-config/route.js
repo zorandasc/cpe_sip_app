@@ -45,12 +45,18 @@ export async function POST(request) {
     // Sanitize MAC for filename
     const filename = `cfg${mac.replace(/[^a-zA-Z0-9]/g, "_")}.xml`;
 
+    const mac1 = mac.toLowerCase();
+    const filename1 = `cfg${mac1.replace(/[^a-zA-Z0-9]/g, "_")}.xml`;
+
     const filePath = path.join(saveDirectory, filename);
+    const filePath1 = path.join(saveDirectory, filename1);
 
     // Write the XML content to the file
     await fs.writeFile(filePath, xmlContent);
+    await fs.writeFile(filePath1, xmlContent);
 
     console.log(`Successfully saved XML to: ${filePath}`);
+    console.log(`Successfully saved XML to: ${filePath1}`);
 
     return NextResponse.json({
       message: `Konfiguracija uspešno sačuvana za: ${filename}!`,

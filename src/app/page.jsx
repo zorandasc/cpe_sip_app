@@ -5,11 +5,11 @@ import toast from "react-hot-toast";
 
 //FRONTEND HOME STRANICA
 export default function Home() {
+  //INICIJALNI STATE
   const [selectedPhone, setSelectedPhone] = useState({
     name: "Grandstream",
     port: 1,
   });
-
   const [mac, setMac] = useState("");
   const [macErrorMessage, setMacErrorMessage] = useState(null);
 
