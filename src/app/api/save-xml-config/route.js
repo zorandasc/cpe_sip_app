@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import fs from "fs/promises"; // For file system operations
 import path from "path"; // For path manipulation
+import { exec } from "child_process";
+import createGrandStreamXml from "@/lib/createGrandStreamXml";
+
+const PASSWORD = "1234567890123456"; // 🔐 Hardcoded password
 
 //BECKEND API ROUTA ZA CUVANJE .XML KONFIG FAJLOVA
 export async function POST(request) {
@@ -16,35 +20,7 @@ export async function POST(request) {
     }
 
     //KREIRAJ XML FAJL
-    let xmlContent = `<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n`;
-    xmlContent += `<!-- Grandstream XML Provisioning Configuration -->\n`;
-    xmlContent += `<gs_provision version=\"1\">\n`;
-    xmlContent += `<mac>${mac}</mac>\n`;
-
-    xmlContent += `  <config version=\"1\">\n`;
-
-    xmlContent += `    <!-- ########################################### -->\n`;
-    xmlContent += `    <!-- ########################################### -->\n`;
-
-    xmlContent += `    <!-- ##prvi SIP nalog## -->\n`;
-    xmlContent += `    <!-- #prvi nalog je po default-u uvijek aktivan# -->\n`;
-
-    if (selectedPhone.port > 0) {
-      portConfigs.forEach((config) => {
-        xmlContent += `    <!-- #SIP password npr. abc123+*# -->\n`;
-        xmlContent += `    <P34>${config.sifra}</P34>\n`;
-
-        xmlContent += `    <!-- #SIP username npr. +38751490227 # -->\n`;
-        xmlContent += `    <P35>+387${config.brojTelefona}</P35>\n`;
-
-        xmlContent += `    <!-- #SIP authenticate ID npr. +38751490227@mtel.ba # -->\n`;
-        xmlContent += `    <P35>${config.brojTelefona}@mtel.ba</P35>\n`;
-
-        xmlContent += `    <!-- #String koji ce biti prikazan na displeju telefona # -->\n`;
-        xmlContent += `    <!-- #ovaj string moze biti duzine max 9 znakova, npr 051490227# -->\n`;
-        xmlContent += `    <P270>0${config.brojTelefona}</P270>\n`;
-      });
-    }
+    let xmlContent = createGrandStreamXml(selectedPhone, mac, portConfigs);
 
     // Define the directory where files will be saved
     // IMPORTANT: This path is relative to where your Next.js app is running
@@ -71,9 +47,55 @@ export async function POST(request) {
     console.log(`Successfully saved XML to: ${filePath}`);
     console.log(`Successfully saved XML to: ${filePath1}`);
 
-    return NextResponse.json({
-      message: `Konfiguracija uspešno sačuvana za: ${filename}!`,
+    NextResponse.json({
+      message: `✅ Successfully saved XML to: ${filePath}`,
       filePath,
+    });
+
+    //ENKTIPCIJA .xml FAJLA
+    const encryptedDirectory = path.join(process.cwd(), "xmlconfigs/encrypted");
+
+    // Ensure the directory exists
+    await fs.mkdir(encryptedDirectory, { recursive: true });
+
+    const outputPath = path.join(encryptedDirectory, filename);
+    /*
+    const outputPath1 = path.join(saveDirectory, filename1);
+
+    const cmd1 = `openssl enc -e -aes-256-cbc -salt -md md5 -in "${filePath1}" -out "${outputPath1}" -pass pass:"${PASSWORD}"`;
+
+    exec(cmd1, (error) => {
+      if (error) {
+        console.error("Encryption error:", error);
+
+        return NextResponse.json(
+          { message: "❌ Encryption failed", error: error.message },
+          { status: 500 }
+        );
+      }
+
+      console.log(`Encrypted file saved at: ${outputPath1}`);
+      //THIS IS THE HOST FILE SYSTEM /var/www/html/Grandstream/encrypted`
+    });
+*/
+    const cmd = `openssl enc -e -aes-256-cbc -salt -md md5 -in "${filePath}" -out "${outputPath}" -pass pass:"${PASSWORD}"`;
+
+    exec(cmd, (error) => {
+      if (error) {
+        console.error("Encryption error:", error);
+
+        return NextResponse.json(
+          { message: "❌ Encryption failed", error: error.message },
+          { status: 500 }
+        );
+      }
+
+      console.log(`Encrypted file saved at: ${outputPath}`);
+    });
+
+    return NextResponse.json({
+      message: `✅ File ${filename} encrypted and saved.`,
+      outputPath,
     });
   } catch (error) {
     console.error("Error saving configuration:", error);
