@@ -61,7 +61,7 @@ export async function POST(request) {
 
     //
     const outputPath = path.join(encryptedDirectory, filename);
-    const outputPath1 = path.join(saveDirectory, filename1);
+    const outputPath1 = path.join(encryptedDirectory, filename1);
 
     const cmd1 = `openssl enc -e -aes-256-cbc -salt -md md5 -in "${filePath1}" -out "${outputPath1}" -pass pass:"${PASSWORD}"`;
     exec(cmd1, (error) => {
