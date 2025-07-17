@@ -1,3 +1,8 @@
+## RUN IN PRODUCTION ON SERVER:
+
+#docker compose -f docker-compose.prod.yml up -d
+
+#-------------------------------------------------------------
 
 #Dockerfile: This is like a blueprint for a single Docker image. 
 #It contains instructions on how to build one specific image 
