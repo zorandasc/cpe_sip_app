@@ -32,7 +32,8 @@ services:
       #./host-xml-configs: This is the path on your host server 
       #(relative to where you run docker compose up). 
       #Docker will create this folder if it doesn't exist.
-      - ./host-xml-configs:/app/xmlconfigs
+      - ./var/www/html/Grandstream/:/app/xmlconfigs
+      - ./var/SQLitedatabase/:/app/data
     restart: always # Keep the container running
     environment:
       # Add any environment variables your Next.js app needs

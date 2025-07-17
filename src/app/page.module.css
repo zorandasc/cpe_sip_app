@@ -209,7 +209,7 @@
 
 .main form button[type="submit"] {
   background-color: #4299e1; /* A strong, clear blue */
-  color: white;
+  color: whitesmoke;
   padding: 1rem 1.5rem;
   border: none;
   border-radius: 5px;
@@ -237,6 +237,38 @@
   font-size: 0.9em;
   border-top: 1px solid #2d3748;
   background-color: #1a202c; /* Matches page background */
+}
+
+.phoneInputContainer {
+  display: flex; /* Makes prefix and input align horizontally */
+  align-items: center; /* Vertically centers them */
+border: 1px solid #ddd;  /* Match input border */
+  border-radius: 8px; /* Match input border-radius */
+  overflow: hidden; /* Ensures no content spills out */
+  
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.phoneInputContainer:focus-within {
+  border-color: #0070f3; /* Focus style */
+  box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.2); /* Focus style */
+}
+
+.phonePrefix {
+  padding: 0.8rem 0.5rem 0.8rem 1rem; /* Padding for the prefix */
+  color: #c7b0b0; /* Slightly muted color for the prefix */
+  font-size: 1rem;
+  /* Ensure it doesn't shrink */
+  flex-shrink: 0;
+}
+
+.phoneInputField {
+  flex-grow: 1; /* Allows the input to take remaining space */
+  border: none; /* Remove individual input border */
+  padding: 0.8rem 1rem 0.8rem 0.5rem; /* Adjust padding for input */
+  font-size: 1rem;
+  outline: none; /* Remove default outline on focus */
+  background-color: transparent; /* Ensure input background is transparent */
 }
 
 /* --- Responsive Adjustments --- */
@@ -290,6 +322,9 @@
   }
 }
 
+
+
+
 /* For screens smaller than 600px (typical phone breakpoint) */
 @media (max-width: 600px) {
   .title {
@@ -317,4 +352,8 @@
     font-size: 1em; /* Adjust font sizes for smaller screens */
     padding: 0.7rem 1rem;
   }
+  
 }
+
+
+

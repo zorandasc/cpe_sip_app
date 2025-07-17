@@ -213,33 +213,41 @@ export default function Home() {
                 {selectedPhone.port > 1 && (
                   <h4 className={styles.portHeading}>Port {index + 1}</h4>
                 )}
-
-                <div>
-                  <label htmlFor={`sifra-${index}`}>Šifra:</label>
-                  <input
-                    type="password"
-                    id={`sifra-${index}`}
-                    value={config.sifra}
-                    onChange={(e) =>
-                      handlePortInputChange(index, "sifra", e.target.value)
-                    }
-                  />
-                </div>
                 <div>
                   <label htmlFor={`brojTelefona-${index}`}>
                     Broj Telefona:
                   </label>
+                  <div className={styles.phoneInputContainer}>
+                    <span className={styles.phonePrefix}>+387</span>
+                    <input
+                      type="tel"
+                      pattern="[0-9]*"
+                      id={`brojTelefona-${index}`}
+                      value={config.brojTelefona}
+                      placeholder="Npr. 51123456"
+                      minLength={8}
+                      maxLength={8}
+                      onChange={(e) =>
+                        handlePortInputChange(
+                          index,
+                          "brojTelefona",
+                          e.target.value
+                        )
+                      }
+                    />
+                    <span className={styles.phonePrefix}>@mtel.ba</span>
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor={`sifra-${index}`}>Šifra:</label>
                   <input
-                    type="tel"
-                    id={`brojTelefona-${index}`}
-                    value={config.brojTelefona}
-                    placeholder="Npr. +38751123456"
+                    type="password"
+                    minLength={8}
+                    maxLength={8}
+                    id={`sifra-${index}`}
+                    value={config.sifra}
                     onChange={(e) =>
-                      handlePortInputChange(
-                        index,
-                        "brojTelefona",
-                        e.target.value
-                      )
+                      handlePortInputChange(index, "sifra", e.target.value)
                     }
                   />
                 </div>
