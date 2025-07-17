@@ -242,7 +242,7 @@
 .phoneInputContainer {
   display: flex; /* Makes prefix and input align horizontally */
   align-items: center; /* Vertically centers them */
-border: 1px solid #ddd;  /* Match input border */
+border: 1px solid #4a5568; /* Match input border */
   border-radius: 8px; /* Match input border-radius */
   overflow: hidden; /* Ensures no content spills out */
   

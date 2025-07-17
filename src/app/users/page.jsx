@@ -132,6 +132,7 @@ export default function UsersPage() {
                   <th className={styles.tableHeaderCell}>ID</th>
                   <th className={styles.tableHeaderCell}>Username</th>
                   <th className={styles.tableHeaderCell}>Role</th>
+                  <th className={styles.tableHeaderCell}></th>
                 </tr>
               </thead>
               <tbody className={styles.tableBody}>
