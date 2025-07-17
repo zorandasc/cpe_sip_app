@@ -53,17 +53,17 @@ export async function POST(request) {
     });
 
     //ENKTIPCIJA .xml FAJLA
+    //DEFINISI DIREKTORIJ
     const encryptedDirectory = path.join(process.cwd(), "xmlconfigs/encrypted");
 
     // Ensure the directory exists
     await fs.mkdir(encryptedDirectory, { recursive: true });
 
+    //
     const outputPath = path.join(encryptedDirectory, filename);
-    /*
     const outputPath1 = path.join(saveDirectory, filename1);
 
     const cmd1 = `openssl enc -e -aes-256-cbc -salt -md md5 -in "${filePath1}" -out "${outputPath1}" -pass pass:"${PASSWORD}"`;
-
     exec(cmd1, (error) => {
       if (error) {
         console.error("Encryption error:", error);
@@ -77,9 +77,8 @@ export async function POST(request) {
       console.log(`Encrypted file saved at: ${outputPath1}`);
       //THIS IS THE HOST FILE SYSTEM /var/www/html/Grandstream/encrypted`
     });
-*/
-    const cmd = `openssl enc -e -aes-256-cbc -salt -md md5 -in "${filePath}" -out "${outputPath}" -pass pass:"${PASSWORD}"`;
 
+    const cmd = `openssl enc -e -aes-256-cbc -salt -md md5 -in "${filePath}" -out "${outputPath}" -pass pass:"${PASSWORD}"`;
     exec(cmd, (error) => {
       if (error) {
         console.error("Encryption error:", error);
