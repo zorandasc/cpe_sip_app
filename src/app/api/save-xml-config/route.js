@@ -98,9 +98,6 @@ export async function POST(request) {
     });
   } catch (error) {
     console.error("Error saving configuration:", error);
-    return NextResponse.json(
-      { message: "Greška pri čuvanju konfiguracije.", error: error.message },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: `${error.message}` }, { status: 500 });
   }
 }
