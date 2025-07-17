@@ -32,14 +32,15 @@ services:
     #overide with image name with this image atribute
     image:  cpe-sip-nextjs-app:latest
     ports:
-      - "3000:3000" # Map host port 3000 to container port 3000
+      - "3001:3000" # Map host port 3000 to container port 3000
     volumes:
       # Map the 'xmlconfigs' directory *inside* the container
       # to a directory on your *host machine*.
-      #./host-xml-configs: This is the path on your host server 
+      #./host:/guest.  This is the path on your host server 
       #(relative to where you run docker compose up). 
       #Docker will create this folder if it doesn't exist.
-      - ./host-xml-configs:/app/xmlconfigs
+      - ../var/www/html/Grandstream/:/app/xmlconfigs
+      - ../var/SQLitedatabase/:/app/data
     restart: always # Keep the container running
     environment:
       # Add any environment variables your Next.js app needs

@@ -25,7 +25,7 @@ export default function LoginPage() {
       const data = await res.json();
 
       if (!res.ok) {
-        toast.error(`Login failed: ${data.error}`);
+        toast.error(`Login failed: ${data.message}`);
 
         return;
       }

@@ -2,7 +2,7 @@ import Database from "better-sqlite3";
 import path from "path";
 
 // Define the path to your database file
-const dbPath = path.resolve(process.cwd(), "database.db");
+const dbPath = path.resolve(process.cwd(), "data/database.db");
 
 // Use a singleton pattern to avoid multiple database connections
 let db = null;
@@ -27,8 +27,9 @@ function openDb() {
     `);
     console.log("User table ensured.");
   } catch (error) {
-    console.error("Error connecting to SQLite:", err.message);
-    process.exit(1); // Exit if database connection fails
+    console.error("Error connecting to SQLite:", error.message);
+    //process.exit(1); // Exit if database connection fails
+    return null;
   }
   return db;
 }

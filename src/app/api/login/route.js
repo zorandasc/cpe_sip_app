@@ -19,6 +19,13 @@ export async function POST(req) {
 
   const db = openDb();
 
+  if (!db) {
+    return NextResponse.json(
+      { message: "Error connecting to SQLite." },
+      { status: 500 }
+    );
+  }
+
   //FIND USER by username
   let user;
 
@@ -33,14 +40,20 @@ export async function POST(req) {
   }
 
   if (!user) {
-    return NextResponse.json({ error: "Pogrešan username." }, { status: 401 });
+    return NextResponse.json(
+      { message: "Pogrešan username." },
+      { status: 401 }
+    );
   }
 
   //COMPARE PASSWORD IZ BAZE I OD KORISNIKA
   const passwordMatch = await bcrypt.compare(password, user.password);
 
   if (!passwordMatch) {
-    return NextResponse.json({ error: "Pogrešan password." }, { status: 401 });
+    return NextResponse.json(
+      { message: "Pogrešan password." },
+      { status: 401 }
+    );
   }
 
   //USERNAM I PASSWORD SU UREDNI SADA FORMIRAJ TOKEN
