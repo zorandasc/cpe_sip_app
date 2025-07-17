@@ -5,6 +5,10 @@ import { openDb } from "@/lib/db";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
+if (!JWT_SECRET) {
+  throw new Error("JWT_SECRET is not defined in environment variables");
+}
+
 //BECKEND ROUTA ZA LOGIN, VALIDACIJA USERNAM I PASS
 //I VRACA VALIDAN JWT TOKEN BROWSERU
 export async function POST(req) {

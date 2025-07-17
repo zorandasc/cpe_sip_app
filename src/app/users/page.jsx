@@ -57,7 +57,7 @@ export default function UsersPage() {
 
       if (!res.ok) {
         console.log(data);
-        toast.error(`Login failed: ${data.message}`);
+        toast.error(`${data.message}`);
 
         return;
       }

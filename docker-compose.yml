@@ -48,11 +48,13 @@ services:
       - ../var/www/html/Grandstream/:/app/xmlconfigs
       - ../var/SQLitedatabase/:/app/data
     restart: always # Keep the container running
+    env_file:
+      - .env.development.local
     environment:
       # Add any environment variables your Next.js app needs
       # e.g., DATABASE_URL, NEXT_PUBLIC_API_URL etc.
       PORT: 3000 # Specify port for Next.js
-    command: ["./start-with-admin.sh"] # DODAVANJE ADMIN USERA
+    command: ["sh", "-c", "node ./src/script/addAdminUser.js && npm start"] # DODAVANJE ADMIN USERA
   
 
 #docker compose up
