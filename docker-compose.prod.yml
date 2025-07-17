@@ -34,7 +34,7 @@ services:
     volumes:
       # Map the 'xmlconfigs' directory *inside* the container
       # to a directory on your *host machine*.
-      #./host-xml-configs: This is the path on your host server 
+      #./var/www/html/Grandstream/: This is the path on your host server 
       #(relative to where you run docker compose up). 
       #Docker will create this folder if it doesn't exist.
       - ./var/www/html/Grandstream/:/app/xmlconfigs
