@@ -22,7 +22,7 @@ export default function xmlGrandStream(selectedPhone, mac, portConfigs) {
       xmlContent += `       <P35>+387${config.brojTelefona}</P35>\n`;
 
       xmlContent += `       <!-- #SIP authenticate ID npr. +38751490227@mtel.ba # -->\n`;
-      xmlContent += `       <P35>${config.brojTelefona}@mtel.ba</P35>\n`;
+      xmlContent += `       <P35>+387${config.brojTelefona}@mtel.ba</P35>\n`;
 
       xmlContent += `       <!-- #String koji ce biti prikazan na displeju telefona # -->\n`;
       xmlContent += `       <!-- #ovaj string moze biti duzine max 9 znakova, npr 051490227# -->\n`;

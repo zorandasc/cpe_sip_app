@@ -21,6 +21,7 @@ export default function Home() {
       brojTelefona: "",
     },
   ]);
+  const [portValidationErrors, setPortValidationErrors] = useState({});
 
   const phones = [
     { name: "Grandstream", port: 1 },
@@ -42,6 +43,7 @@ export default function Home() {
       brojTelefona: "",
     }));
     setPortConfigs(initialPortConfigs);
+    setPortValidationErrors({});
   };
 
   const handleMacChange = (e) => {
@@ -93,7 +95,27 @@ export default function Home() {
       }
       return config;
     });
+
+    const isBrojTelefonaEmpty =
+      updatedPortConfigs[index].brojTelefona.trim() === "";
+    const isSifraEmpty = updatedPortConfigs[index].sifra.trim() === "";
+
+    let newErrors = { ...portValidationErrors }; // Copy current errors
+
+    // Validation logic: If one is empty and the other is not
+    if (
+      (isBrojTelefonaEmpty && !isSifraEmpty) ||
+      (!isBrojTelefonaEmpty && isSifraEmpty)
+    ) {
+      newErrors[index] =
+        "Oba polja (Šifra i Broj Telefona) moraju biti ili prazna ili popunjena.";
+    } else {
+      // Clear error for this port if it's now valid
+      delete newErrors[index];
+    }
+
     setPortConfigs(updatedPortConfigs);
+    setPortValidationErrors(newErrors);
   };
 
   //POSALJI PODATKE PREMA API RUTI /api/save-xml-config
@@ -251,6 +273,11 @@ export default function Home() {
                     }
                   />
                 </div>
+                {portValidationErrors[index] && (
+                  <p className={styles.portErrorMessage}>
+                    {portValidationErrors[index]}
+                  </p>
+                )}
               </div>
             ))}
 

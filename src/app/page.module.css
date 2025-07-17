@@ -271,6 +271,13 @@ border: 1px solid #4a5568; /* Match input border */
   background-color: transparent; /* Ensure input background is transparent */
 }
 
+.portErrorMessage {
+  color: tomato; /* A red color for error messages */
+  font-size: 0.875rem; /* Smaller font size */
+  margin-top: 0.5rem; /* Spacing above the message */
+  margin-bottom: 0.5rem;
+}
+
 /* --- Responsive Adjustments --- */
 
 /* For screens smaller than 992px (typical tablet/mobile breakpoint) */
