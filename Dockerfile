@@ -1,6 +1,15 @@
 # Use the official Node.js image as the base image
-FROM node:20.12.2-alpine3.19 AS base
+FROM node:20-slim AS base
 
+# Install system dependencies in base (needed in builder & runner)
+RUN apt-get update && apt-get install -y \
+    python3 \
+    make \
+    g++ \
+    sqlite3 \
+    && rm -rf /var/lib/apt/lists/*
+
+# ========== Builder stage ==========
 # Install dependencies and build the Next.js app
 FROM base AS builder
 
@@ -27,6 +36,7 @@ RUN \
 COPY . .
 RUN npm run build
 
+# ========== Production runner stage ==========
 # Production image
 FROM base AS runner
 WORKDIR /app

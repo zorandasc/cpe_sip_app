@@ -40,11 +40,25 @@ docker-compose.yml JE FILE KOJI DEFINISE KAKO DA SE NAPRAVI RUNING DOCKER CONTAI
 docker-compose.yml JE U SUTINI UPUTSTVO ZA POKRETANJE DOCKER CONTAINERA
 docker-compose.yml DEFINISE KAKO DA IMAGE KOMUNICIRA SA SVOJIM HOSTOM: NPR. KOJE TCP PORTOVE DA SE KORISTE, I KOJE FOLDER NA HOSTU DA KORISTI
 
+
+LOKALNI RAZVOJ:
+---------------
 KADA KORISTIOMO docker-compose.yml KONTEJNER SE POKRECE SA:
 
 ```bash
 docker compose up -d
 
+```
+
+KADA PROMJENIMO SOURCE CODE ONDA REBUILDUJEMO IMAGE
+
+```bash
+docker compose up --build
+
+or 
+
+docker compose build --no-cache
+docker compose up
 ```
 
 KADA NEMAMO docker-compose.yml ZA POKRETANJE KONTAIJENRA, SE KORISTI, NPR:
@@ -61,14 +75,19 @@ docker stop your-nextjs-app-name
 
 ```
 
+PRODUKCIONI SERVER:
 # -----------------------------------------------------------------
+
 SAVE TO USBE
 
 # Example using Git Bash (often preferred for cleaner paths)
+
 docker save -o ~/Desktop/cpe-sip-nextjs-app.tar cpe-sip-nextjs-app:latest
 
 # In Git Bash or WSL terminal
+
 gzip C:/Users/YourUser/Desktop/my-nextjs-app-image.tar
+
 # This will create a compressed file named my-nextjs-app-image.tar.gz
 
 # ----------------------------------------------------------------
@@ -83,7 +102,9 @@ docker save -o my-phone-config-app.tar your_app_name:1.0.0
 gzip my-phone-config-app.tar
 
 ```
+
 # -----------------------------------------------------
+
 TRANSFER SA WINDOWS NA LINUX SYSTEMA SA SCP COMANDOM:
 
 PRENOSIMO:
