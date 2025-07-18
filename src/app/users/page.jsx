@@ -4,7 +4,7 @@
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import styles from "./page.module.css";
-import TrashIcon from "@/components/TrashIcon";
+import TrashIcon from "@/components/icons/TrashIcon";
 
 //FRONTEND STRANICA SVIH KORISNIKA
 export default function UsersPage() {

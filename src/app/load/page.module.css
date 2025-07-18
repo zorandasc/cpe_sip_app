@@ -1,0 +1,37 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #1a202c; /* Deep dark blue-gray */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #e2e8f0; /* Light text for dark background */
+}
+
+.title { /* Changed from h1 to class .title */
+  color: #63b3ed; /* A brighter, more prominent blue */
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  font-size: 2.5em;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.subtitle { /* Changed from h2 to class .subtitle */
+  color: #a0aec0;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1.2em;
+}
+
+.main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row; /* Desktop: arrange children (list and form) in a row */
+  align-items: flex-start; /* Align items to the top if they have different heights */
+  justify-content: center; /* Center the list + form block horizontally */
+  gap: 3rem; /* Space between the list and the form */
+  max-width: 1400px; /* Limit the overall width of the main content on large screens */
+  width: 100%; /* Ensure it takes full width up to max-width */
+  margin: 0 auto; /* Center the main content block */
+  padding: 2rem;
+}

@@ -7,10 +7,11 @@ import { usePathname } from "next/navigation";
 
 import toast from "react-hot-toast";
 
-import HomeIcon from "./HomeIcon";
-import UsersIcon from "./UsersIcon";
-import ExitIcon from "./ExitIcon";
-import UserIcon from "./UserIcon";
+import HomeIcon from "./icons/HomeIcon";
+import UsersIcon from "./icons/UsersIcon";
+import ExitIcon from "./icons/ExitIcon";
+import UserIcon from "./icons/UserIcon";
+import SearchIcon from "./icons/SearchIcon";
 
 import { useUserContext } from "@/context/UserContext";
 
@@ -62,7 +63,15 @@ const NavbarBottom = () => {
             <HomeIcon />
           </Link>
         </li>
-
+        <li
+          className={`${styles.link} ${
+            pathname === "/load" ? styles.active : ""
+          }`}
+        >
+          <Link href="/load">
+            <SearchIcon></SearchIcon>
+          </Link>
+        </li>
         <li
           className={`${styles.link} ${
             pathname === "/users" ? styles.active : ""
