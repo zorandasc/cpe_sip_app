@@ -175,7 +175,7 @@ export default function UsersPage() {
             required
             minLength={4}
           ></input>
-          <button type="submit" className={styles.loginButton}>
+          <button type="submit" className={styles.addButton}>
             Novi korisnik
           </button>
         </form>

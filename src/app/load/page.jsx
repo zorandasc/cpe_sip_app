@@ -1,44 +1,143 @@
 "use client"; // This component will run on the client-side
 import { useState } from "react";
 import styles from "./page.module.css";
+import toast from "react-hot-toast";
 
 //FRONTEND STRANICA SVIH KORISNIKA
 export default function LoadPage() {
-  const [xmlContent, setXmlContent] = useState(null);
+  //FOR RAW XML
+  const [rawXmlContent, setRawXmlContent] = useState(null);
+  //FOR PARSE XML // Parsed children: [{ name, value }]
+  const [childrenState, setChildrenState] = useState([]);
+  //FOR SEARCH FIELD
+  const [searchXmlFile, setSearchXmlFile] = useState("");
 
-  const handleFileChange = (e) => {
-    console.log("e", e);
-    const file = e.target.files[0];
+  const handleXmlFieldChange = (index, newValue) => {
+    setChildrenState((prev) =>
+      prev.map(item, (i) => (i === index ? { ...item, value: newValue } : item))
+    );
+  };
 
-    if (file && file.type === "text/xml") {
-      const reader = new FileReader();
+  const handleLoadXml = async (e) => {
+    e.preventDefault();
 
-      reader.onload = () => {
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(reader.result, "text/xml");
-        setXmlContent(xmlDoc);
-        const pass = xmlDoc.getElementsByTagName("P34")[0].textContent;
-        console.log("pass:", pass);
-        const allChildern = xmlDoc.querySelectorAll("config")[0].children;
-        console.log("allChildern", allChildern);
-        //make object of name and values of every childe
-        //display as input field
-        //store in state nay changes
-      };
+    try {
+      const res = await fetch("/api/load-xml-config", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ searchXmlFile }),
+      });
 
-      reader.readAsText(file);
-    } else {
-      alert("Please upload a valid XML file");
+      const contentType = res.headers.get("content-type") || "";
+
+      if (!res.ok) {
+        const data = await res.text();
+        toast.error(`Failed to Load .xml: ${data.message}`);
+        return;
+      }
+
+      if (
+        contentType.includes("text/xml") ||
+        contentType.includes("application/xml")
+      ) {
+        const xmlText = await res.text();
+        parseAndSetXml(xmlText);
+        toast.success("XML loaded successfully");
+        return;
+      }
+
+      if (
+        contentType.includes("octet-stream") ||
+        contentType.includes("application/octet-stream")
+      ) {
+        const blob = await res.blob();
+        const xmlText = await blob.text();
+        parseAndSetXml(xmlText);
+        toast.success("XML loaded successfully");
+        return;
+      }
+      toast.error("Unexpected response type — expected XML.");
+    } catch (err) {
+      console.log("Something went wrong", err);
+      toast.error(`Something went wrong", ${err}`);
     }
+  };
+
+  const parseAndSetXml = (xmlString) => {
+    const parser = new DOMParser();
+
+    const xmlDoc = parser.parseFromString(xmlString, "application/xml");
+
+    setRawXmlContent(xmlDoc);
+
+    const configElement = xmlDoc.querySelector("config");
+    if (!configElement) {
+      toast.error("No <config> tag found in XML.");
+      return;
+    }
+
+    const newChildren = Array.from(configElement.children).map((child) => ({
+      name: child.tagName,
+      value: child.textContent,
+    }));
+
+    setChildrenState(newChildren);
   };
 
   return (
     <div className={styles.page}>
       <h1 className={styles.title}>Load .xml file</h1>
+      <form className={styles.formSearch} onSubmit={handleLoadXml}>
+        <div className={styles.formGroup}>
+          <label htmlFor="search" className={styles.label}>
+            Search
+          </label>
+          <input
+            id="search"
+            type="text"
+            className={styles.input}
+            value={searchXmlFile}
+            onChange={(e) => setSearchXmlFile(e.target.value)}
+            placeholder="Enter file name"
+          ></input>
+        </div>
+        <button type="submit" className={styles.loadButton}>
+          Load
+        </button>
+      </form>
       <main className={styles.main}>
-        <input type="file" accept=".xml" onChange={handleFileChange}></input>
-        {xmlContent && (
-          <pre>{new XMLSerializer().serializeToString(xmlContent)}</pre>
+        {/* Display parsed XML as a form */}
+        {childrenState.length > 0 && (
+          <div className={styles.inputContainer}>
+            <h2>Parsed XML Fields</h2>
+            <form className={styles.form}>
+              {childrenState.map((item, index) => (
+                <div key={index} className={styles.formGroup}>
+                  <label htmlFor={`field-${index}`} className={styles.label}>
+                    {item.name}
+                  </label>
+                  <input
+                    id={`field-${index}`}
+                    type="text"
+                    value={item.value}
+                    onChange={(e) =>
+                      handleXmlFieldChange(index, e.target.value)
+                    }
+                    className={styles.input}
+                  ></input>
+                </div>
+              ))}
+            </form>
+          </div>
+        )}
+        {/* Display raw XML */}
+        {rawXmlContent && (
+          <div>
+            <h2>Raw XML</h2>
+            <pre className={styles.rawXml}>
+              {new XMLSerializer().serializeToString(rawXmlContent)}
+            </pre>
+          </div>
         )}
       </main>
     </div>

@@ -36,7 +36,7 @@ export default function RootLayout({ children }) {
                   secondary: "black",
                 },
                 style: {
-                  background: "green",
+                  background: "#4f8f42",
                   color: "whitesmoke",
                   fontSize: "1.3rem",
                 },
