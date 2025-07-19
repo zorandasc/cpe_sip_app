@@ -38,7 +38,7 @@ export const config = {
   matcher: [
     "/", // protect root page
     "/users", // protect users page
-    "/api/save-config",
+    "/api/save-new-xml",
     "/api/users",
     "/api/users/:path*",
   ],

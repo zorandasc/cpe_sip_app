@@ -22,7 +22,7 @@ export default function LoadPage() {
     e.preventDefault();
 
     try {
-      const res = await fetch("/api/load-xml-config", {
+      const res = await fetch("/api/load-xml", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ searchXmlFile }),
@@ -91,6 +91,8 @@ export default function LoadPage() {
     setChildrenState(newChildren);
   };
 
+  const handleSaveXml = () => {};
+
   return (
     <div className={styles.page}>
       <h1 className={styles.title}>Load .xml file</h1>
@@ -118,7 +120,8 @@ export default function LoadPage() {
         {childrenState.length > 0 && (
           <div className={styles.inputContainer}>
             <h2>Parsed XML Fields</h2>
-            <form className={styles.form}>
+
+            <form className={styles.formParsed}>
               {childrenState.map((item, index) => (
                 <div key={index} className={styles.formGroup}>
                   <label htmlFor={`field-${index}`} className={styles.label}>
@@ -135,6 +138,9 @@ export default function LoadPage() {
                   ></input>
                 </div>
               ))}
+              <button type="submit" className={styles.loadButton}>
+                Save
+              </button>
             </form>
           </div>
         )}
