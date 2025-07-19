@@ -31,11 +31,12 @@ export default function LoadPage() {
       const contentType = res.headers.get("content-type") || "";
 
       if (!res.ok) {
-        const data = await res.text();
-        toast.error(`Failed to Load .xml: ${data.message}`);
+        const data = await res.json();
+        toast.error(`${data.message ?? "Failed to Load .xml"} `);
         return;
       }
 
+      /* ---If server returns raw text --- */
       if (
         contentType.includes("text/xml") ||
         contentType.includes("application/xml")
@@ -46,6 +47,7 @@ export default function LoadPage() {
         return;
       }
 
+      /* --- If server returns a Blob/File --- */
       if (
         contentType.includes("octet-stream") ||
         contentType.includes("application/octet-stream")
@@ -76,6 +78,7 @@ export default function LoadPage() {
       return;
     }
 
+    //COVERT HTMLCollection TO ARRAY, THEN MAP OVER IT
     const newChildren = Array.from(configElement.children).map((child) => ({
       name: child.tagName,
       value: child.textContent,
@@ -90,7 +93,7 @@ export default function LoadPage() {
       <form className={styles.formSearch} onSubmit={handleLoadXml}>
         <div className={styles.formGroup}>
           <label htmlFor="search" className={styles.label}>
-            Search
+            Unesite ime .xml fajla:
           </label>
           <input
             id="search"
@@ -98,7 +101,7 @@ export default function LoadPage() {
             className={styles.input}
             value={searchXmlFile}
             onChange={(e) => setSearchXmlFile(e.target.value)}
-            placeholder="Enter file name"
+            placeholder="npr: cfgaabbccddeeff"
           ></input>
         </div>
         <button type="submit" className={styles.loadButton}>

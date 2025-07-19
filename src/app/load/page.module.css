@@ -41,10 +41,6 @@
   padding-bottom: 6rem;
 }
 
-.localinput {
-  font-size: 1rem;
-}
-
 .formGroup {
   margin-bottom: 1rem;
 }
@@ -67,9 +63,28 @@
 
 .formSearch {
   display: flex;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 400px;
   flex-direction: row-reverse;
   justify-content: center;
   align-items: center;
+}
+
+.formSearch input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5);
+  outline: none;
+  transition: border 0.2s;
+}
+
+.formSearch input:focus {
+  border-color: #6c9cc6;
+  box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.1);
 }
 
 .loadButton {

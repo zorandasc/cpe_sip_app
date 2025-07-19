@@ -53,6 +53,7 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit} className={styles.form}>
           <input
             type="text"
+            id="username"
             placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -61,6 +62,8 @@ export default function LoginPage() {
           ></input>
           <input
             type="password"
+            id="password"
+            
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
