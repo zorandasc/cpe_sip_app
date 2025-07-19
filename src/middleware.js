@@ -3,7 +3,8 @@ import { jwtVerify } from "jose";
 
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
 
-//Your middleware.js is designed to handle authentication (verifying the JWT) for protected routes.
+//Your middleware.js is designed to handle authentication (verifying the JWT) 
+// for protected routes.
 // By including /api/users/[id] in the matcher:
 
 //Centralized Authentication: It centralizes the initial check for a valid token for all

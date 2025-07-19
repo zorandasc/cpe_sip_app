@@ -54,7 +54,8 @@ services:
       # Add any environment variables your Next.js app needs
       # e.g., DATABASE_URL, NEXT_PUBLIC_API_URL etc.
       PORT: 3000 # Specify port for Next.js
-    command: ["sh", "-c", "node ./src/script/addAdminUser.js && npm start"] # DODAVANJE ADMIN USERA
+      # RUN ONLY ONCE DODAVANJE ADMIN USERA
+    command: ["sh", "-c", "node ./src/script/addAdminUser.js && npm start"] 
   
 
 #docker compose up
