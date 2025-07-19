@@ -32,7 +32,9 @@ export default function LoadPage() {
 
       if (!res.ok) {
         const data = await res.json();
-        toast.error(`${data.message ?? "Failed to Load .xml"} `);
+        toast.error(`${data.message ?? "Failed to Load .xml"} `, {
+          position: "top-left",
+        });
         return;
       }
 
@@ -43,7 +45,9 @@ export default function LoadPage() {
       ) {
         const xmlText = await res.text();
         parseAndSetXml(xmlText);
-        toast.success("XML loaded successfully");
+        toast.success("XML loaded successfully", {
+          position: "top-left",
+        });
         return;
       }
 
@@ -102,6 +106,7 @@ export default function LoadPage() {
             value={searchXmlFile}
             onChange={(e) => setSearchXmlFile(e.target.value)}
             placeholder="npr: cfgaabbccddeeff"
+            maxLength={19}
           ></input>
         </div>
         <button type="submit" className={styles.loadButton}>
@@ -135,7 +140,7 @@ export default function LoadPage() {
         )}
         {/* Display raw XML */}
         {rawXmlContent && (
-          <div>
+          <div className={styles.rawContainer}>
             <h2>Raw XML</h2>
             <pre className={styles.rawXml}>
               {new XMLSerializer().serializeToString(rawXmlContent)}
