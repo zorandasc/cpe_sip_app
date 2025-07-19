@@ -50,6 +50,9 @@ export default function RootLayout({ children }) {
                   background: "tomato",
                   color: "whitesmoke",
                   fontSize: "1.3rem",
+                  minWidth:"520px",
+                  wordWrap: "break-word",
+                  wordBreak:"break-all"
                 },
               },
             }}
