@@ -2,13 +2,12 @@ import { NextResponse } from "next/server";
 import path from "path"; // For path manipulation
 import fs from "fs/promises"; // For file system operations
 
-//BECKEND API ROUTA ZA CUVANJE LOADED .XML
+//BECKEND API ROUTA ZA DOWNLOAD .XML
 // RETURN RAW XML (string or Blob)
 export async function POST(req) {
-  const { searchXmlFile } = await req.json();
+  const { searchXmlByMac } = await req.json();
 
-  if (!searchXmlFile) {
-    console.log("searchXmlFile", searchXmlFile);
+  if (!searchXmlByMac) {
     return NextResponse.json(
       { message: "Ime .xml fajla je obavezno." },
       { status: 400 }
@@ -22,8 +21,12 @@ export async function POST(req) {
     //ALL FILES IN xmlconfigs DIRECTORY
     const files = await fs.readdir(searchDir);
 
-    //STRIP .xml EXTENSION IN GIVEN SEARCHTERM
-    const targetBase = searchXmlFile.toLowerCase().replace(/\.xml$/i, "");
+    //STRIP .xml EXTENSION AT THE AND ALSO
+    //STRIP cfg AT THE BEGINIBIG IF EXSIST IN GIVEN SEARCHTERM
+    const targetBase = searchXmlByMac
+      .toLowerCase()
+      .replace(/\.xml$/i, "")
+      .replace(/^cfg/i, "");
 
     //We are using .find(), which:
     //✅ Returns the first match only
@@ -33,14 +36,14 @@ export async function POST(req) {
       if (!f.toLowerCase().endsWith(".xml")) return false;
 
       //TAKE LAST PART OF FULL PATH AND STRIP .xml
-      return path.basename(f, ".xml").toLowerCase() === targetBase;
+      return path.basename(f, ".xml").toLowerCase() === "cfg" + targetBase;
       //This requires an exact match (case-insensitive) of the
       //full filename without the .xml extension.
     });
 
     if (!match) {
       return NextResponse.json(
-        { message: `XML file: ${searchXmlFile}, nije pronadjen.` },
+        { message: `XML file: ${searchXmlByMac}, nije pronadjen.` },
         { status: 404 }
       );
     }

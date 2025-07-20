@@ -2,9 +2,10 @@ import { NextResponse } from "next/server";
 import fs from "fs/promises"; // For file system operations
 import path from "path"; // For path manipulation
 import { exec } from "child_process";
+import { promisify } from "util"; //FOR PROMISIFIKACIJU execa
 import createGrandStreamXml from "@/lib/createGrandStreamXml";
 
-const PASSWORD = "1234567890123456"; // 🔐 Hardcoded password
+const PASSWORD = process.env.OPEN_SSL_PASS; // 🔐 Hardcoded password
 
 //BECKEND API ROUTA ZA CUVANJE .XML KONFIG FAJLOVA
 export async function POST(request) {
@@ -47,55 +48,41 @@ export async function POST(request) {
     console.log(`Successfully saved XML to: ${filePath}`);
     console.log(`Successfully saved XML to: ${filePath1}`);
 
-    NextResponse.json({
-      message: `✅ Successfully saved XML to: ${filePath}`,
-      filePath,
-    });
-
-    //ENKTIPCIJA .xml FAJLA
-    //DEFINISI DIREKTORIJ
+    //DEFINISI SUB DIREKTORIJ ZA ENKRIPTOVANE .xml FAJLAOVE
     const encryptedDirectory = path.join(process.cwd(), "xmlconfigs/encrypted");
 
     // Ensure the directory exists
     await fs.mkdir(encryptedDirectory, { recursive: true });
 
-    //
     const outputPath = path.join(encryptedDirectory, filename);
     const outputPath1 = path.join(encryptedDirectory, filename1);
 
-    const cmd1 = `openssl enc -e -aes-256-cbc -salt -md md5 -in "${filePath1}" -out "${outputPath1}" -pass pass:"${PASSWORD}"`;
-    exec(cmd1, (error) => {
-      if (error) {
-        console.error("Encryption error:", error);
+    //exec(cmd, callback) is asynchronous. The try/catch only wraps
+    //synchronous code and awaited promises.
+    //pa iz tog razloga vrsimo:
+    //Wrap exec() in a Promise and await it
+    const execAsync = promisify(exec);
 
-        return NextResponse.json(
-          { message: "❌ Encryption failed", error: error.message },
-          { status: 500 }
-        );
-      }
-
-      console.log(`Encrypted file saved at: ${outputPath1}`);
-      //THIS IS THE HOST FILE SYSTEM /var/www/html/Grandstream/encrypted`
-    });
-
+    //CLI COMMAND FOR ENCRYPTION
     const cmd = `openssl enc -e -aes-256-cbc -salt -md md5 -in "${filePath}" -out "${outputPath}" -pass pass:"${PASSWORD}"`;
-    exec(cmd, (error) => {
-      if (error) {
-        console.error("Encryption error:", error);
+    const cmd1 = `openssl enc -e -aes-256-cbc -salt -md md5 -in "${filePath1}" -out "${outputPath1}" -pass pass:"${PASSWORD}"`;
 
-        return NextResponse.json(
-          { message: "❌ Encryption failed", error: error.message },
-          { status: 500 }
-        );
-      }
+    try {
+      await execAsync(cmd);
+      await execAsync(cmd1);
 
-      console.log(`Encrypted file saved at: ${outputPath}`);
-    });
+      console.log(`Successfully encrypted XML to: ${outputPath}`);
+      console.log(`Successfully saved XML to: ${outputPath1}`);
 
-    return NextResponse.json({
-      message: `✅ File ${filename} encrypted and saved.`,
-      outputPath,
-    });
+      return NextResponse.json({
+        message: "✅ File encrypted and saved",
+      });
+    } catch (err) {
+      return NextResponse.json(
+        { message: "❌ Encryption failed", error: err.message },
+        { status: 500 }
+      );
+    }
   } catch (error) {
     console.error("Error saving configuration:", error);
     return NextResponse.json({ message: `${error.message}` }, { status: 500 });

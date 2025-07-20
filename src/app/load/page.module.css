@@ -132,6 +132,7 @@
 }
 
 .rawContainer {
+
   overflow: auto; /* This makes the rawXml content scrollable internally */
 
   /* Sticky properties */
@@ -143,6 +144,7 @@
 }
 
 .rawXml {
+
   background: #2f2a2a;
   padding: 1rem;
   border: 1px solid #ccc;

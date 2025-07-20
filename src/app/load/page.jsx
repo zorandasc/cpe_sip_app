@@ -9,15 +9,18 @@ export default function LoadPage() {
   const [rawXmlContent, setRawXmlContent] = useState(null);
   //FOR PARSE XML // Parsed children: [{ name, value }]
   const [childrenState, setChildrenState] = useState([]);
-  //FOR SEARCH FIELD
-  const [searchXmlFile, setSearchXmlFile] = useState("");
 
+  //FOR SEARCH FIELD
+  const [searchXmlByMac, setSearchXmlByMac] = useState("");
+
+  //RECORD CHANGES OF EVERY FIELD
   const handleXmlFieldChange = (index, newValue) => {
     setChildrenState((prev) =>
-      prev.map(item, (i) => (i === index ? { ...item, value: newValue } : item))
+      prev.map((item, i) => (i === index ? { ...item, value: newValue } : item))
     );
   };
 
+  //FETCH XML FROM NETWORK
   const handleLoadXml = async (e) => {
     e.preventDefault();
 
@@ -25,9 +28,10 @@ export default function LoadPage() {
       const res = await fetch("/api/load-xml", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ searchXmlFile }),
+        body: JSON.stringify({ searchXmlByMac }),
       });
 
+      //RESPONSE MOZE BITI TEXT ILI BLOB
       const contentType = res.headers.get("content-type") || "";
 
       if (!res.ok) {
@@ -44,10 +48,13 @@ export default function LoadPage() {
         contentType.includes("application/xml")
       ) {
         const xmlText = await res.text();
-        parseAndSetXml(xmlText);
+
+        parseReacivedXml(xmlText);
+
         toast.success("XML loaded successfully", {
           position: "top-left",
         });
+
         return;
       }
 
@@ -58,8 +65,11 @@ export default function LoadPage() {
       ) {
         const blob = await res.blob();
         const xmlText = await blob.text();
-        parseAndSetXml(xmlText);
+
+        parseReacivedXml(xmlText);
+
         toast.success("XML loaded successfully");
+
         return;
       }
       toast.error("Unexpected response type — expected XML.");
@@ -69,7 +79,8 @@ export default function LoadPage() {
     }
   };
 
-  const parseAndSetXml = (xmlString) => {
+  //HELPER FUCTION
+  const parseReacivedXml = (xmlString) => {
     const parser = new DOMParser();
 
     const xmlDoc = parser.parseFromString(xmlString, "application/xml");
@@ -91,7 +102,54 @@ export default function LoadPage() {
     setChildrenState(newChildren);
   };
 
-  const handleSaveXml = () => {};
+  //RETURN EDITED XML TO NETWORK
+  const handleSaveAndSendXml = async (e) => {
+    e.preventDefault();
+
+    const updatedXml = editReacivedXml();
+
+    const serializer = new XMLSerializer();
+    const serializedXml = serializer.serializeToString(updatedXml);
+
+    try {
+      const res = await fetch("/api/save-edited-xml", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/xml",
+        },
+        body: serializedXml,
+      });
+
+      const data = await res.json();
+      console.log("data", data);
+
+      if (!res.ok) {
+        toast.error(`${data.message}`);
+        return;
+      }
+
+      toast.success(`${data.message}`);
+      setRawXmlContent(null);
+      setChildrenState([]);
+    } catch (error) {
+      console.log("Something went wrong", error);
+      toast.error(`Something went wrong", ${error}`);
+    }
+  };
+
+  //HELPER FUNCTION
+  const editReacivedXml = () => {
+    const xmlClone = rawXmlContent.cloneNode(true);
+
+    childrenState.forEach((child) => {
+      //ZA SVAKI ELEMENT IZ childrenState
+      const element = xmlClone.querySelector(child.name);
+      //IZMJENI xmlClone VRIJEDNOST
+      if (element) element.textContent = child.value;
+    });
+
+    return xmlClone;
+  };
 
   return (
     <div className={styles.page}>
@@ -105,8 +163,8 @@ export default function LoadPage() {
             id="search"
             type="text"
             className={styles.input}
-            value={searchXmlFile}
-            onChange={(e) => setSearchXmlFile(e.target.value)}
+            value={searchXmlByMac}
+            onChange={(e) => setSearchXmlByMac(e.target.value)}
             placeholder="npr: cfgaabbccddeeff"
             maxLength={19}
           ></input>
@@ -121,7 +179,7 @@ export default function LoadPage() {
           <div className={styles.inputContainer}>
             <h2>Parsed XML Fields</h2>
 
-            <form className={styles.formParsed}>
+            <form className={styles.formParsed} onSubmit={handleSaveAndSendXml}>
               {childrenState.map((item, index) => (
                 <div key={index} className={styles.formGroup}>
                   <label htmlFor={`field-${index}`} className={styles.label}>
@@ -135,6 +193,9 @@ export default function LoadPage() {
                       handleXmlFieldChange(index, e.target.value)
                     }
                     className={styles.input}
+                    style={
+                      item.name == "P270" ? { marginBottom: "2rem" } : null
+                    }
                   ></input>
                 </div>
               ))}
