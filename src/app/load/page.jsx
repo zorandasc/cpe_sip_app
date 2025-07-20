@@ -13,6 +13,14 @@ export default function LoadPage() {
   //FOR SEARCH FIELD
   const [searchXmlByMac, setSearchXmlByMac] = useState("");
 
+  const [activeTab, setActiveTab] = useState("tab1");
+
+  // Function to handle tab clicks
+  // It updates the activeTab state to the clicked tab's ID
+  const handleTabClick = (tabId) => {
+    setActiveTab(tabId);
+  };
+
   //RECORD CHANGES OF EVERY FIELD
   const handleXmlFieldChange = (index, newValue) => {
     setChildrenState((prev) =>
@@ -121,14 +129,15 @@ export default function LoadPage() {
       });
 
       const data = await res.json();
-      console.log("data", data);
 
       if (!res.ok) {
         toast.error(`${data.message}`);
         return;
       }
 
-      toast.success(`${data.message}`);
+      toast.success(`${data.message}`, {
+        position: "top-left",
+      });
       setRawXmlContent(null);
       setChildrenState([]);
     } catch (error) {
@@ -173,48 +182,169 @@ export default function LoadPage() {
           Load
         </button>
       </form>
-      <main className={styles.main}>
-        {/* Display parsed XML as a form */}
-        {childrenState.length > 0 && (
-          <div className={styles.inputContainer}>
-            <h2>Parsed XML Fields</h2>
+      <div className={styles.container}>
+        <div className={styles.card}>
+          {/* Tab Navigation */}
+          <div className={styles.tabNavigation}>
+            {/* Tab 1 Button */}
+            <button
+              className={`${styles.tabButton} ${
+                activeTab === "tab1" ? styles.activeTab : ""
+              } ${styles.firstTab}`}
+              onClick={() => handleTabClick("tab1")}
+              aria-selected={activeTab === "tab1"}
+              role="tab"
+            >
+              Basic Field
+            </button>
 
-            <form className={styles.formParsed} onSubmit={handleSaveAndSendXml}>
-              {childrenState.map((item, index) => (
-                <div key={index} className={styles.formGroup}>
-                  <label htmlFor={`field-${index}`} className={styles.label}>
-                    {item.name}
-                  </label>
-                  <input
-                    id={`field-${index}`}
-                    type="text"
-                    value={item.value}
-                    onChange={(e) =>
-                      handleXmlFieldChange(index, e.target.value)
-                    }
-                    className={styles.input}
-                    style={
-                      item.name == "P270" ? { marginBottom: "2rem" } : null
-                    }
-                  ></input>
-                </div>
-              ))}
-              <button type="submit" className={styles.loadButton}>
-                Save
-              </button>
-            </form>
+            {/* Tab 2 Button */}
+            <button
+              className={`${styles.tabButton} ${
+                activeTab === "tab2" ? styles.activeTab : ""
+              }`}
+              onClick={() => handleTabClick("tab2")}
+              aria-selected={activeTab === "tab2"}
+              role="tab"
+            >
+              Advanced Field
+            </button>
+
+            {/* Tab 3 Button */}
+            <button
+              className={`${styles.tabButton} ${
+                activeTab === "tab3" ? styles.activeTab : ""
+              } ${styles.lastTab}`}
+              onClick={() => handleTabClick("tab3")}
+              aria-selected={activeTab === "tab3"}
+              role="tab"
+            >
+              Raw XML
+            </button>
           </div>
-        )}
-        {/* Display raw XML */}
-        {rawXmlContent && (
-          <div className={styles.rawContainer}>
-            <h2>Raw XML</h2>
-            <pre className={styles.rawXml}>
-              {new XMLSerializer().serializeToString(rawXmlContent)}
-            </pre>
+
+          {/* Tab Content Windows */}
+          <div className={styles.tabContentArea}>
+            {/* Content for Tab 1 */}
+            {activeTab === "tab1" && (
+              <div
+                className={`${styles.tabPanel} ${styles.tab1Panel}`}
+                role="tabpanel"
+                aria-labelledby="tab1-label"
+              >
+                {/* Display parsed XML as a form */}
+                {childrenState.length > 0 && (
+                  <div className={styles.inputContainer}>
+                    <form
+                      className={styles.formParsed}
+                      onSubmit={handleSaveAndSendXml}
+                    >
+                      {childrenState.map((item, index) => {
+                        if (index > 3) return;
+                        return (
+                          <div key={index} className={styles.formGroup}>
+                            <label
+                              htmlFor={`field-${index}`}
+                              className={styles.label}
+                            >
+                              {item.name}
+                            </label>
+                            <input
+                              id={`field-${index}`}
+                              type="text"
+                              value={item.value}
+                              onChange={(e) =>
+                                handleXmlFieldChange(index, e.target.value)
+                              }
+                              className={styles.input}
+                              style={
+                                item.name == "P270"
+                                  ? { marginBottom: "2rem" }
+                                  : null
+                              }
+                            ></input>
+                          </div>
+                        );
+                      })}
+                      <button type="submit" className={styles.loadButton}>
+                        Save
+                      </button>
+                    </form>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Content for Tab 2 */}
+            {activeTab === "tab2" && (
+              <div
+                className={`${styles.tabPanel} ${styles.tab2Panel}`}
+                role="tabpanel"
+                aria-labelledby="tab2-label"
+              >
+                {/* Display parsed XML as a form */}
+                {childrenState.length > 0 && (
+                  <div className={styles.inputContainer}>
+                    <form
+                      className={styles.formParsed}
+                      onSubmit={handleSaveAndSendXml}
+                    >
+                      {childrenState.map((item, index) => {
+                        if (index < 4) return;
+                        return (
+                          <div key={index} className={styles.formGroup}>
+                            <label
+                              htmlFor={`field-${index}`}
+                              className={styles.label}
+                            >
+                              {item.name}
+                            </label>
+                            <input
+                              id={`field-${index}`}
+                              type="text"
+                              value={item.value}
+                              onChange={(e) =>
+                                handleXmlFieldChange(index, e.target.value)
+                              }
+                              className={styles.input}
+                              style={
+                                item.name == "P270"
+                                  ? { marginBottom: "2rem" }
+                                  : null
+                              }
+                            ></input>
+                          </div>
+                        );
+                      })}
+                      <button type="submit" className={styles.loadButton}>
+                        Save
+                      </button>
+                    </form>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Content for Tab 3 */}
+            {activeTab === "tab3" && (
+              <div
+                className={`${styles.tabPanel} ${styles.tab3Panel}`}
+                role="tabpanel"
+                aria-labelledby="tab3-label"
+              >
+                {/* Display raw XML */}
+                {rawXmlContent && (
+                  <div className={styles.rawContainer}>
+                    <pre className={styles.rawXml}>
+                      {new XMLSerializer().serializeToString(rawXmlContent)}
+                    </pre>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
-        )}
-      </main>
+        </div>
+      </div>
     </div>
   );
 }
