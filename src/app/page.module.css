@@ -5,12 +5,13 @@
   flex-direction: column;
   min-height: 100vh;
   background-color: #1a202c; /* Deep dark blue-gray */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
   color: #e2e8f0; /* Light text for dark background */
 }
 
 /* Adjustments for h1 and h2 to be outside main for full-width headers */
-.title { /* Changed from h1 to class .title */
+.title {
+  /* Changed from h1 to class .title */
   color: #63b3ed; /* A brighter, more prominent blue */
   text-align: center;
   margin-top: 2rem;
@@ -19,7 +20,8 @@
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
 }
 
-.subtitle { /* Changed from h2 to class .subtitle */
+.subtitle {
+  /* Changed from h2 to class .subtitle */
   color: #a0aec0;
   text-align: center;
   margin-bottom: 2rem;
@@ -48,7 +50,7 @@
   flex-wrap: wrap; /* Allow items to wrap to the next line */
   justify-content: center; /* Center the list items within the list container */
   gap: 1rem; /* Space between list items */
-  
+
   flex: 1; /* Allow it to grow and shrink */
   max-width: 400px; /* Limit its maximum width */
   align-self: flex-start; /* Align with the form */
@@ -84,16 +86,17 @@
 
 .form {
   flex: 1; /* Allow it to grow and shrink */
-   /* Keep form's max-width for readability */
+  /* Keep form's max-width for readability */
 
   background-color: #2d3748; /* Darker background for the form card */
   padding: 2.5rem;
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: #6c9cc6 0px 7px 29px 0px;
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 1.5rem; /* Gap between major form sections (MAC field, port groups, button) */
+  margin-bottom: 3rem;
 }
 
 .form h3 {
@@ -117,7 +120,9 @@
   font-size: 0.85em;
   margin-top: 0.5rem; /* Space above message */
   /* Position the error message below the input, aligned with its start */
-  padding-left: calc(120px + 1rem); /* Aligns with the start of the input field */
+  padding-left: calc(
+    120px + 1rem
+  ); /* Aligns with the start of the input field */
   text-align: left;
   width: 100%; /* Take full width of its flex parent to appear on new line */
   box-sizing: border-box; /* Include padding in width */
@@ -144,7 +149,9 @@
   margin-bottom: 0.5rem; /* Small margin below heading within port group */
   /* --- MODIFIED --- */
   text-align: left; /* Align to the left */
-  padding-left: calc(120px + 1rem); /* Aligns with the start of the input fields (label-width + gap) */
+  padding-left: calc(
+    120px + 1rem
+  ); /* Aligns with the start of the input fields (label-width + gap) */
   /* --- END MODIFIED --- */
   font-size: 1.2em;
 }
@@ -156,11 +163,11 @@
   font-size: 0.95em;
 }
 
-
 /* Base style for div containers of label+input pairs within the form AND port groups */
 /* These are the generic divs like <div><label>...<input></div> */
 .form > div:not(.macField):not(.portGroup), /* Direct divs in form, excluding macField and portGroup */
-.portGroup > div { /* Divs directly inside .portGroup */
+.portGroup > div {
+  /* Divs directly inside .portGroup */
   display: flex; /* Make it a flex container */
   flex-direction: row; /* Arrange label and input in a row */
   align-items: center; /* Vertically center label and input */
@@ -218,6 +225,7 @@
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
   margin-top: 1rem;
+  letter-spacing: 2px;
 }
 
 .main form button[type="submit"]:hover {
@@ -242,15 +250,15 @@
 .phoneInputContainer {
   display: flex; /* Makes prefix and input align horizontally */
   align-items: center; /* Vertically centers them */
-border: 1px solid #4a5568; /* Match input border */
+  border: 1px solid #4a5568; /* Match input border */
   border-radius: 8px; /* Match input border-radius */
   overflow: hidden; /* Ensures no content spills out */
-  
+
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .phoneInputContainer:focus-within {
-  border-color: #0070f3; /* Focus style */
+  border-color: #63b3ed; /* Focus style */
   box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.2); /* Focus style */
 }
 
@@ -329,9 +337,6 @@ border: 1px solid #4a5568; /* Match input border */
   }
 }
 
-
-
-
 /* For screens smaller than 600px (typical phone breakpoint) */
 @media (max-width: 600px) {
   .title {
@@ -359,8 +364,4 @@ border: 1px solid #4a5568; /* Match input border */
     font-size: 1em; /* Adjust font sizes for smaller screens */
     padding: 0.7rem 1rem;
   }
-  
 }
-
-
-

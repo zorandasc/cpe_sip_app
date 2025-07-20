@@ -2,6 +2,8 @@
 import { useState } from "react";
 import styles from "./page.module.css";
 import toast from "react-hot-toast";
+import SaveIcon from "@/components/icons/SaveIcon";
+import DownLoadIcon from "@/components/icons/DownLoadIcon";
 
 //FRONTEND STRANICA SVIH KORISNIKA
 export default function LoadPage() {
@@ -33,7 +35,7 @@ export default function LoadPage() {
     e.preventDefault();
 
     try {
-      const res = await fetch("/api/load-xml", {
+      const res = await fetch("/api/xml-load", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ searchXmlByMac }),
@@ -120,7 +122,7 @@ export default function LoadPage() {
     const serializedXml = serializer.serializeToString(updatedXml);
 
     try {
-      const res = await fetch("/api/save-edited-xml", {
+      const res = await fetch("/api/xml-edit", {
         method: "POST",
         headers: {
           "Content-Type": "application/xml",
@@ -179,7 +181,7 @@ export default function LoadPage() {
           ></input>
         </div>
         <button type="submit" className={styles.loadButton}>
-          Load
+          <DownLoadIcon></DownLoadIcon>
         </button>
       </form>
       <div className={styles.container}>
@@ -234,43 +236,36 @@ export default function LoadPage() {
               >
                 {/* Display parsed XML as a form */}
                 {childrenState.length > 0 && (
-                  <div className={styles.inputContainer}>
-                    <form
-                      className={styles.formParsed}
-                      onSubmit={handleSaveAndSendXml}
-                    >
-                      {childrenState.map((item, index) => {
-                        if (index > 3) return;
-                        return (
-                          <div key={index} className={styles.formGroup}>
-                            <label
-                              htmlFor={`field-${index}`}
-                              className={styles.label}
-                            >
-                              {item.name}
-                            </label>
-                            <input
-                              id={`field-${index}`}
-                              type="text"
-                              value={item.value}
-                              onChange={(e) =>
-                                handleXmlFieldChange(index, e.target.value)
-                              }
-                              className={styles.input}
-                              style={
-                                item.name == "P270"
-                                  ? { marginBottom: "2rem" }
-                                  : null
-                              }
-                            ></input>
-                          </div>
-                        );
-                      })}
-                      <button type="submit" className={styles.loadButton}>
-                        Save
-                      </button>
-                    </form>
-                  </div>
+                  <form
+                    className={styles.formParsed}
+                    onSubmit={handleSaveAndSendXml}
+                  >
+                    {childrenState.map((item, index) => {
+                      if (index > 3) return;
+                      return (
+                        <div key={index} className={styles.formGroup}>
+                          <label
+                            htmlFor={`field-${index}`}
+                            className={styles.label}
+                          >
+                            {item.name}
+                          </label>
+                          <input
+                            id={`field-${index}`}
+                            type="text"
+                            value={item.value}
+                            onChange={(e) =>
+                              handleXmlFieldChange(index, e.target.value)
+                            }
+                            className={styles.input}
+                          ></input>
+                        </div>
+                      );
+                    })}
+                    <button type="submit" className={styles.saveButton}>
+                      <SaveIcon></SaveIcon>
+                    </button>
+                  </form>
                 )}
               </div>
             )}
@@ -284,43 +279,41 @@ export default function LoadPage() {
               >
                 {/* Display parsed XML as a form */}
                 {childrenState.length > 0 && (
-                  <div className={styles.inputContainer}>
-                    <form
-                      className={styles.formParsed}
-                      onSubmit={handleSaveAndSendXml}
-                    >
-                      {childrenState.map((item, index) => {
-                        if (index < 4) return;
-                        return (
-                          <div key={index} className={styles.formGroup}>
-                            <label
-                              htmlFor={`field-${index}`}
-                              className={styles.label}
-                            >
-                              {item.name}
-                            </label>
-                            <input
-                              id={`field-${index}`}
-                              type="text"
-                              value={item.value}
-                              onChange={(e) =>
-                                handleXmlFieldChange(index, e.target.value)
-                              }
-                              className={styles.input}
-                              style={
-                                item.name == "P270"
-                                  ? { marginBottom: "2rem" }
-                                  : null
-                              }
-                            ></input>
-                          </div>
-                        );
-                      })}
-                      <button type="submit" className={styles.loadButton}>
-                        Save
-                      </button>
-                    </form>
-                  </div>
+                  <form
+                    className={styles.formParsed}
+                    onSubmit={handleSaveAndSendXml}
+                  >
+                    {childrenState.map((item, index) => {
+                      if (index < 4) return;
+                      return (
+                        <div key={index} className={styles.formGroup}>
+                          <label
+                            htmlFor={`field-${index}`}
+                            className={styles.label}
+                          >
+                            {item.name}
+                          </label>
+                          <input
+                            id={`field-${index}`}
+                            type="text"
+                            value={item.value}
+                            onChange={(e) =>
+                              handleXmlFieldChange(index, e.target.value)
+                            }
+                            className={styles.input}
+                            style={
+                              item.name == "P270"
+                                ? { marginBottom: "2rem" }
+                                : null
+                            }
+                          ></input>
+                        </div>
+                      );
+                    })}
+                    <button type="submit" className={styles.saveButton}>
+                      <SaveIcon></SaveIcon>
+                    </button>
+                  </form>
                 )}
               </div>
             )}

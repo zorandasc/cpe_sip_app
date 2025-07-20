@@ -3,7 +3,7 @@ import { jwtVerify } from "jose";
 
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
 
-//Your middleware.js is designed to handle authentication (verifying the JWT) 
+//Your middleware.js is designed to handle authentication (verifying the JWT)
 // for protected routes.
 // By including /api/users/[id] in the matcher:
 
@@ -38,7 +38,10 @@ export const config = {
   matcher: [
     "/", // protect root page
     "/users", // protect users page
-    "/api/save-new-xml",
+    "/load",
+    "/api/xml-save",
+    "/api/xml-edit",
+    "/api/xml-load",
     "/api/users",
     "/api/users/:path*",
   ],
