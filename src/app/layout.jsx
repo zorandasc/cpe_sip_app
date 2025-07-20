@@ -36,8 +36,8 @@ export default function RootLayout({ children }) {
                   secondary: "black",
                 },
                 style: {
-                  background: "#4f8f42",
-                  color: "whitesmoke",
+                  background: "aquamarine",
+                  color: "black",
                   fontSize: "1.3rem",
                 },
               },
@@ -50,9 +50,9 @@ export default function RootLayout({ children }) {
                   background: "tomato",
                   color: "whitesmoke",
                   fontSize: "1.3rem",
-                  minWidth:"520px",
+                  minWidth: "520px",
                   wordWrap: "break-word",
-                  wordBreak:"break-all"
+                  wordBreak: "break-all",
                 },
               },
             }}

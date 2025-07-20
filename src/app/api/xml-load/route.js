@@ -43,7 +43,7 @@ export async function POST(req) {
 
     if (!match) {
       return NextResponse.json(
-        { message: `XML file: ${searchXmlByMac}, nije pronadjen.` },
+        { message: `XML file: ${searchXmlByMac}.xml, nije pronađen.` },
         { status: 404 }
       );
     }
