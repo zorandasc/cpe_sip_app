@@ -9,13 +9,56 @@ import DownLoadIcon from "@/components/icons/DownLoadIcon";
 export default function LoadPage() {
   //FOR RAW XML
   const [rawXmlContent, setRawXmlContent] = useState(null);
+
   //FOR PARSE XML // Parsed children: [{ name, value }]
   const [childrenState, setChildrenState] = useState([]);
 
   //FOR SEARCH FIELD
   const [searchXmlByMac, setSearchXmlByMac] = useState("");
+  const [macErrorMessage, setMacErrorMessage] = useState(null);
 
   const [activeTab, setActiveTab] = useState("tab1");
+
+  const handleMacChange = (e) => {
+    let value = e.target.value;
+
+    // 2. Convert to uppercase for consistency in display
+    value = value.toUpperCase();
+
+    const originalValue = value.trim();
+
+    // 1. Remove any characters that are not hex digits, colons, or hyphens
+    value = value.replace(/[^0-9a-fA-F:-]/g, "");
+
+    setSearchXmlByMac(value);
+
+    let currentErrorMessage = null;
+
+    if (originalValue !== value) {
+      currentErrorMessage =
+        "Dozvoljeni su samo heksadecimalni karakteri (0-9, A-F), dvotačke (:) ili crtice (-).";
+    }
+
+    const cleanedMacLength = getCleanMac(value).length;
+
+    if (cleanedMacLength > 0 && cleanedMacLength !== 12) {
+      // If there's already an "invalid chars" message, prioritize it
+      // otherwise, show the "incorrect length" message
+      if (!currentErrorMessage) {
+        // Only set this if no other error is present
+        currentErrorMessage =
+          "MAC adresa mora imati tačno 12 heksadecimalnih karaktera.";
+      }
+    }
+
+    setMacErrorMessage(currentErrorMessage);
+  };
+
+  // Function to get a cleaned MAC address (12 hex digits)
+  //REMOVE : AND -
+  const getCleanMac = (rawMac) => {
+    return rawMac.replace(/[^0-9a-fA-F]/g, "").toLowerCase();
+  };
 
   // Function to handle tab clicks
   // It updates the activeTab state to the clicked tab's ID
@@ -34,11 +77,13 @@ export default function LoadPage() {
   const handleLoadXml = async (e) => {
     e.preventDefault();
 
+    const cleandeXmlToSend = getCleanMac(searchXmlByMac);
+
     try {
       const res = await fetch("/api/xml-load", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ searchXmlByMac }),
+        body: JSON.stringify({ searchXmlByMac: cleandeXmlToSend }),
       });
 
       //RESPONSE MOZE BITI TEXT ILI BLOB
@@ -61,7 +106,7 @@ export default function LoadPage() {
 
         parseReacivedXml(xmlText);
 
-        toast.success("XML loaded successfully", {
+        toast.success(`XML cfg${cleandeXmlToSend}.xml loaded successfully`, {
           position: "top-left",
         });
 
@@ -168,18 +213,23 @@ export default function LoadPage() {
       <form className={styles.formSearch} onSubmit={handleLoadXml}>
         <div className={styles.formGroup}>
           <label htmlFor="search" className={styles.label}>
-            Unesite ime .xml fajla:
+            MAC adresa:
           </label>
           <input
             id="search"
             type="text"
             className={styles.input}
             value={searchXmlByMac}
-            onChange={(e) => setSearchXmlByMac(e.target.value)}
-            placeholder="npr: cfgaabbccddeeff"
-            maxLength={19}
+            onChange={handleMacChange}
+            required
+            placeholder="Npr. AA:BB:CC:DD:EE:FF"
+            maxLength={25}
           ></input>
+          {macErrorMessage && (
+            <p className={styles.errorMessage}>{macErrorMessage}</p>
+          )}
         </div>
+
         <button type="submit" className={styles.loadButton}>
           <DownLoadIcon></DownLoadIcon>
         </button>

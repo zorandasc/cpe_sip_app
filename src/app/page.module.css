@@ -116,7 +116,7 @@
 }
 
 .errorMessage {
-  color: #e53e3e; /* Red text for error message */
+  color: tomato; /* Red text for error message */
   font-size: 0.85em;
   margin-top: 0.5rem; /* Space above message */
   /* Position the error message below the input, aligned with its start */
@@ -209,8 +209,8 @@
 }
 
 .inputError {
-  border-color: #e53e3e !important; /* Red border for error */
-  box-shadow: 0 0 0 1px #e53e3e !important; /* Optional: Red outline-like shadow */
+  border-color: tomato !important; /* Red border for error */
+  box-shadow: 0 0 0 1px tomato !important; /* Optional: Red outline-like shadow */
 }
 
 .main form button[type="submit"] {

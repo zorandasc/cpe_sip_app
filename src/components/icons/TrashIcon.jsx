@@ -2,8 +2,8 @@ const TrashIcon = ({ className, ...props }) => (
   <svg
     className={className}
     xmlns="http://www.w3.org/2000/svg"
-    width="40px"
-    height="40px"
+    width="30px"
+    height="30px"
     viewBox="-3 0 32 32"
     version="1.1"
     {...props}

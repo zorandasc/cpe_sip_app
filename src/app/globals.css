@@ -25,6 +25,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   /*ADDED FOR STIKCY POSTION*/
   overflow: visible;
+  font-size: 16px;
 }
 
 * {
