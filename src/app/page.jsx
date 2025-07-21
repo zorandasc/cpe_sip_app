@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import styles from "./page.module.css";
 import toast from "react-hot-toast";
+import SendIcon from "@/components/icons/SendIcon";
 
 //FRONTEND HOME STRANICA
 export default function Home() {
@@ -281,7 +282,7 @@ export default function Home() {
               </div>
             ))}
 
-            <button type="submit">Kreiraj fajl</button>
+            <button type="submit">Kreiraj fajl <SendIcon></SendIcon></button>
           </form>
         )}
       </main>

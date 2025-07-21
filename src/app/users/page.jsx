@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import styles from "./page.module.css";
 import TrashIcon from "@/components/icons/TrashIcon";
+import NewUserIcon from "@/components/icons/NewUserIcon";
 
 //FRONTEND STRANICA SVIH KORISNIKA
 export default function UsersPage() {
@@ -176,7 +177,7 @@ export default function UsersPage() {
             minLength={4}
           ></input>
           <button type="submit" className={styles.addButton}>
-            Novi korisnik
+            <NewUserIcon></NewUserIcon>
           </button>
         </form>
       </div>

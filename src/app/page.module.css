@@ -216,7 +216,7 @@
 .main form button[type="submit"] {
   background-color: #4299e1; /* A strong, clear blue */
   color: whitesmoke;
-  padding: 1rem 1.5rem;
+  padding: 10px 40px;
   border: none;
   border-radius: 18px;
   font-size: 1.1em;
@@ -225,8 +225,14 @@
   margin-top: 1rem;
   letter-spacing: 2px;
   transform: translateY(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+.main form button[type="submit"] svg {
+  margin-left: 1rem;
+}
 .main form button[type="submit"]:hover {
   letter-spacing: 3px;
   background-color: whitesmoke;
