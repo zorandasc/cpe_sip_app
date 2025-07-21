@@ -39,7 +39,7 @@ export const config = {
     "/", // protect root page
     "/users", // protect users page
     "/load",
-    "/api/xml-save",
+    "/api/xml-new",
     "/api/xml-edit",
     "/api/xml-load",
     "/api/users",

@@ -8,7 +8,9 @@ import SendIcon from "@/components/icons/SendIcon";
 export default function Home() {
   //INICIJALNI STATE
   const [selectedPhone, setSelectedPhone] = useState({
-    name: "Grandstream",
+    name: "SIP telefon (model:GXP_1625)",
+    type: "Grandstream",
+    model: "GXP_1625",
     port: 1,
   });
   const [mac, setMac] = useState("");
@@ -25,12 +27,36 @@ export default function Home() {
   const [portValidationErrors, setPortValidationErrors] = useState({});
 
   const phones = [
-    { name: "Grandstream", port: 1 },
-    { name: "SIP telefon (model:GXP_1625)", port: 1 },
-    { name: "4-portni RGW (model:HT814)", port: 4 },
-    { name: "8-portni RGW (model:HT818)", port: 8 },
-    { name: "16-portni RGW (model:GXW4216)", port: 16 },
-    { name: "24-portni RGW (model:GXW4224)", port: 24 },
+    {
+      name: "SIP telefon (model:GXP_1625)",
+      type: "Grandstream",
+      model: "GXP_1625",
+      port: 1,
+    },
+    {
+      name: "4-portni RGW (model:HT814)",
+      type: "Grandstream",
+      model: "HT814",
+      port: 4,
+    },
+    {
+      name: "8-portni RGW (model:HT818)",
+      type: "Grandstream",
+      model: "HT818",
+      port: 8,
+    },
+    {
+      name: "16-portni RGW (model:GXW4216)",
+      type: "Grandstream",
+      model: "GXW4216",
+      port: 16,
+    },
+    {
+      name: "24-portni RGW (model:GXW4224)",
+      type: "Grandstream",
+      model: "GXW4224",
+      port: 24,
+    },
   ];
 
   const handlePhoneSelect = (item) => {
@@ -158,7 +184,7 @@ export default function Home() {
     };
 
     try {
-      const response = await fetch("/api/xml-save", {
+      const response = await fetch("/api/xml-new", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -282,7 +308,9 @@ export default function Home() {
               </div>
             ))}
 
-            <button type="submit">Kreiraj fajl <SendIcon></SendIcon></button>
+            <button type="submit">
+              Kreiraj fajl <SendIcon></SendIcon>
+            </button>
           </form>
         )}
       </main>
