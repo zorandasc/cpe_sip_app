@@ -125,8 +125,11 @@ export default function Home() {
 
     let newErrors = { ...portValidationErrors }; // Copy current errors
 
-    // Validation logic: If one is empty and the other is not
-    if (
+    // Validation logic:
+    if (!updatedPortConfigs[index].brojTelefona.trim().startsWith("387")) {
+      newErrors[index] = "Broj mora početi sa 387.";
+      //If one is empty and the other is not
+    } else if (
       (isBrojTelefonaEmpty && !isSifraEmpty) ||
       (!isBrojTelefonaEmpty && isSifraEmpty)
     ) {
@@ -263,15 +266,15 @@ export default function Home() {
                     Broj Telefona:
                   </label>
                   <div className={styles.phoneInputContainer}>
-                    <span className={styles.phonePrefix}>+387</span>
+                    <span className={styles.phonePrefix}>+</span>
                     <input
                       type="tel"
                       pattern="[0-9]*"
                       id={`brojTelefona-${index}`}
                       value={config.brojTelefona}
-                      placeholder="Npr. 51123456"
-                      minLength={8}
-                      maxLength={8}
+                      placeholder="Npr. 38751123456"
+                      minLength={11}
+                      maxLength={11}
                       onChange={(e) =>
                         handlePortInputChange(
                           index,
@@ -286,7 +289,7 @@ export default function Home() {
                 <div>
                   <label htmlFor={`sifra-${index}`}>Šifra:</label>
                   <input
-                    type="password"
+                    type="text"
                     minLength={8}
                     maxLength={8}
                     id={`sifra-${index}`}
