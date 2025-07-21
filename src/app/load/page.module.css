@@ -112,6 +112,7 @@
   background-color: whitesmoke;
   box-shadow: 2px 6px 18px rgba(0, 0, 0, 0.5);
   color: #1a202c;
+  transform: translateY(4px);
 }
 
 .loadButton:active {
@@ -126,7 +127,7 @@
 .saveButton {
   margin-right: 2rem;
   margin-top: 1rem;
-  padding:8px 30px;
+  padding: 8px 30px;
   border-radius: 12px;
   cursor: pointer;
   border: 0;
@@ -143,6 +144,7 @@
   background-color: whitesmoke;
   box-shadow: 2px 6px 18px rgba(0, 0, 0, 0.5);
   color: #1a202c;
+  transform: translateY(-4px);
 }
 
 .saveButton:active {
