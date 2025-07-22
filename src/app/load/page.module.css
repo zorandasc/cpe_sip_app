@@ -29,6 +29,9 @@
 .formGroup {
   margin-bottom: 1rem;
   margin-right: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
 }
 
 .inputContainer {

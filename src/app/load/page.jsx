@@ -312,13 +312,15 @@ export default function LoadPage() {
                     {basicXmlContent.map((item, index) => {
                       return (
                         <div key={index} className={styles.formGroup}>
-                          {index % 4 === 0 && <p>Phone {index / 4}</p>}
-                          <label
-                            htmlFor={`field-${index}`}
-                            className={styles.label}
-                          >
-                            {item.name}
-                          </label>
+                          {index % 4 === 0 && (
+                            <label
+                              htmlFor={`field-${index}`}
+                              className={styles.label}
+                            >
+                              Phone {index / 4}
+                            </label>
+                          )}
+
                           <input
                             id={`field-${index}`}
                             type="text"
