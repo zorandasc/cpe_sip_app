@@ -28,6 +28,7 @@
 
 .formGroup {
   margin-bottom: 1rem;
+  margin-right: 1rem;
 }
 
 .inputContainer {
@@ -83,12 +84,18 @@
   box-sizing: border-box; /* Include padding in width */
 }
 
+.formParsed {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
 .formParsed input {
   border-radius: 8px;
   outline: none;
   border: 1px solid #4a5568;
   box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5);
   transition: border 0.2s;
+
   /*background-color: #2d3748;*/
 }
 

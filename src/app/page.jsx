@@ -102,7 +102,7 @@ export default function Home() {
           "MAC adresa mora imati tačno 12 heksadecimalnih karaktera.";
       }
     }
-    console.log(currentErrorMessage);
+
     setMacErrorMessage(currentErrorMessage);
   };
 

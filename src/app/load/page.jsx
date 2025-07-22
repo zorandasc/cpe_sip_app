@@ -1,5 +1,5 @@
 "use client"; // This component will run on the client-side
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./page.module.css";
 import toast from "react-hot-toast";
 import SaveIcon from "@/components/icons/SaveIcon";
@@ -9,6 +9,8 @@ import DownLoadIcon from "@/components/icons/DownLoadIcon";
 export default function LoadPage() {
   //FOR RAW XML
   const [rawXmlContent, setRawXmlContent] = useState(null);
+  const [basicXmlContent, setBasicXmlContent] = useState([]);
+  const [advancedXmlContent, setAdvancedXmlContent] = useState([]);
 
   //FOR PARSE XML // Parsed children: [{ name, value }]
   const [childrenState, setChildrenState] = useState([]);
@@ -17,7 +19,7 @@ export default function LoadPage() {
   const [searchXmlByMac, setSearchXmlByMac] = useState("");
   const [macErrorMessage, setMacErrorMessage] = useState(null);
 
-  const [activeTab, setActiveTab] = useState("tab1");
+  const [activeTab, setActiveTab] = useState("basic");
 
   const handleMacChange = (e) => {
     let value = e.target.value;
@@ -207,6 +209,23 @@ export default function LoadPage() {
     return xmlClone;
   };
 
+  useEffect(() => {
+    //ZA GRANDSTREAM TELEFON JE P401 GRANICA
+    //ZA RGW JE P2 TAG GRANICA
+    const p401Index = childrenState.findIndex(
+      (item) => item.name === "P401" || item.name === "P2"
+    );
+
+    //FOR DIPLAYING BASIC PARAMETARS
+    const before401 =
+      p401Index !== -1 ? childrenState.slice(0, p401Index) : childrenState;
+    setBasicXmlContent(before401);
+
+    //FOR DIPLAYING ADVANCED PARAMAETARS
+    const afterP401 = p401Index !== -1 ? childrenState.slice(p401Index) : [];
+    setAdvancedXmlContent(afterP401);
+  }, [childrenState]);
+
   return (
     <div className={styles.page}>
       <h1 className={styles.title}>Load .xml file</h1>
@@ -241,10 +260,10 @@ export default function LoadPage() {
             {/* Tab 1 Button */}
             <button
               className={`${styles.tabButton} ${
-                activeTab === "tab1" ? styles.activeTab : ""
+                activeTab === "basic" ? styles.activeTab : ""
               } ${styles.firstTab}`}
-              onClick={() => handleTabClick("tab1")}
-              aria-selected={activeTab === "tab1"}
+              onClick={() => handleTabClick("basic")}
+              aria-selected={activeTab === "basic"}
               role="tab"
             >
               Basic Field
@@ -253,10 +272,10 @@ export default function LoadPage() {
             {/* Tab 2 Button */}
             <button
               className={`${styles.tabButton} ${
-                activeTab === "tab2" ? styles.activeTab : ""
+                activeTab === "advanced" ? styles.activeTab : ""
               }`}
-              onClick={() => handleTabClick("tab2")}
-              aria-selected={activeTab === "tab2"}
+              onClick={() => handleTabClick("advanced")}
+              aria-selected={activeTab === "advanced"}
               role="tab"
             >
               Advanced Field
@@ -265,10 +284,10 @@ export default function LoadPage() {
             {/* Tab 3 Button */}
             <button
               className={`${styles.tabButton} ${
-                activeTab === "tab3" ? styles.activeTab : ""
+                activeTab === "raw" ? styles.activeTab : ""
               } ${styles.lastTab}`}
-              onClick={() => handleTabClick("tab3")}
-              aria-selected={activeTab === "tab3"}
+              onClick={() => handleTabClick("raw")}
+              aria-selected={activeTab === "raw"}
               role="tab"
             >
               Raw XML
@@ -278,11 +297,11 @@ export default function LoadPage() {
           {/* Tab Content Windows */}
           <div className={styles.tabContentArea}>
             {/* Content for Tab 1 */}
-            {activeTab === "tab1" && (
+            {activeTab === "basic" && (
               <div
                 className={`${styles.tabPanel} ${styles.tab1Panel}`}
                 role="tabpanel"
-                aria-labelledby="tab1-label"
+                aria-labelledby="basic-label"
               >
                 {/* Display parsed XML as a form */}
                 {childrenState.length > 0 && (
@@ -290,10 +309,10 @@ export default function LoadPage() {
                     className={styles.formParsed}
                     onSubmit={handleSaveAndSendXml}
                   >
-                    {childrenState.map((item, index) => {
-                      if (index > 3) return;
+                    {basicXmlContent.map((item, index) => {
                       return (
                         <div key={index} className={styles.formGroup}>
+                          {index % 4 === 0 && <p>Phone {index / 4}</p>}
                           <label
                             htmlFor={`field-${index}`}
                             className={styles.label}
@@ -321,11 +340,11 @@ export default function LoadPage() {
             )}
 
             {/* Content for Tab 2 */}
-            {activeTab === "tab2" && (
+            {activeTab === "advanced" && (
               <div
                 className={`${styles.tabPanel} ${styles.tab2Panel}`}
                 role="tabpanel"
-                aria-labelledby="tab2-label"
+                aria-labelledby="advanced-label"
               >
                 {/* Display parsed XML as a form */}
                 {childrenState.length > 0 && (
@@ -333,8 +352,7 @@ export default function LoadPage() {
                     className={styles.formParsed}
                     onSubmit={handleSaveAndSendXml}
                   >
-                    {childrenState.map((item, index) => {
-                      if (index < 4) return;
+                    {advancedXmlContent.map((item, index) => {
                       return (
                         <div key={index} className={styles.formGroup}>
                           <label
@@ -369,11 +387,11 @@ export default function LoadPage() {
             )}
 
             {/* Content for Tab 3 */}
-            {activeTab === "tab3" && (
+            {activeTab === "raw" && (
               <div
                 className={`${styles.tabPanel} ${styles.tab3Panel}`}
                 role="tabpanel"
-                aria-labelledby="tab3-label"
+                aria-labelledby="raw-label"
               >
                 {/* Display raw XML */}
                 {rawXmlContent && (
