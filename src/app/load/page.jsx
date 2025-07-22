@@ -249,7 +249,11 @@ export default function LoadPage() {
           )}
         </div>
 
-        <button type="submit" className={styles.loadButton}>
+        <button
+          type="submit"
+          className={styles.loadButton}
+          disabled={macErrorMessage ? true : undefined}
+        >
           <DownLoadIcon></DownLoadIcon>
         </button>
       </form>

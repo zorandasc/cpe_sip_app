@@ -127,6 +127,19 @@
   transition: all 0.5s ease;
 }
 
+.loadButton:disabled {
+  background-color: tomato;
+  cursor: none;
+  transform: none;
+  letter-spacing: 2px;
+  color: whitesmoke;
+}
+
+.loadButton:disabled:hover {
+  transform: none;
+  background-color: tomato;
+}
+
 .loadButton:hover {
   letter-spacing: 3px;
   background-color: whitesmoke;
@@ -250,8 +263,10 @@
   transition-duration: 300ms; /* duration-300 */
   border: none;
   cursor: pointer;
-  background-color: transparent;
   letter-spacing: 2px;
+  background-color: #d1d5db; /* hover:bg-gray-300 */
+  /* bg-blue-600 */
+  color: #4b5563;
 }
 
 .tabButton:hover {
@@ -267,9 +282,9 @@
 }
 
 .activeTab {
-  background-color: #d1d5db; /* hover:bg-gray-300 */
+  background-color: #2d3748; /* hover:bg-gray-300 */
   /* bg-blue-600 */
-  color: #4b5563; /* text-gray-700 */
+  color: whitesmoke; /* text-gray-700 */
 
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
