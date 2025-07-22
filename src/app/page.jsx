@@ -142,6 +142,7 @@ export default function Home() {
 
     setPortConfigs(updatedPortConfigs);
     setPortValidationErrors(newErrors);
+    console.log(portValidationErrors);
   };
 
   //POSALJI PODATKE PREMA API RUTI /api/save-xml-config
@@ -307,7 +308,13 @@ export default function Home() {
               </div>
             ))}
 
-            <button type="submit">
+            <button
+              type="submit"
+              className={styles.submit}
+              disabled={
+                Object.keys(portValidationErrors).length > 0 ? true : undefined
+              }
+            >
               Kreiraj fajl <SendIcon></SendIcon>
             </button>
           </form>

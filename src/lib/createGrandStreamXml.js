@@ -117,13 +117,15 @@ export default function xmlGrandStream(selectedPhone, mac, portConfigs) {
 
       xmlContent += `<!--  ################ FXS 1 ######################  -->\n`;
       xmlContent += `<!--  #SIP USER ID; npr. +38751490227  -->\n`;
-      xmlContent += `<${userIdTag}>+${brojTelefona}</${userIdTag}>\n`;
+      xmlContent += `<P${userIdTag}>+${brojTelefona}</P${userIdTag}>\n`;
       xmlContent += `<!--  #Authenticate ID; npr. +38751490227@mtel.ba  -->\n`;
-      xmlContent += `<${authIdTag}>+${brojTelefona}@mtel.ba</${authIdTag}>\n`;
+      xmlContent += `<P${authIdTag}>+${brojTelefona}@mtel.ba</P${authIdTag}>\n`;
       xmlContent += `<!--  #Password; npr. abc.123*  -->\n`;
-      xmlContent += `<${passTag}>${sifra}</${passTag}>\n`;
+      xmlContent += `<P${passTag}>${sifra}</P${passTag}>\n`;
       xmlContent += `<!--  #Name; npr. 051490227  -->\n`;
-      xmlContent += `<${nameTag}>0${brojTelefona.substring(3)}</${nameTag}>\n`;
+      xmlContent += `<P${nameTag}>0${brojTelefona.substring(
+        3
+      )}</P${nameTag}>\n`;
 
       userIdTag = userIdTag + 1;
       authIdTag = authIdTag + 1;

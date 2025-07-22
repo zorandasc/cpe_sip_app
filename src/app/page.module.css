@@ -211,7 +211,7 @@
   box-shadow: 0 0 0 1px tomato !important; /* Optional: Red outline-like shadow */
 }
 
-.main form button[type="submit"] {
+.submit {
   background-color: #4299e1; /* A strong, clear blue */
   color: whitesmoke;
   padding: 10px 40px;
@@ -228,10 +228,10 @@
   justify-content: center;
 }
 
-.main form button[type="submit"] svg {
+.submit svg {
   margin-left: 1rem;
 }
-.main form button[type="submit"]:hover {
+.submit:hover {
   letter-spacing: 3px;
   background-color: whitesmoke;
   box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5);
@@ -239,9 +239,20 @@
   transform: translateX(2px);
 }
 
-.main form button[type="submit"]:active {
+.submit:active {
   background-color: #2b6cb0;
   transform: translateY(0);
+}
+
+.submit:disabled {
+  background-color: tomato;
+  cursor: none;
+  transform: none;
+  letter-spacing: 2px;
+  color: whitesmoke;
+}
+.submit:disabled:hover {
+  transform: none;
 }
 
 .footer {
