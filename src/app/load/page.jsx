@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import styles from "./page.module.css";
 import toast from "react-hot-toast";
+import CodeEditor from "@uiw/react-textarea-code-editor";
+
 import SaveIcon from "@/components/icons/SaveIcon";
 import DownLoadIcon from "@/components/icons/DownLoadIcon";
 
@@ -19,8 +21,10 @@ export default function LoadPage() {
   const [searchXmlByMac, setSearchXmlByMac] = useState("");
   const [macErrorMessage, setMacErrorMessage] = useState(null);
 
+  //FOR TAB WINDOW
   const [activeTab, setActiveTab] = useState("basic");
 
+  //<<<---------HENDLERS FUCTION---------------------------->>>
   const handleMacChange = (e) => {
     let value = e.target.value;
 
@@ -76,16 +80,17 @@ export default function LoadPage() {
   };
 
   //FETCH XML FROM NETWORK
-  const handleLoadXml = async (e) => {
+  const handleLoadXmlFromNetwork = async (e) => {
     e.preventDefault();
 
-    const cleandeXmlToSend = getCleanMac(searchXmlByMac);
+    //CLEAN MAC ADDRES ENTERED IN SEARCH
+    const cleanedXmlToSend = getCleanMac(searchXmlByMac);
 
     try {
       const res = await fetch("/api/xml-load", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ searchXmlByMac: cleandeXmlToSend }),
+        body: JSON.stringify({ searchXmlByMac: cleanedXmlToSend }),
       });
 
       //RESPONSE MOZE BITI TEXT ILI BLOB
@@ -93,6 +98,7 @@ export default function LoadPage() {
 
       if (!res.ok) {
         const data = await res.json();
+        console.log(`${data.message ?? "Failed to Load .xml"} `);
         toast.error(`${data.message ?? "Failed to Load .xml"} `, {
           position: "top-left",
         });
@@ -100,49 +106,99 @@ export default function LoadPage() {
       }
 
       /* ---If server returns raw text --- */
+      let xmlText = "";
       if (
         contentType.includes("text/xml") ||
         contentType.includes("application/xml")
       ) {
-        const xmlText = await res.text();
-
-        parseReacivedXml(xmlText);
-
-        toast.success(`XML cfg${cleandeXmlToSend}.xml loaded successfully`, {
-          position: "top-left",
-        });
-
-        return;
+        xmlText = await res.text();
       }
-
-      /* --- If server returns a Blob/File --- */
       if (
+        /* --- If server returns a Blob/File --- */
         contentType.includes("octet-stream") ||
         contentType.includes("application/octet-stream")
       ) {
         const blob = await res.blob();
-        const xmlText = await blob.text();
+        xmlText = await blob.text();
+      }
 
-        parseReacivedXml(xmlText);
-
-        toast.success("XML loaded successfully");
-
+      if (!xmlText) {
+        toast.error("Unexpected response type — expected XML.");
         return;
       }
-      toast.error("Unexpected response type — expected XML.");
+
+      //STORE RAW XML TO STATE
+      setRawXmlContent(xmlText);
+
+      //TO DISPLAY TO INNPUT FIELDS
+      parseReacivedXml(xmlText);
+
+      toast.success(`XML cfg${cleanedXmlToSend}.xml loaded successfully`, {
+        position: "top-left",
+      });
     } catch (err) {
       console.log("Something went wrong", err);
       toast.error(`Something went wrong", ${err}`);
     }
   };
 
-  //HELPER FUCTION
+  //RETURN EDITED XML TO NETWORK
+  const handleSaveAndSendXml = async (e) => {
+    e.preventDefault();
+
+    let finalXml;
+
+    if (activeTab === "raw") {
+      const parsed = parseAndValidateXml(rawXmlContent);
+      if (!parsed) {
+        toast.error("Invalid XML syntax in Raw view. Fix it before saving.");
+        return;
+      }
+      //ALREADU IN XML STRING FORMAT, JUST SENDIT
+      finalXml = rawXmlContent;
+    } else {
+      //CAHNGE VALUES OF XMLS ELEMENTS
+      const updatedXmlDom = parseEditedXml();
+      if (!updatedXmlDom) return;
+      //NEED TO CONVERT TOE SERIALIZABLES XML STRING
+      finalXml = new XMLSerializer().serializeToString(updatedXmlDom);
+    }
+
+    try {
+      const res = await fetch("/api/xml-edit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/xml",
+        },
+        body: finalXml,
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        toast.error(`${data.message}`);
+        return;
+      }
+
+      toast.success(`${data.message}`, {
+        position: "top-left",
+      });
+      //CLEAR EVERYTHING
+      setRawXmlContent(null);
+      setChildrenState([]);
+    } catch (error) {
+      console.log("Something went wrong", error);
+      toast.error(`Something went wrong", ${error}`);
+    }
+  };
+
+  //<<<---------HELPER FUCTION--------------------------->>>
   const parseReacivedXml = (xmlString) => {
-    const parser = new DOMParser();
-
-    const xmlDoc = parser.parseFromString(xmlString, "application/xml");
-
-    setRawXmlContent(xmlDoc);
+    const xmlDoc = parseAndValidateXml(xmlString);
+    if (!xmlDoc) {
+      toast.error("Invalid XML syntax. Please fix errors before saving.");
+      return;
+    }
 
     const configElement = xmlDoc.querySelector("config");
     if (!configElement) {
@@ -159,55 +215,42 @@ export default function LoadPage() {
     setChildrenState(newChildren);
   };
 
-  //RETURN EDITED XML TO NETWORK
-  const handleSaveAndSendXml = async (e) => {
-    e.preventDefault();
-
-    const updatedXml = editReacivedXml();
-
-    const serializer = new XMLSerializer();
-    const serializedXml = serializer.serializeToString(updatedXml);
-
-    try {
-      const res = await fetch("/api/xml-edit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/xml",
-        },
-        body: serializedXml,
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        toast.error(`${data.message}`);
-        return;
-      }
-
-      toast.success(`${data.message}`, {
-        position: "top-left",
-      });
-      setRawXmlContent(null);
-      setChildrenState([]);
-    } catch (error) {
-      console.log("Something went wrong", error);
-      toast.error(`Something went wrong", ${error}`);
+  const parseEditedXml = () => {
+    //convert to xml
+    const xmlDoc = parseAndValidateXml(rawXmlContent);
+    if (!xmlDoc) {
+      toast.error("Invalid XML syntax. Please fix errors before saving.");
+      return;
     }
-  };
 
-  //HELPER FUNCTION
-  const editReacivedXml = () => {
-    const xmlClone = rawXmlContent.cloneNode(true);
+    //clone of orginal
+    const xmlClone = xmlDoc.cloneNode(true);
 
+    //ZA SVAKI ELEMENT IZ childrenState
+    //IZMJENI xmlClone VRIJEDNOST
     childrenState.forEach((child) => {
-      //ZA SVAKI ELEMENT IZ childrenState
       const element = xmlClone.querySelector(child.name);
-      //IZMJENI xmlClone VRIJEDNOST
       if (element) element.textContent = child.value;
     });
-
     return xmlClone;
   };
+
+  //CONVERT STRING TO XML FORMAT
+  //This converts the string into a DOM object to extract fields.
+  const parseAndValidateXml = (xmlString) => {
+    const parser = new DOMParser();
+    const parsed = parser.parseFromString(xmlString, "application/xml");
+    const errorNode = parsed.querySelector("parsererror");
+    if (errorNode) {
+      const message = errorNode.textContent;
+      toast.error(`XML Error: ${message}`);
+      return null;
+    }
+
+    return parsed;
+  };
+
+  //<<<----------------------------------------------------->>>
 
   useEffect(() => {
     //ZA GRANDSTREAM TELEFON JE P401 GRANICA
@@ -229,7 +272,7 @@ export default function LoadPage() {
   return (
     <div className={styles.page}>
       <h1 className={styles.title}>Load .xml file</h1>
-      <form className={styles.formSearch} onSubmit={handleLoadXml}>
+      <form className={styles.formSearch} onSubmit={handleLoadXmlFromNetwork}>
         <div className={styles.formGroup}>
           <label htmlFor="search" className={styles.label}>
             MAC adresa:
@@ -402,9 +445,25 @@ export default function LoadPage() {
                 {/* Display raw XML */}
                 {rawXmlContent && (
                   <div className={styles.rawContainer}>
-                    <pre className={styles.rawXml}>
-                      {new XMLSerializer().serializeToString(rawXmlContent)}
-                    </pre>
+                    <CodeEditor
+                      value={rawXmlContent}
+                      language="xml"
+                      placeholder="Edit XML..."
+                      onChange={(e) => setRawXmlContent(e.target.value)}
+                      padding={15}
+                      style={{
+                        fontFamily: "monospace",
+                        fontSize: 14,
+                        color: "#f0a572ff",
+                      }}
+                    />
+                    <button
+                      type="button"
+                      className={styles.saveButton}
+                      onClick={handleSaveAndSendXml}
+                    >
+                      <SaveIcon></SaveIcon>
+                    </button>
                   </div>
                 )}
               </div>

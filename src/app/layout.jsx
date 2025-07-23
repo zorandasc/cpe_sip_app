@@ -47,8 +47,8 @@ export default function RootLayout({ children }) {
                   secondary: "red",
                 },
                 style: {
-                  background: "tomato",
-                  color: "whitesmoke",
+                  background: "salmon",
+                  color: "#333",
                   fontSize: "1.3rem",
                   minWidth: "520px",
                   wordWrap: "break-word",

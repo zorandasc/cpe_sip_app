@@ -17,6 +17,7 @@ export async function POST(req) {
   try {
     const xmlDoc = new DOMParser().parseFromString(xmlText, "application/xml");
 
+    //GET AMC ADDDRESS FROM XML FOR NAMING FILE
     const macElements = xmlDoc.getElementsByTagName("mac");
 
     if (!macElements.length || !macElements[0].textContent) {
