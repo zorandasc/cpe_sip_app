@@ -31,7 +31,7 @@
   margin-right: 1rem;
   display: flex;
   flex-direction: column;
-  justify-content:flex-end;
+  justify-content: flex-end;
 }
 
 .inputContainer {
@@ -121,7 +121,7 @@
   border: 0;
   background-color: #4299e1;
   color: hsl(0, 0%, 100%);
-  box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 6px 12px rgba(178, 176, 176, 0.5);
   letter-spacing: 1.5px;
   font-size: 15px;
   transition: all 0.5s ease;
@@ -133,6 +133,7 @@
   transform: none;
   letter-spacing: 2px;
   color: whitesmoke;
+  box-shadow: none;
 }
 
 .loadButton:disabled:hover {
@@ -142,31 +143,32 @@
 
 .loadButton:hover {
   letter-spacing: 3px;
-  background-color: whitesmoke;
-  box-shadow: 2px 6px 18px rgba(0, 0, 0, 0.5);
+
+  box-shadow: none;
   color: #1a202c;
-  transform: translateY(4px);
+  transform: translateY(5px);
 }
 
 .loadButton:active {
   letter-spacing: 3px;
-  background-color: whitesmoke;
-  box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5);
+
+  box-shadow: none;
   color: #1a202c;
-  transform: translateY(2px);
+  transform: translateY(5px);
   transition: 100ms;
 }
 
 .saveButton {
   margin-right: 2rem;
   margin-top: 1rem;
+  margin-bottom: 1rem;
   padding: 5px 40px;
   border-radius: 12px;
   cursor: pointer;
   border: 0;
   background-color: #4299e1;
   color: hsl(0, 2%, 12%);
-  box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 6px 12px rgba(178, 176, 176, 0.5);
   letter-spacing: 1.5px;
   font-size: 15px;
   transition: all 0.5s ease;
@@ -174,19 +176,16 @@
 
 .saveButton:hover {
   letter-spacing: 3px;
-  background-color: whitesmoke;
-  box-shadow: 2px 6px 18px rgba(0, 0, 0, 0.5);
-  color: #1a202c;
-  transform: translateY(-4px);
+  box-shadow: none;
+  transform: translateY(5px);
 }
 
 .saveButton:active {
   letter-spacing: 3px;
-  background-color: whitesmoke;
-  box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5);
-  color: #1a202c;
-  transform: translateY(2px);
+  box-shadow: none;
+  transform: none;
   transition: 100ms;
+  transform: translateY(5px);
 }
 
 .rawContainer {
@@ -286,8 +285,7 @@
   /* bg-blue-600 */
   color: whitesmoke; /* text-gray-700 */
 
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+  box-shadow: none;
 }
 
 .tabPanel {

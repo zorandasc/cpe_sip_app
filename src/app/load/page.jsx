@@ -2,10 +2,13 @@
 import { useState, useEffect } from "react";
 import styles from "./page.module.css";
 import toast from "react-hot-toast";
-import CodeEditor from "@uiw/react-textarea-code-editor";
 
 import SaveIcon from "@/components/icons/SaveIcon";
 import DownLoadIcon from "@/components/icons/DownLoadIcon";
+
+import AceEditor from "react-ace";
+import "ace-builds/src-noconflict/mode-xml";
+import "ace-builds/src-noconflict/theme-merbivore_soft";
 
 //FRONTEND STRANICA SVIH KORISNIKA
 export default function LoadPage() {
@@ -445,17 +448,20 @@ export default function LoadPage() {
                 {/* Display raw XML */}
                 {rawXmlContent && (
                   <div className={styles.rawContainer}>
-                    <CodeEditor
+                    <AceEditor
+                      mode="xml"
+                      theme="merbivore_soft"
                       value={rawXmlContent}
-                      language="xml"
-                      placeholder="Edit XML..."
-                      onChange={(e) => setRawXmlContent(e.target.value)}
-                      padding={15}
-                      style={{
-                        fontFamily: "monospace",
-                        fontSize: 14,
-                        color: "#f0a572ff",
-                      }}
+                      onChange={(val) => setRawXmlContent(val)}
+                      name="xml_editor"
+                      editorProps={{ $blockScrolling: true }}
+                      width="100%"
+                      height="600px"
+                      fontSize={14}
+                      lineHeight={24}
+                      showPrintMargin={false}
+                      showGutter={true} // ✅ This shows line numbers
+                      highlightActiveLine={true}
                     />
                     <button
                       type="button"

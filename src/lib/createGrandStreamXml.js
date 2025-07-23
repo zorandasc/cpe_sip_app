@@ -112,10 +112,10 @@ export default function xmlGrandStream(selectedPhone, mac, portConfigs) {
     let nameTag = userIdTag + 120;
 
     //LOOP OWER PHONE PORTS
-    portConfigs.forEach((config) => {
+    portConfigs.forEach((config, index) => {
       const { brojTelefona, sifra } = config;
 
-      xmlContent += `<!--  ################ FXS 1 ######################  -->\n`;
+      xmlContent += `<!--  ################ FXS ${index} ######################  -->\n`;
       xmlContent += `<!--  #SIP USER ID; npr. +38751490227  -->\n`;
       xmlContent += `<P${userIdTag}>+${brojTelefona}</P${userIdTag}>\n`;
       xmlContent += `<!--  #Authenticate ID; npr. +38751490227@mtel.ba  -->\n`;

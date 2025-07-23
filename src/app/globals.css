@@ -44,3 +44,20 @@ a {
     color-scheme: dark;
   }
 }
+
+.ace-merbivore-soft .ace_comment {
+  color: #85b2bd !important; /* or any custom color */
+  font-style: italic;
+}
+
+
+.ace-merbivore-soft .ace_tag{
+  color: #dd60b1 !important; /* or any custom color */
+  font-style: italic;
+}
+
+
+.ace-merbivore-soft .ace_text{
+  color: #ebe241 !important; /* or any custom color */
+  font-style: italic;
+}

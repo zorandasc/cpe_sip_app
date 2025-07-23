@@ -2,7 +2,7 @@ const NewUserIcon = ({ className, ...props }) => (
   <svg
     className={className}
     xmlns="http://www.w3.org/2000/svg"
-    fill="#000000"
+    fill="#fcf8f8ff"
     height="40px"
     width="40px"
     version="1.1"
