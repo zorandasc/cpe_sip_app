@@ -67,7 +67,6 @@ export default function LoadPage() {
   };
 
   // Function to handle tab clicks
-  // It updates the activeTab state to the clicked tab's ID
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
   };
@@ -133,8 +132,9 @@ export default function LoadPage() {
       //TO DISPLAY TO INNPUT FIELDS
       parseReacivedXml(xmlText);
 
-      toast.success(`XML cfg${cleanedXmlToSend}.xml loaded successfully`, {
+      toast.success(`File: cfg${cleanedXmlToSend}.xml, loaded successfully`, {
         position: "top-left",
+        duration: 3000,
       });
     } catch (err) {
       console.log("Something went wrong", err);
