@@ -45,19 +45,19 @@ a {
   }
 }
 
+/*FOR AceEditor */
+
 .ace-merbivore-soft .ace_comment {
-  color: #85b2bd !important; /* or any custom color */
+  color: #86bdcb !important; /* or any custom color */
   font-style: italic;
 }
 
-
-.ace-merbivore-soft .ace_tag{
+.ace-merbivore-soft .ace_tag {
   color: #f358bc !important; /* or any custom color */
   font-style: italic;
 }
 
-
-.ace-merbivore-soft .ace_text{
-  color: #e8e278 !important; /* or any custom color */
+.ace-merbivore-soft .ace_text {
+  color: #43ec4c !important; /* or any custom color */
   font-style: italic;
 }

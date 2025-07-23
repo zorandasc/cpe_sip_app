@@ -53,6 +53,7 @@ export default function Home() {
       brojTelefona: "",
     },
   ]);
+
   const [portValidationErrors, setPortValidationErrors] = useState({});
 
   const handlePhoneSelect = (item) => {
@@ -210,9 +211,11 @@ export default function Home() {
     } catch (error) {
       console.error("Network or client-side error:", error);
 
-      toast.error(`Došlo je do greške pri komunikaciji sa serverom:${error}`);
+      toast.error(`Došlo je do greške pri komunikaciji sa serverom`);
     }
   };
+
+ 
 
   return (
     <div className={styles.page}>
@@ -312,7 +315,9 @@ export default function Home() {
               type="submit"
               className={styles.submit}
               disabled={
-                Object.keys(portValidationErrors).length > 0 ? true : undefined
+                Object.keys(portValidationErrors).length > 0 || macErrorMessage
+                  ? true
+                  : undefined
               }
             >
               Kreiraj fajl <SendIcon></SendIcon>

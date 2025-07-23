@@ -30,6 +30,25 @@ export async function middleware(req) {
     return NextResponse.next();
   } catch (error) {
     console.log(error);
+    const accepts = req.headers.get("accept") || "";
+    //AKO JE DOSLO DO GRESKE PRILIKOM VALIDACIJE JWT, A PRI TOME
+    //JE BI API CALL
+    // If API call (expecting JSON), return 401 JSON response
+    if (
+      accepts.includes("application/json") ||
+      req.nextUrl.pathname.startsWith("/api")
+    ) {
+      return new NextResponse(
+        JSON.stringify({
+          message: `Token invalid or expired. Please login again.`,
+        }),
+        {
+          status: 401,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    }
+    //IF PAGE REQUEST THAN REDIRECT
     return NextResponse.redirect(new URL("/login", req.url));
   }
 }
