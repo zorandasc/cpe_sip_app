@@ -35,7 +35,7 @@
   align-items: flex-start; /* Align items to the top if they have different heights */
   justify-content: center; /* Center the list + form block horizontally */
   gap: 3rem; /* Space between the list and the form */
-  max-width: 1400px; /* Limit the overall width of the main content on large screens */
+  max-width: 1200px; /* Limit the overall width of the main content on large screens */
   width: 100%; /* Ensure it takes full width up to max-width */
   margin: 0 auto; /* Center the main content block */
   padding: 2rem;
@@ -92,6 +92,7 @@
   box-shadow: #6c9cc6 0px 7px 29px 0px;
   width: 100%;
   display: flex;
+  align-items: self-start;
   flex-direction: column;
   gap: 1.5rem; /* Gap between major form sections (MAC field, port groups, button) */
   margin-bottom: 6rem;
@@ -222,7 +223,6 @@
   transition: all 0.5s ease;
   margin-top: 1rem;
   letter-spacing: 3px;
-
   display: flex;
   align-items: center;
   justify-content: center;

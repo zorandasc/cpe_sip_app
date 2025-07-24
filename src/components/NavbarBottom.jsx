@@ -87,7 +87,7 @@ const NavbarBottom = () => {
               pathname === "/login" ? styles.active : ""
             }`}
           >
-            <button onClick={handleLogout}>
+            <button onClick={handleLogout} style={{ cursor: "pointer" }}>
               <ExitIcon></ExitIcon>
             </button>
           </li>

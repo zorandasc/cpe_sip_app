@@ -38,7 +38,7 @@ export default function LoginPage() {
       //NAVIGACIJA PREMA HOME PAGE
       setTimeout(() => {
         window.location.href = "/";
-      }, 1500);
+      }, 1200);
     } catch (err) {
       console.log("Something went wrong", err);
       toast.error(`Something went wrong", ${err}`);
