@@ -52,3 +52,6 @@ database.db
 *.db
 *.db-wal
 *.db-shm
+
+
+docker-compose.prod.yml

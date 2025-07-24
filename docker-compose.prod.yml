@@ -40,12 +40,15 @@ services:
       - /var/www/html/Grandstream/:/app/xmlconfigs
       - /var/SQLitedatabase/:/app/data
     restart: always # Keep the container running
-    env_file:
-      - .env.production.local
+    #sa ovim trebas vucarati .env.production.local zajedno sa compose
+    #env_file:
+    #  - .env.production.local
     environment:
       # Add any environment variables your Next.js app needs
       # e.g., DATABASE_URL, NEXT_PUBLIC_API_URL etc.
       PORT: 3000 # Specify port for Next.js
+      JWT_SECRET: "Tajni_JWT_Token_123*"
+      OPEN_SSL_PASS: "1234567890123456"
     # DODAVANJE ADMIN USERA
     command: ["sh", "-c", "node ./src/script/addAdminUser.js && npm start"] 
   
