@@ -77,7 +77,7 @@ export async function POST(req) {
   response.cookies.set("token", token, {
     httpOnly: true, // Prevents client-side JavaScript from accessing the cookie
     secure: process.env.NODE_ENV === "production",
-    sameSite: "strict", // Protects against CSRF attacks
+    sameSite: "lax", // Protects against CSRF attacks
     path: "/", // Cookie is valid for all paths
   });
   return response;
