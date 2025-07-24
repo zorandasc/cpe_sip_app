@@ -40,9 +40,8 @@ docker-compose.yml JE FILE KOJI DEFINISE KAKO DA SE NAPRAVI RUNING DOCKER CONTAI
 docker-compose.yml JE U SUTINI UPUTSTVO ZA POKRETANJE DOCKER CONTAINERA
 docker-compose.yml DEFINISE KAKO DA IMAGE KOMUNICIRA SA SVOJIM HOSTOM: NPR. KOJE TCP PORTOVE DA SE KORISTE, I KOJE FOLDER NA HOSTU DA KORISTI
 
+## LOKALNI RAZVOJ:
 
-LOKALNI RAZVOJ:
----------------
 KADA KORISTIOMO docker-compose.yml KONTEJNER SE POKRECE SA:
 
 ```bash
@@ -55,7 +54,7 @@ KADA PROMJENIMO SOURCE CODE ONDA REBUILDUJEMO IMAGE
 ```bash
 docker compose up --build
 
-or 
+or
 
 docker compose build --no-cache
 docker compose up
@@ -68,17 +67,28 @@ docker run -p 3000:3000 -v /path/to/your/host/xml-configs:/app/xmlconfigs --name
 
 ```
 
+U OVOM PROJEKTU KORISTIMO DVA compose FILE:
+
+1.) docker-compose.yml: ZA LOKALNI DEVELOPMENT
+
+2.) docker-compose.prod.yml: ZA PRODUKCIJU
+OVAJ FILE SALJE SE ZAJEDNO SA DOCKER IMAGE NA PRODUKCIONI SERVER
+
+````
+
+
 ZAUSTAVITE KONTAJINER
 
 ```bash
 docker stop your-nextjs-app-name
 
-```
+````
 
 PRODUKCIONI SERVER:
+
 # -----------------------------------------------------------------
 
-SAVE TO USBE
+PREKO USB:
 
 # Example using Git Bash (often preferred for cleaner paths)
 
