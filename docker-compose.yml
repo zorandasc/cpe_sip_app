@@ -27,7 +27,7 @@
 #In essence, docker-compose.yml is your declarative manifest for running an 
 #entire Docker-based application stack, making complex setups manageable and reproducible.
 
-version:  '3.8'
+#version:  '3.8'
 
 services:
   nextjs-app:
@@ -59,16 +59,3 @@ services:
       # RUN ONLY ONCE DODAVANJE ADMIN USERA
     command: ["sh", "-c", "node ./src/script/addAdminUser.js && npm start"] 
   
-
-#docker compose up
-
-#Automatic Build on First Run: The very first time you run docker compose up for a 
-#service with a build directive, Docker Compose will automatically look for the Dockerfile 
-#in the specified context and build the image.
-
-#On subsequent runs, docker compose up will check if the Dockerfile or any files in its build 
-#context (e.g., your source code) have changed.
-
-#If changes are detected, it will automatically rebuild the image before starting the container.
-
-#If no relevant changes are detected, it will use the existing, cached image, which saves a lot of time.
