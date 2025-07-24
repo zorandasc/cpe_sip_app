@@ -18,9 +18,8 @@ const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
 // a valid user is logged in; the route handler's job is to determine if that specific logged-in
 // user has permission for that specific action on that specific resource.
 
-//FILE KOJI PRESRECE SVE REQUESTE
+//FILE KOJI PRESRECE SVE REQUESTE AKO REQUEST ODGOVARAJU matcheru
 // OD FRONTENDA PREMA BECKENDU
-// AKO REQUEST ODGOVARAJU matcheru
 export async function middleware(req) {
   const token = req.cookies.get("token")?.value;
   if (!token) return NextResponse.redirect(new URL("/login", req.url));
@@ -29,11 +28,10 @@ export async function middleware(req) {
     await jwtVerify(token, JWT_SECRET);
     return NextResponse.next();
   } catch (error) {
+    //AKO JE DOSLO DO GRESKE PRILIKOM VALIDACIJE JWT, A PRI TOME
     console.log(error);
     const accepts = req.headers.get("accept") || "";
-    //AKO JE DOSLO DO GRESKE PRILIKOM VALIDACIJE JWT, A PRI TOME
-    //JE BI API CALL
-    // If API call (expecting JSON), return 401 JSON response
+    //1. AKO JE BIO API call (expecting JSON), return 401 JSON response
     if (
       accepts.includes("application/json") ||
       req.nextUrl.pathname.startsWith("/api")
@@ -48,16 +46,17 @@ export async function middleware(req) {
         }
       );
     }
-    //IF PAGE REQUEST THAN REDIRECT
+    //2. AKO JE BIO PAGE REQUEST THAN REDIRECT
     return NextResponse.redirect(new URL("/login", req.url));
   }
 }
 
+//ZASTICENE API ROUTE I STRANICE
 export const config = {
   matcher: [
     "/", // protect root page
     "/users", // protect users page
-    "/load",
+    "/load", //protct load page
     "/api/xml-new",
     "/api/xml-edit",
     "/api/xml-load",
