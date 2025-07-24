@@ -76,7 +76,8 @@ export async function POST(req) {
   });
   response.cookies.set("token", token, {
     httpOnly: true, // Prevents client-side JavaScript from accessing the cookie
-    secure: process.env.NODE_ENV === "production",
+    //secure: process.env.NODE_ENV === "production", THIS IS FOR HTTPS
+    secure: false, //BUT WE IN KORP NETWORK ARE USING HTTP
     sameSite: "lax", // Protects against CSRF attacks
     path: "/", // Cookie is valid for all paths
   });

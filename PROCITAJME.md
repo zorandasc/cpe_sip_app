@@ -1,26 +1,27 @@
 ## LOKALNI DEVELOPMENT
 
-REQUIREMENTS: node.js, VSCODE, GIT-BASH (linux cli), DOCKER DESKTOP,
+# REQUIREMENTS: node.js, VSCODE, GIT-BASH (linux cli), DOCKER DESKTOP,
 
-PRVO, POKRETANJE LOKALNOG SERVERA I LOKALNI RAZVOJ REACT(NEXT.JS) APLIKACIJE:
+# PRVO, POKRETANJE LOKALNOG SERVERA I LOKALNI RAZVOJ REACT(NEXT.JS) APLIKACIJE:
+
+# downoald next.js framework
 
 ```bash
-#downoald next.js framework
+
 npx create-next-app@latest
-# kada zavrsi download
 npm run dev
 
 ```
 
-NAKON ZAVRSETKA DEVELOPMENTA IDE POKRETANJE LOKALNE PRODUKCIONE APLIKACIJE BEZ DOCKERA:
-PRVO SE APLIKACIJA BILDUJE SA:
+# NAKON ZAVRSETKA DEVELOPMENTA IDE POKRETANJE LOKALNE PRODUKCIONE APLIKACIJE BEZ DOCKERA:
+# PRVO SE APLIKACIJA BILDUJE SA:
 
 ```bash
 npm run build
 
 ```
 
-A ONDA SE POKRENE SA:
+# A ONDA SE POKRENE SA:
 
 ```bash
 npm run start
@@ -42,14 +43,14 @@ docker-compose.yml DEFINISE KAKO DA IMAGE KOMUNICIRA SA SVOJIM HOSTOM: NPR. KOJE
 
 ## LOKALNI RAZVOJ:
 
-KADA KORISTIOMO docker-compose.yml KONTEJNER SE POKRECE SA:
+# KADA KORISTIOMO docker-compose.yml KONTEJNER SE POKRECE SA:
 
 ```bash
 docker compose up -d
 
 ```
 
-KADA PROMJENIMO SOURCE CODE ONDA REBUILDUJEMO IMAGE
+# KADA PROMJENIMO SOURCE CODE ONDA REBUILDUJEMO IMAGE
 
 ```bash
 docker compose up --build
@@ -60,41 +61,42 @@ docker compose build --no-cache
 docker compose up
 ```
 
-KADA NEMAMO docker-compose.yml ZA POKRETANJE KONTAIJENRA, SE KORISTI, NPR:
+# KADA NEMAMO docker-compose.yml ZA POKRETANJE KONTAIJENRA, SE KORISTI, NPR:
 
 ```bash
 docker run -p 3000:3000 -v /path/to/your/host/xml-configs:/app/xmlconfigs --name your-nextjs-app-name  your-nextjs-image-name
 
 ```
 
-U OVOM PROJEKTU KORISTIMO DVA compose FILE:
+# U OVOM PROJEKTU KORISTIMO DVA compose FILE:
 
-1.) docker-compose.yml: ZA LOKALNI DEVELOPMENT
+# 1.) docker-compose.yml: ZA LOKALNI DEVELOPMENT
 
-2.) docker-compose.prod.yml: ZA PRODUKCIJU
-OVAJ FILE SALJE SE ZAJEDNO SA DOCKER IMAGE NA PRODUKCIONI SERVER
+# 2.) docker-compose.prod.yml: ZA PRODUKCIJU
 
-````
+# OVAJ FILE SALJE SE ZAJEDNO SA DOCKER IMAGE NA PRODUKCIONI SERVER
 
-
-ZAUSTAVITE KONTAJINER
+# ZAUSTAVITE KONTAJINER
 
 ```bash
+
 docker stop your-nextjs-app-name
 
-````
+```
 
-PRODUKCIONI SERVER:
+# PRODUKCIONI SERVER:
 
 # -----------------------------------------------------------------
 
-PREKO USB:
-
 # Example using Git Bash (often preferred for cleaner paths)
+
+# SACUVAAJ IMAGE cpe-sip-nextjs-app:latest NA DESKTOP KAO .tar
 
 docker save -o ~/Desktop/cpe-sip-nextjs-app.tar cpe-sip-nextjs-app:latest
 
 # In Git Bash or WSL terminal
+
+# ZIPUJ GA ZA LAKSI PRENOS
 
 gzip C:/Users/YourUser/Desktop/my-nextjs-app-image.tar
 
@@ -104,34 +106,28 @@ gzip C:/Users/YourUser/Desktop/my-nextjs-app-image.tar
 
 ## PUSH TO PRODUCTION SERVER (HOST)
 
-LOKLANO ZIPOVANJE:
-
-```bash
-docker save -o my-phone-config-app.tar your_app_name:1.0.0
-
-gzip my-phone-config-app.tar
-
-```
-
 # -----------------------------------------------------
 
-TRANSFER SA WINDOWS NA LINUX SYSTEMA SA SCP COMANDOM:
+# TRANSFER SA WINDOWS PC NA LINUX SYSTEMA SA SCP COMANDOM:
 
-PRENOSIMO:
+# NA SERVER PRENOSIMO:
 
-1. BUILODVANI ZIPOVANI IMAGE my-phone-config-app.tar.gz
-2. docker-compose.prod.yml TO JE SET INSTRUKCIJA ZA PRODUKCIONI CONTAINER
+# 1. BUILODVANI ZIPOVANI IMAGE my-nextjs-app-image.tar.gz
 
-NA SERVERU docker-compose.prod.yml I IMAGE my-phone-config-app.tar.gz MORAJU BITI U ISTOM FOLDERU
+# 2. docker-compose.prod.yml TO JE SET INSTRUKCIJA ZA PRODUKCIONI CONTAINER
 
 # From your local Windows machine (using Git Bash/WSL/pscp)
 
 ```bash
 
-scp my-phone-config-app.tar.gz user@your_server_ip:/home/user/
-scp C:\path\to\your\modified\docker-compose.prod.yml user@your_server_ip:/home/user/nextjs-app/docker-compose.yml
+scp "my-phone-config-app.tar.gz" user@your_server_ip:/home/user/nextjs-app
+scp "docker-compose.prod.yml" user@your_server_ip:/home/user/nextjs-app
 
 ```
+
+# NA SERVERU FAJLOVI: docker-compose.prod.yml I IMAGE my-nextjs-app-image.tar.gzz
+
+# MORAJU BITI U ISTOM FOLDERU
 
 # ------------------------------------------------------------------------------------------------
 
@@ -146,33 +142,52 @@ cd /home/user/nextjs-app
 
 ```
 
-DEKOMPRESIJA
+# DEKOMPRESIJA
 
 ```bash
 
 gunzip /home/user/my-phone-config-app.tar.gz
 ```
 
-LOAD DOCKER U DOCKER DEAMON:
+# LOAD DOCKER IMAGE U DOCKER DEAMON (REPOSTORY):
 
 ```bash
 
 docker load -i /home/user/my-phone-config-app.tar
 ```
 
-VERIFIKACIJA IMAGE NA SERVERU:
+# VERIFIKACIJA IMAGE NA SERVERU:
 
 ```bash
 docker images
 ```
 
-POKRETANJE DOCKER KONTAINERA:
+# POKRETANJE DOCKER KONTAINERA:
 
 ```bash
 docker compose -f docker-compose.prod.yml up -d
+
 ```
 
-AKO ZELITE DA OBRISETE DOCKER IMAGE
+# PROVJERA RADA DOCKER KONTAINERA:
+
+```bash
+docker ps
+```
+
+# ZAUSTAVLJANJE DOCKER KONTAINERA:
+
+```bash
+docker stop container-name
+```
+
+# AKO ZELITE DA OBRISETE DOCKER CONTAINER
+
+```bash
+docker rm container-name
+```
+
+# AKO ZELITE DA OBRISETE DOCKER IMAGE
 
 ```bash
 docker rmi image-name
