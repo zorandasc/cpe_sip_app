@@ -39,6 +39,7 @@ const phones = [
 
 //FRONTEND HOME STRANICA
 export default function Home() {
+  const [loading, setLoading] = useState(false);
   //INICIJALNI STATE
   const [selectedPhone, setSelectedPhone] = useState(phones[0]);
 
@@ -185,6 +186,7 @@ export default function Home() {
     };
 
     try {
+      setLoading(true);
       const response = await fetch("/api/xml-new", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -212,10 +214,27 @@ export default function Home() {
       console.error("Network or client-side error:", error);
 
       toast.error(`Došlo je do greške pri komunikaciji sa serverom`);
+    } finally {
+      setLoading(false);
     }
   };
 
- 
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "100vh",
+          fontSize: "1.5rem",
+          color: "#63b3ed",
+        }}
+      >
+        Sending data...
+      </div>
+    );
+  }
 
   return (
     <div className={styles.page}>

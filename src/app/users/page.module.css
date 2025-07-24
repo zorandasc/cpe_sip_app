@@ -161,7 +161,6 @@
   letter-spacing: 2px;
   font-size: 15px;
   transition: all 0.5s ease;
-  
 }
 
 .addButton:hover {
@@ -170,6 +169,7 @@
   box-shadow: none;
   color: #1a202c;
   transform: translateY(4px);
+  background-color: #2369a2;
 }
 
 .addButton:active {

@@ -12,6 +12,7 @@ import "ace-builds/src-noconflict/theme-merbivore_soft";
 
 //FRONTEND STRANICA SVIH KORISNIKA
 export default function LoadPage() {
+  const [loading, setLoading] = useState("");
   //FOR RAW XML
   const [rawXmlContent, setRawXmlContent] = useState(null);
   const [basicXmlContent, setBasicXmlContent] = useState([]);
@@ -89,6 +90,7 @@ export default function LoadPage() {
     const cleanedXmlToSend = getCleanMac(searchXmlByMac);
 
     try {
+      setLoading("Loading data ...");
       const res = await fetch("/api/xml-load", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -142,6 +144,8 @@ export default function LoadPage() {
     } catch (err) {
       console.log("Something went wrong", err);
       toast.error(`Something went wrong", ${err}`);
+    } finally {
+      setLoading("");
     }
   };
 
@@ -168,6 +172,7 @@ export default function LoadPage() {
     }
 
     try {
+      setLoading("Sending data ...");
       const res = await fetch("/api/xml-edit", {
         method: "POST",
         headers: {
@@ -192,6 +197,8 @@ export default function LoadPage() {
     } catch (error) {
       console.log("Something went wrong", error);
       toast.error(`Something went wrong", ${error}`);
+    } finally {
+      setLoading("");
     }
   };
 
@@ -272,6 +279,23 @@ export default function LoadPage() {
     setAdvancedXmlContent(afterP401);
   }, [childrenState]);
 
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "100vh",
+          fontSize: "1.5rem",
+          color: "#63b3ed",
+        }}
+      >
+        {loading}
+      </div>
+    );
+  }
+
   return (
     <div className={styles.page}>
       <h1 className={styles.title}>Load .xml file</h1>
@@ -300,7 +324,7 @@ export default function LoadPage() {
           className={styles.loadButton}
           disabled={macErrorMessage ? true : undefined}
         >
-          Load <DownLoadIcon></DownLoadIcon>
+          Dobavi <DownLoadIcon></DownLoadIcon>
         </button>
       </form>
       <div className={styles.container}>
