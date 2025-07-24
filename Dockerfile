@@ -61,4 +61,6 @@ COPY --from=builder /app/src ./src
 #(which you defined earlier with FROM ... AS builder) and copy files from there."
 
 # Command to run the application
+# OVA KOMANDA SE KORISITI AKO NEMAMO docker-compose.yml
+# I AKO POKRECEMO CONTAINER PREKO CLI
 CMD ["npm", "start"]

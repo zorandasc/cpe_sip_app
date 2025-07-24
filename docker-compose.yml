@@ -1,6 +1,7 @@
 # RUN IN DEVELOPMENT ON YOUR LOCAL PC:
 # FOR BUILDING IMAGE
 
+# POKRETANJE CONTAINERA (DEFAULT TO docker-compose.yml)
 # docker compose build --no-cache
 # docker compose up
 
