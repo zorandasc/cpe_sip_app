@@ -53,13 +53,25 @@
   display: flex;
   gap: 0.5rem;
   width: 100%;
-  max-width: 600px;
+  max-width: 700px;
   flex-direction: row-reverse;
   justify-content: center;
   align-items: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
-.formSearch input {
+.formGroupSearch {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+}
+.formGroupSearch label {
+  margin-bottom: 0;
+}
+
+.formGroupSearch input {
   width: 100%;
   padding: 0.75rem 1rem;
   font-size: 1rem;
@@ -69,9 +81,11 @@
   outline: none;
   transition: border 0.2s;
   background-color: #2d3748;
+  margin-left: 0.5rem;
+  margin-right: 1rem;
 }
 
-.formSearch input:focus {
+.formGroupSearch input:focus {
   border-color: #6c9cc6;
   box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.1);
 }
@@ -79,8 +93,6 @@
 .errorMessage {
   color: tomato; /* Red text for error message */
   font-size: 0.85em;
-  margin-top: 0.5rem; /* Space above message */
-  /* Position the error message below the input, aligned with its start */
 
   text-align: left;
   width: 100%; /* Take full width of its flex parent to appear on new line */
@@ -122,16 +134,34 @@
   background-color: #4299e1;
   color: hsl(0, 0%, 100%);
   box-shadow: 2px 6px 12px rgba(178, 176, 176, 0.5);
-  letter-spacing: 1.5px;
+  letter-spacing: 3px;
   font-size: 15px;
   transition: all 0.5s ease;
+  display: flex;
+  align-items: center;
+}
+
+.loadButton:hover {
+  letter-spacing: 2px;
+  box-shadow: none;
+  color: #1a202c;
+  transform: translateY(5px);
+  background-color: #2369a2;
+}
+
+.loadButton:active {
+  letter-spacing: 2px;
+  box-shadow: none;
+  color: #1a202c;
+  transform: translateY(5px);
+  transition: 100ms;
 }
 
 .loadButton:disabled {
   background-color: tomato;
   cursor: not-allowed;
   transform: none;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
   color: whitesmoke;
   box-shadow: none;
 }
@@ -139,23 +169,6 @@
 .loadButton:disabled:hover {
   transform: none;
   background-color: tomato;
-}
-
-.loadButton:hover {
-  letter-spacing: 3px;
-
-  box-shadow: none;
-  color: #1a202c;
-  transform: translateY(5px);
-}
-
-.loadButton:active {
-  letter-spacing: 3px;
-
-  box-shadow: none;
-  color: #1a202c;
-  transform: translateY(5px);
-  transition: 100ms;
 }
 
 .saveButton {
@@ -167,21 +180,25 @@
   cursor: pointer;
   border: 0;
   background-color: #4299e1;
-  color: hsl(0, 2%, 12%);
+  color: hsl(0, 0%, 100%);
   box-shadow: 2px 6px 12px rgba(178, 176, 176, 0.5);
-  letter-spacing: 1.5px;
+  letter-spacing: 3px;
   font-size: 15px;
   transition: all 0.5s ease;
+  display: flex;
+  align-items: center;
 }
 
 .saveButton:hover {
-  letter-spacing: 3px;
+  letter-spacing: 2px;
   box-shadow: none;
+  color: #1a202c;
   transform: translateY(5px);
+  background-color: #2369a2;
 }
 
 .saveButton:active {
-  letter-spacing: 3px;
+  letter-spacing: 2px;
   box-shadow: none;
   transform: none;
   transition: 100ms;

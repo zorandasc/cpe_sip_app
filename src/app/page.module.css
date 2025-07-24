@@ -234,7 +234,7 @@
 }
 .submit:hover {
   letter-spacing: 2px;
-  background-color: whitesmoke;
+  background-color: #2369a2;
   box-shadow: none;
   color: #1a202c;
   transform: translateY(5px);
@@ -253,6 +253,7 @@
   transform: none;
   letter-spacing: 2px;
   color: whitesmoke;
+  box-shadow: none;
 }
 .submit:disabled:hover {
   transform: none;

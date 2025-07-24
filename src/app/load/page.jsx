@@ -276,9 +276,9 @@ export default function LoadPage() {
     <div className={styles.page}>
       <h1 className={styles.title}>Load .xml file</h1>
       <form className={styles.formSearch} onSubmit={handleLoadXmlFromNetwork}>
-        <div className={styles.formGroup}>
+        <div className={styles.formGroupSearch}>
           <label htmlFor="search" className={styles.label}>
-            MAC adresa:
+            MAC:
           </label>
           <input
             id="search"
@@ -300,7 +300,7 @@ export default function LoadPage() {
           className={styles.loadButton}
           disabled={macErrorMessage ? true : undefined}
         >
-          <DownLoadIcon></DownLoadIcon>
+          Load <DownLoadIcon></DownLoadIcon>
         </button>
       </form>
       <div className={styles.container}>
@@ -384,7 +384,7 @@ export default function LoadPage() {
                       );
                     })}
                     <button type="submit" className={styles.saveButton}>
-                      <SaveIcon></SaveIcon>
+                      Sačuvaj <SaveIcon></SaveIcon>
                     </button>
                   </form>
                 )}
@@ -431,7 +431,7 @@ export default function LoadPage() {
                       );
                     })}
                     <button type="submit" className={styles.saveButton}>
-                      <SaveIcon></SaveIcon>
+                      Sačuvaj <SaveIcon></SaveIcon>
                     </button>
                   </form>
                 )}
@@ -468,7 +468,7 @@ export default function LoadPage() {
                       className={styles.saveButton}
                       onClick={handleSaveAndSendXml}
                     >
-                      <SaveIcon></SaveIcon>
+                      Sačuvaj <SaveIcon></SaveIcon>
                     </button>
                   </div>
                 )}
