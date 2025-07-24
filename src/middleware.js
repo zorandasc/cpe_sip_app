@@ -22,16 +22,22 @@ const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
 // OD FRONTENDA PREMA BECKENDU
 export async function middleware(req) {
   const token = req.cookies.get("token")?.value;
-  if (!token) return NextResponse.redirect(new URL("/login", req.url));
+  //if (!token) return NextResponse.redirect(new URL("/login", req.url));
 
   try {
+    //AKO NEMA TOKENA OVO CE UHVATITI CATCH PA REDIRECT
+    if (!token) throw new Error("No token");
+
     await jwtVerify(token, JWT_SECRET);
+    //TOKEN DOBAR NASTAVI DALJE
     return NextResponse.next();
   } catch (error) {
-    //AKO JE DOSLO DO GRESKE PRILIKOM VALIDACIJE JWT, A PRI TOME
-    console.log(error);
+    //AKO JE DOSLO DO GRESKE PRILIKOM VALIDACIJE JWT
+    //(ISTEKAO ILI NEKO TEMPEROVAO) A PRI TOME:
     const accepts = req.headers.get("accept") || "";
-    //1. AKO JE BIO API call (expecting JSON), return 401 JSON response
+    //1.JE BIO API call (expecting JSON), return 401 JSON response
+    //OVO JE BITNO JSON RESPONSE, JER AKO SE VRATI REDIRECT
+    //FRONTEN TO NE PARSIRA DOBRO
     if (
       accepts.includes("application/json") ||
       req.nextUrl.pathname.startsWith("/api")
@@ -46,7 +52,7 @@ export async function middleware(req) {
         }
       );
     }
-    //2. AKO JE BIO PAGE REQUEST THAN REDIRECT
+    //2.A AKO JE BIO PAGE REQUEST THAN REDIRECT
     return NextResponse.redirect(new URL("/login", req.url));
   }
 }
