@@ -172,6 +172,14 @@
   background-color: #2369a2;
 }
 
+.addButton svg {
+  transition: all 0.5s ease;
+}
+
+.addButton:hover svg {
+  transform: scale(0.7);
+}
+
 .addButton:active {
   letter-spacing: 3px;
   box-shadow: none;
