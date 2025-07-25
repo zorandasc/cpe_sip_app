@@ -31,8 +31,13 @@ export default function UsersPage() {
           throw new Error(errorData.message || "Failed to fetch users");
         }
 
-        const data = await res.json(); // Parse the JSON response
-        setUsers(data); // Update the users state with the fetched data
+        if (res.status === 401) {
+          //NO TOKEN OR EXPIRED
+          window.location.href = "/login";
+        } else {
+          const data = await res.json(); // Parse the JSON response
+          setUsers(data); // Update the users state with the fetched data
+        }
       } catch (err) {
         console.error("Error fetching users:", err);
         setError(err.message || "An unexpected error occurred."); // Set the error message

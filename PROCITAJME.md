@@ -92,8 +92,9 @@ docker stop your-nextjs-app-name
 
 # SACUVAAJ IMAGE cpe-sip-nextjs-app:latest NA DESKTOP KAO .tar
 
+```bash
 docker save -o ~/Desktop/cpe-sip-nextjs-app.tar cpe-sip-nextjs-app:latest
-
+```
 # In Git Bash or WSL terminal
 
 # ZIPUJ GA ZA LAKSI PRENOS
