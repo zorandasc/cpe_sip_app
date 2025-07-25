@@ -4,6 +4,15 @@ export default function xmlGrandStream(selectedPhone, mac, portConfigs) {
     //SINGLE PORT GRANDSTREAM
     let config = portConfigs[0];
 
+    let sifra = config.sifra ? config.sifra : " ";
+    let sipUsername = config.brojTelefona ? `+${config.brojTelefona}` : " ";
+    let sipAuthenicateId = config.brojTelefona
+      ? `+${config.brojTelefona}@mtel.ba`
+      : " ";
+    let sipDisplay = config.brojTelefona
+      ? `0${config.brojTelefona.substring(3)}`
+      : " ";
+
     //KREIRAJ XML FAJL
     xmlContent = `<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n`;
     xmlContent += `<!-- Grandstream XML Provisioning Configuration -->\n`;
@@ -19,17 +28,17 @@ export default function xmlGrandStream(selectedPhone, mac, portConfigs) {
     xmlContent += `       <!-- #prvi nalog je po default-u uvijek aktivan# -->\n`;
 
     xmlContent += `       <!-- #SIP password npr. abc123+*# -->\n`;
-    xmlContent += `       <P34>${config.sifra}</P34>\n`;
+    xmlContent += `       <P34>${sifra}</P34>\n`;
 
     xmlContent += `       <!-- #SIP username npr. +38751490227 # -->\n`;
-    xmlContent += `       <P35>+${config.brojTelefona}</P35>\n`;
+    xmlContent += `       <P35>${sipUsername}</P35>\n`;
 
     xmlContent += `       <!-- #SIP authenticate ID npr. +38751490227@mtel.ba # -->\n`;
-    xmlContent += `       <P35>+${config.brojTelefona}@mtel.ba</P35>\n`;
+    xmlContent += `       <P35>${sipAuthenicateId}</P35>\n`;
 
     xmlContent += `       <!-- #String koji ce biti prikazan na displeju telefona # -->\n`;
     xmlContent += `       <!-- #ovaj string moze biti duzine max 9 znakova, npr 051490227# -->\n`;
-    xmlContent += `       <P270>0${config.brojTelefona.substring(3)}</P270>\n`;
+    xmlContent += `       <P270>${sipDisplay}</P270>\n`;
 
     xmlContent += `<!-- ###############cfg_kon.txt################ -->
               <!-- ##drugi sip nalog## -->
@@ -113,19 +122,24 @@ export default function xmlGrandStream(selectedPhone, mac, portConfigs) {
 
     //LOOP OWER PHONE PORTS
     portConfigs.forEach((config, index) => {
-      const { brojTelefona, sifra } = config;
+      let sifra = config.sifra ? config.sifra : " ";
+      let sipUserId = config.brojTelefona ? `+${config.brojTelefona}` : " ";
+      let sipAuthenicateId = config.brojTelefona
+        ? `+${config.brojTelefona}@mtel.ba`
+        : " ";
+      let sipDisplay = config.brojTelefona
+        ? `0${config.brojTelefona.substring(3)}`
+        : " ";
 
       xmlContent += `<!--  ################ FXS ${index} ######################  -->\n`;
       xmlContent += `<!--  #SIP USER ID; npr. +38751490227  -->\n`;
-      xmlContent += `<P${userIdTag}>+${brojTelefona}</P${userIdTag}>\n`;
+      xmlContent += `<P${userIdTag}>${sipUserId}</P${userIdTag}>\n`;
       xmlContent += `<!--  #Authenticate ID; npr. +38751490227@mtel.ba  -->\n`;
-      xmlContent += `<P${authIdTag}>+${brojTelefona}@mtel.ba</P${authIdTag}>\n`;
+      xmlContent += `<P${authIdTag}>${sipAuthenicateId}</P${authIdTag}>\n`;
       xmlContent += `<!--  #Password; npr. abc.123*  -->\n`;
       xmlContent += `<P${passTag}>${sifra}</P${passTag}>\n`;
       xmlContent += `<!--  #Name; npr. 051490227  -->\n`;
-      xmlContent += `<P${nameTag}>0${brojTelefona.substring(
-        3
-      )}</P${nameTag}>\n`;
+      xmlContent += `<P${nameTag}>${sipDisplay}</P${nameTag}>\n`;
 
       userIdTag = userIdTag + 1;
       authIdTag = authIdTag + 1;

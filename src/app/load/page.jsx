@@ -324,7 +324,7 @@ export default function LoadPage() {
           className={styles.loadButton}
           disabled={macErrorMessage ? true : undefined}
         >
-         <DownLoadIcon></DownLoadIcon>
+          <DownLoadIcon></DownLoadIcon>
         </button>
       </form>
       <div className={styles.container}>
@@ -408,7 +408,7 @@ export default function LoadPage() {
                       );
                     })}
                     <button type="submit" className={styles.saveButton}>
-                     <SaveIcon></SaveIcon>
+                      <SaveIcon></SaveIcon>
                     </button>
                   </form>
                 )}
@@ -455,7 +455,7 @@ export default function LoadPage() {
                       );
                     })}
                     <button type="submit" className={styles.saveButton}>
-                      Sačuvaj <SaveIcon></SaveIcon>
+                      <SaveIcon></SaveIcon>
                     </button>
                   </form>
                 )}
@@ -492,7 +492,7 @@ export default function LoadPage() {
                       className={styles.saveButton}
                       onClick={handleSaveAndSendXml}
                     >
-                      Sačuvaj <SaveIcon></SaveIcon>
+                      <SaveIcon></SaveIcon>
                     </button>
                   </div>
                 )}

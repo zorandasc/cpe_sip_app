@@ -128,7 +128,10 @@ export default function Home() {
     let newErrors = { ...portValidationErrors }; // Copy current errors
 
     // Validation logic:
-    if (!updatedPortConfigs[index].brojTelefona.trim().startsWith("387")) {
+    if (
+      !isBrojTelefonaEmpty &&
+      !updatedPortConfigs[index].brojTelefona.trim().startsWith("387")
+    ) {
       newErrors[index] = "Broj mora početi sa 387.";
       //If one is empty and the other is not
     } else if (

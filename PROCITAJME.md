@@ -99,7 +99,9 @@ docker save -o ~/Desktop/cpe-sip-nextjs-app.tar cpe-sip-nextjs-app:latest
 
 # ZIPUJ GA ZA LAKSI PRENOS
 
-gzip C:/Users/YourUser/Desktop/my-nextjs-app-image.tar
+```bash
+gzip C:/Users/YourUser/Desktop/cpe-sip-nextjs-app.tar
+```
 
 # This will create a compressed file named my-nextjs-app-image.tar.gz
 
@@ -121,7 +123,7 @@ gzip C:/Users/YourUser/Desktop/my-nextjs-app-image.tar
 
 ```bash
 
-scp "my-phone-config-app.tar.gz" user@your_server_ip:/home/user/nextjs-app
+scp "cpe-sip-nextjs-app.tar.gz" user@your_server_ip:/home/user/nextjs-app
 scp "docker-compose.prod.yml" user@your_server_ip:/home/user/nextjs-app
 
 ```
