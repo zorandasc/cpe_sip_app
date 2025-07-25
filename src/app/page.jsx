@@ -147,7 +147,6 @@ export default function Home() {
 
     setPortConfigs(updatedPortConfigs);
     setPortValidationErrors(newErrors);
-    console.log(portValidationErrors);
   };
 
   //POSALJI PODATKE PREMA API RUTI /api/save-xml-config

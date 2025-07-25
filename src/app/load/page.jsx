@@ -340,7 +340,7 @@ export default function LoadPage() {
               aria-selected={activeTab === "basic"}
               role="tab"
             >
-              Basic Field
+              SIP Phones
             </button>
 
             {/* Tab 2 Button */}
@@ -352,7 +352,7 @@ export default function LoadPage() {
               aria-selected={activeTab === "advanced"}
               role="tab"
             >
-              Advanced Field
+              Advanced Settings
             </button>
 
             {/* Tab 3 Button */}
