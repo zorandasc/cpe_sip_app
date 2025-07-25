@@ -144,9 +144,16 @@
 .loadButton:hover {
   letter-spacing: 2px;
   box-shadow: none;
-  color: #1a202c;
   transform: translateY(5px);
   background-color: #2369a2;
+}
+
+.loadButton svg {
+  transition: all 0.5s ease;
+}
+
+.loadButton:hover svg {
+  transform: scale(0.7);
 }
 
 .loadButton:active {
@@ -192,9 +199,16 @@
 .saveButton:hover {
   letter-spacing: 2px;
   box-shadow: none;
-  color: #1a202c;
   transform: translateY(5px);
   background-color: #2369a2;
+}
+
+.saveButton svg {
+  transition: all 0.5s ease;
+}
+
+.saveButton:hover svg {
+  transform: scale(0.7);
 }
 
 .saveButton:active {

@@ -1,33 +1,32 @@
-.pageContainer{
-   display: flex;
+.pageContainer {
+  display: flex;
   flex-direction: column;
   min-height: 100vh;
   background-color: #1a202c; /* Deep dark blue-gray */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #e2e8f0; /* Light text for dark background */
-  
 }
 
-.container{
-    max-width: 400px; 
-    margin: 100px auto; 
-    text-align: center;
-    
+.container {
+  max-width: 400px;
+  margin: 100px auto;
+  text-align: center;
 }
 
-.title { /* Changed from h1 to class .title */
+.title {
+  /* Changed from h1 to class .title */
   color: #63b3ed; /* A brighter, more prominent blue */
   text-align: center;
   margin-top: 2rem;
-  margin-bottom:2rem;
+  margin-bottom: 2rem;
   font-size: 2.5em;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
 }
 
-.error{
-    color: tomato; 
-    margin-top: 1rem;
-    font-size: large;
+.error {
+  color: tomato;
+  margin-top: 1rem;
+  font-size: large;
 }
 
 .form {
@@ -45,7 +44,7 @@
   font-size: 1rem;
   border-radius: 8px;
   border: 1px solid #ccc;
-  box-shadow: 2px 6px 12px rgba(0, 0, 0, .5);
+  box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5);
   outline: none;
   transition: border 0.2s;
 }
@@ -54,8 +53,6 @@
   border-color: #6c9cc6;
   box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.1);
 }
-
-
 
 .loginButton {
   margin-top: 2rem;
@@ -69,25 +66,20 @@
   letter-spacing: 1.5px;
   font-size: 15px;
   transition: all 0.5s ease;
- 
 }
 
 .loginButton:hover {
   letter-spacing: 3px;
   background-color: white;
-  box-shadow: 2px 6px 12px rgba(0, 0, 0, .5);
+  box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5);
   color: #1a202c;
 }
 
 .loginButton:active {
   letter-spacing: 3px;
   background-color: white;
-  box-shadow: 2px 6px 12px rgba(0, 0, 0, .5);
+  box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5);
   color: #1a202c;
   transform: translateY(10px);
   transition: 100ms;
 }
-
-
-
-
