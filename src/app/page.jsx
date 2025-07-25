@@ -123,17 +123,19 @@ export default function Home() {
 
     const isBrojTelefonaEmpty =
       updatedPortConfigs[index].brojTelefona.trim() === "";
+
     const isSifraEmpty = updatedPortConfigs[index].sifra.trim() === "";
 
     let newErrors = { ...portValidationErrors }; // Copy current errors
 
     // Validation logic:
+    //if: AKO BROJ NE POCINJE SA 387-> GRESKA, OSIM AKO BROJ NIJE PRAZAN
+    //else: AKO JE JEDNO POLJE PRAZNO A DRUGO NIJE -> GRESKA
     if (
       !isBrojTelefonaEmpty &&
       !updatedPortConfigs[index].brojTelefona.trim().startsWith("387")
     ) {
       newErrors[index] = "Broj mora početi sa 387.";
-      //If one is empty and the other is not
     } else if (
       (isBrojTelefonaEmpty && !isSifraEmpty) ||
       (!isBrojTelefonaEmpty && isSifraEmpty)
@@ -202,7 +204,7 @@ export default function Home() {
           duration: 4000,
           position: "top-left",
         });
-        console.log("Server response:", data);
+        //console.log("Server response:", data);
 
         //reset form after successful save
         handlePhoneSelect(selectedPhone);
