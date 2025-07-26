@@ -75,7 +75,7 @@
   display: flex;
   width: 100%;
   max-width: 400px;
-  margin: 2rem auto;
+  margin: 1rem auto;
   flex-direction: row;
   align-items: center;
 }

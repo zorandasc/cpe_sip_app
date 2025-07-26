@@ -106,11 +106,63 @@ export default function Load() {
   };
 
   //SAVE AND SAND EDITED XML
-  const handleSaveAndSendXml = () => {};
+  //RETURN EDITED XML TO NETWORK
+  const handleSaveAndSendXml = async (e) => {
+    e.preventDefault();
+
+    //AKO POSTOJI GRESKA U XML STRUKTURI RETURN
+    if (!parseAndValidateXml(rawXmlContent)) return;
+
+    try {
+      setLoading(true);
+      const res = await fetch("/api/xml-edit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/xml",
+        },
+        body: rawXmlContent,
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        toast.error(`${data.message}`);
+        return;
+      }
+
+      toast.success(`${data.message}`, {
+        position: "top-left",
+      });
+      //CLEAR EVERYTHING
+      setRawXmlContent(null);
+      closeModal();
+    } catch (error) {
+      console.log("Something went wrong", error);
+      toast.error(`Something went wrong", ${error}`);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   //CLOSE XML
   const closeModal = () => {
     setSelectedFile(null);
+  };
+
+  //HEPLER FUNCTION
+  //CONVERT STRING TO XML FORMAT
+  //This converts the string into a DOM object to extract fields.
+  //AND TO VALIDATE XML OBJECT
+  const parseAndValidateXml = (xmlString) => {
+    const parser = new DOMParser();
+    const parsed = parser.parseFromString(xmlString, "application/xml");
+    const errorNode = parsed.querySelector("parsererror");
+    if (errorNode) {
+      toast.error(`XML Error: ${errorNode.textContent}`);
+      return null;
+    }
+
+    return parsed;
   };
 
   useEffect(() => {
@@ -197,7 +249,7 @@ export default function Load() {
                 name="xml_editor"
                 editorProps={{ $blockScrolling: true }}
                 width="100%"
-                height="600px"
+                height="650px"
                 fontSize={14}
                 lineHeight={22}
                 showPrintMargin={false}
