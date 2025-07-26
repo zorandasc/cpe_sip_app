@@ -21,7 +21,7 @@ export default function Load() {
 
   const [rawXmlContent, setRawXmlContent] = useState(null);
 
-  const [loading, setLoading] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSearchFile = (value) => {
     setSearchFile(value);
@@ -41,7 +41,7 @@ export default function Load() {
       .replace(/^cfg/i, "");
 
     try {
-      setLoading("Loading data ...");
+      setLoading(true);
 
       const res = await fetch("/api/xml-load", {
         method: "POST",
@@ -94,7 +94,7 @@ export default function Load() {
       console.log("Something went wrong", err);
       toast.error(`Something went wrong", ${err}`);
     } finally {
-      setLoading("");
+      setLoading(false);
     }
   };
 
@@ -113,7 +113,7 @@ export default function Load() {
     // Function to fetch users from the API
     const fetchFiles = async () => {
       try {
-        setLoading("Loading files..."); // Set loading to true before fetching
+        setLoading(true); // Set loading to true before fetching
 
         const res = await fetch("/api/xml-load-all"); // Make the GET request to your API route
 
@@ -134,7 +134,7 @@ export default function Load() {
       } catch (err) {
         console.error("Error fetching allFiles:", err);
       } finally {
-        setLoading("");
+        setLoading(false);
       }
     };
 
@@ -144,7 +144,7 @@ export default function Load() {
   if (loading) {
     return (
       <div className={styles.loadingContainer}>
-        <p className={styles.loadingText}>{loading}</p>
+        <p className={styles.loadingText}>Loading resurces...</p>
       </div>
     );
   }
@@ -215,8 +215,9 @@ export default function Load() {
                   color: "#888",
                 }}
               >
-                Tip: Označite pa pritisnite <kbd>Ctrl</kbd> + <kbd>F</kbd> (ili <kbd>⌘</kbd>{" "}
-                + <kbd>F</kbd> na Mac) da biste brzo pronašli tekst u XML.
+                Hint: Označite tekst ili pritisnite <kbd>Ctrl</kbd> +{" "}
+                <kbd>F</kbd> (ili <kbd>⌘</kbd> + <kbd>F</kbd> na Mac) da biste
+                brzo pronašli tekst u XML.
               </p>
               <button
                 type="button"
