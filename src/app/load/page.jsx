@@ -45,8 +45,6 @@ export default function Load() {
       .replace(/^cfg/i, "");
 
     try {
-      setLoading(true);
-
       const res = await fetch("/api/xml-load", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -97,8 +95,6 @@ export default function Load() {
     } catch (err) {
       console.log("Something went wrong", err);
       toast.error(`Something went wrong", ${err}`);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -117,7 +113,6 @@ export default function Load() {
     if (!parseAndValidateXml(rawXmlContent)) return;
 
     try {
-      setLoading(true);
       const res = await fetch("/api/xml-edit", {
         method: "POST",
         headers: {
@@ -142,8 +137,6 @@ export default function Load() {
     } catch (error) {
       console.log("Something went wrong", error);
       toast.error(`Something went wrong", ${error}`);
-    } finally {
-      setLoading(false);
     }
   };
 

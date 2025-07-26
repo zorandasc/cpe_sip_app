@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import path from "path"; // For path manipulation
 import fs from "fs/promises"; // For file system operations
-import { time } from "console";
 
 //BECKEND API ROUTA ZA DOWNLOAD .XML
 // RETURN RAW XML (string or Blob)
