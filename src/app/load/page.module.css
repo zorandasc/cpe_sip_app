@@ -11,7 +11,7 @@
 
 .contentWrapper {
   max-width: 64rem;
-  margin: 2rem auto;
+  margin: 0 auto;
   background-color: #232e3e; /* darker neutral (tailwind's gray-800) */
   border-radius: 0.75rem;
   box-shadow: rgba(100, 149, 237, 0.25) 0px 8px 24px;
@@ -122,6 +122,13 @@
   background: linear-gradient(145deg, #2d3748, #1a202c);
 }
 
+.time {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.75rem;
+  color: #aaa;
+}
+
 /*--STYLING FOR MODAL*/
 
 .modalOverlay {
@@ -139,7 +146,7 @@
 }
 
 .modal {
-  background-color: #454547;
+  background-color: #3c495f;
   color: #f1f1f1;
   border-radius: 12px;
   width: 90%;
@@ -149,7 +156,7 @@
   flex-direction: column;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(113, 111, 111, 0.5);
-  border: 1px solid silver;
+  border: 1px solid rgb(95, 93, 93);
 }
 
 .modalHeader {

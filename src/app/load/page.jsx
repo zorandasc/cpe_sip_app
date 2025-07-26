@@ -23,10 +23,11 @@ export default function Load() {
 
   const [loading, setLoading] = useState(false);
 
+  //LOCAL SEARCH
   const handleSearchFile = (value) => {
     setSearchFile(value);
     const filtered = allFiles.filter((file) =>
-      file.toLowerCase().includes(value.toLowerCase())
+      file.name.toLowerCase().includes(value.toLowerCase())
     );
     setFilteredFiles(filtered);
   };
@@ -86,7 +87,7 @@ export default function Load() {
       //STORE RAW XML TO STATE
       setRawXmlContent(xmlText);
 
-      toast.success(`${file}, loaded successfully`, {
+      toast.success(`${file}, loaded.`, {
         position: "top-right",
         duration: 3000,
       });
@@ -98,13 +99,16 @@ export default function Load() {
     }
   };
 
+  //OPEN MODAL AND RETRIEVE XML
   const handleOpenModal = async (file) => {
     setSelectedFile(file);
     handleLoadSingleXml(file);
   };
 
+  //SAVE AND SAND EDITED XML
   const handleSaveAndSendXml = () => {};
 
+  //CLOSE XML
   const closeModal = () => {
     setSelectedFile(null);
   };
@@ -163,13 +167,16 @@ export default function Load() {
         ></input>
       </div>
       <div className={styles.contentWrapper}>
-        {filteredFiles.map((file, i) => (
+        {filteredFiles.map((fileObj, i) => (
           <div
             key={i}
             className={styles.file}
-            onClick={() => handleOpenModal(file)}
+            onClick={() => handleOpenModal(fileObj.name)}
           >
-            {file}
+            <div>{fileObj.name}</div>
+            <small className={styles.time}>
+              {new Date(fileObj.time).toLocaleString()}
+            </small>
           </div>
         ))}
       </div>
