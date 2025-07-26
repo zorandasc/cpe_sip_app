@@ -23,6 +23,9 @@ export default function Load() {
 
   const [loading, setLoading] = useState(false);
 
+  //FOR ANIMATION OF CLOSING MODAL
+  const [isClosing, setIsClosing] = useState(false);
+
   //LOCAL SEARCH
   const handleSearchFile = (value) => {
     setSearchFile(value);
@@ -146,7 +149,11 @@ export default function Load() {
 
   //CLOSE XML
   const closeModal = () => {
-    setSelectedFile(null);
+    setIsClosing(true);
+    setTimeout(() => {
+      setSelectedFile(null);
+      setIsClosing(false);
+    }, 300); // match duration of animation
   };
 
   //HEPLER FUNCTION
@@ -233,8 +240,13 @@ export default function Load() {
         ))}
       </div>
       {selectedFile && (
-        <div className={styles.modalOverlay} onClick={closeModal}>
-          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+        <div className={`${styles.modalOverlay}`} onClick={closeModal}>
+          <div
+            className={`${styles.modal} ${
+              isClosing ? styles.zoomOut : styles.zoomIn
+            }`}
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className={styles.modalHeader}>
               <h2 className={styles.modalTitle}>Editing File</h2>
               <p className={styles.filename}>{selectedFile}</p>
