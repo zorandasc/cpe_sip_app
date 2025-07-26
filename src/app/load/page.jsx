@@ -209,6 +209,15 @@ export default function Load() {
             </div>
 
             <div className={styles.modalFooter}>
+              <p
+                style={{
+                  fontSize: "0.9rem",
+                  color: "#888",
+                }}
+              >
+                Tip: Označite pa pritisnite <kbd>Ctrl</kbd> + <kbd>F</kbd> (ili <kbd>⌘</kbd>{" "}
+                + <kbd>F</kbd> na Mac) da biste brzo pronašli tekst u XML.
+              </p>
               <button
                 type="button"
                 className={styles.saveButton}
