@@ -343,7 +343,7 @@ export default function Home() {
                   : undefined
               }
             >
-              Kreiraj fajl <SendIcon></SendIcon>
+              Create <SendIcon></SendIcon>
             </button>
           </form>
         )}

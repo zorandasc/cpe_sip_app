@@ -61,3 +61,7 @@ a {
   color: #43ec4c !important; /* or any custom color */
   font-style: italic;
 }
+
+.ace-merbivore-soft .ace_marker-layer .ace_selected-word {
+  background-color: #2d0f97 !important;
+}

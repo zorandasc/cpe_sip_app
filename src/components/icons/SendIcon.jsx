@@ -5,8 +5,8 @@ const SendIcon = ({ className, ...props }) => (
     fill="#ffffff"
     version="1.1"
     id="Layer_1"
-    width="40px"
-    height="40px"
+    width="30px"
+    height="30px"
     viewBox="0 0 70 70"
     enableBackground="new 0 0 70 70"
     {...props}
