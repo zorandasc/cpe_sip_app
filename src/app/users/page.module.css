@@ -28,9 +28,15 @@
 
 .pageContainer {
   min-height: 100vh;
-  background-color: #1a202c; /* bg-gray-100 */
-  padding: 1rem; /* p-4 */
-  margin-bottom: 3rem;
+  background-color: #141923; /* dark background (tailwind gray-900) */
+  padding: 2rem; /* more breathing room */
+  overflow-x: hidden; /* prevent horizontal scroll */
+  overflow-y: auto; /* enable vertical scroll if content overflows */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
 }
 
 /* Responsive padding */
@@ -49,9 +55,8 @@
 }
 
 .contentWrapper {
-  max-width: 64rem; /* max-w-4xl */
-  margin-left: auto;
-  margin-right: auto;
+  width: 80%; /* max-w-4xl */
+
   background-color: #2d3748; /* bg-white */
   border-radius: 0.5rem; /* rounded-lg */
   box-shadow: #6c9cc6 0px 7px 29px 0px;

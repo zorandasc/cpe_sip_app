@@ -348,7 +348,6 @@ export default function Home() {
           </form>
         )}
       </main>
-      <footer className={styles.footer}></footer>
     </div>
   );
 }

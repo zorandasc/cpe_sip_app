@@ -1,22 +1,26 @@
 .pageContainer {
   min-height: 100vh;
-  background-color: #1a202c; /* bg-gray-100 */
-  padding: 1rem; /* p-4 */
-  margin-bottom: 3rem;
+  background-color: #141923; /* dark background (tailwind gray-900) */
+  padding: 2rem; /* more breathing room */
+  overflow-x: hidden; /* prevent horizontal scroll */
+  overflow-y: auto; /* enable vertical scroll if content overflows */
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* space between children like title and contentWrapper */
 }
 
 .contentWrapper {
-  max-width: 64rem; /* max-w-4xl */
-  margin-left: auto;
-  margin-right: auto;
-  background-color: #2a2e35;
-  border-radius: 0.5rem; /* rounded-lg */
-  box-shadow: #6c9cc6 0px 7px 29px 0px;
-  padding: 1.5rem; /* p-6 */
+  max-width: 64rem;
+  margin: 2rem auto;
+  background-color: #232e3e; /* darker neutral (tailwind's gray-800) */
+  border-radius: 0.75rem;
+  box-shadow: rgba(100, 149, 237, 0.25) 0px 8px 24px;
+  padding: 2rem;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-row-gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
   place-items: center;
+  color: #f0f0f0;
 }
 
 .title {
@@ -96,17 +100,26 @@
 }
 
 .file {
-  transition: all 0.5s ease;
-  transform: scale(0.9);
+  background-color: #3c495f; /* tailwind gray-700 */
+  padding: 1rem 1rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #cbd5e0;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
   cursor: pointer;
-  padding: 10px;
-  text-shadow: 2px 2px 2px #787373;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  word-break: break-word;
 }
 
 .file:hover {
-  transform: scale(1.1);
-  color: #4299e1;
-  text-shadow: 4px 4px 2px #787373;
+  transform: scale(1.05);
+  color: #63b3ed; /* blue-400 */
+  box-shadow: 0 0 0 2px #63b3ed;
+  background-color: #1a202c; /* dark hover */
+  background: linear-gradient(145deg, #2d3748, #1a202c);
 }
 
 /*--STYLING FOR MODAL*/
@@ -136,6 +149,7 @@
   flex-direction: column;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(113, 111, 111, 0.5);
+  border: 1px solid silver;
 }
 
 .modalHeader {
@@ -156,7 +170,7 @@
 .editorContainer {
   flex: 1;
   min-height: 300px; /* <-- Ensures it's visible */
-  overflow:hidden
+  overflow: hidden;
 }
 
 .modalFooter {

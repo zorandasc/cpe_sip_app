@@ -4,8 +4,9 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: #1a202c; /* Deep dark blue-gray */
-
+  background-color: #141923; /* Deep dark blue-gray */
+  overflow-x: hidden; /* prevent horizontal scroll */
+  overflow-y: auto;
   color: #e2e8f0; /* Light text for dark background */
 }
 
@@ -50,7 +51,6 @@
   flex-wrap: wrap; /* Allow items to wrap to the next line */
   justify-content: center; /* Center the list items within the list container */
   gap: 1rem; /* Space between list items */
-
   flex: 1; /* Allow it to grow and shrink */
   max-width: 400px; /* Limit its maximum width */
   align-self: flex-start; /* Align with the form */
@@ -199,11 +199,18 @@
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+.main form input[type="tel"] {
+  border: 1px solid #242b38;
+}
+
 .main form input[type="text"]:focus,
-.main form input[type="password"]:focus,
-.main form input[type="tel"]:focus {
+.main form input[type="password"]:focus {
   border-color: #63b3ed; /* Bright blue for focus */
   box-shadow: 0 0 8px rgba(99, 179, 237, 0.4);
+  outline: none;
+}
+
+.main form input[type="tel"]:focus{
   outline: none;
 }
 
@@ -253,7 +260,7 @@
 
 .submit:disabled {
   background-color: tomato;
-  cursor: none;
+  cursor: not-allowed;
   transform: none;
   letter-spacing: 2px;
   color: whitesmoke;
