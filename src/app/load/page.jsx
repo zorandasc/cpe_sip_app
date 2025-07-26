@@ -115,7 +115,7 @@ export default function Load() {
       try {
         setLoading("Loading files..."); // Set loading to true before fetching
 
-        const res = await fetch("/api/all-xml"); // Make the GET request to your API route
+        const res = await fetch("/api/xml-load-all"); // Make the GET request to your API route
 
         if (!res.ok) {
           // If the response is not OK (e.g., 400, 500 status)

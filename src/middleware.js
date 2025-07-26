@@ -66,6 +66,7 @@ export const config = {
     "/api/xml-new",
     "/api/xml-edit",
     "/api/xml-load",
+    "/api/xml-load-all",
     "/api/users",
     "/api/users/:path*",
   ],
