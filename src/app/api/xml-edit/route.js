@@ -32,7 +32,7 @@ export async function POST(req) {
     // Define the directory where files will be saved
     // IMPORTANT: This path is relative to where your Next.js app is running
     // inside the Docker container. You'll map this via Docker volumes.
-    const saveDirectory = path.join(process.cwd(), "xmlconfigs");
+    const saveDirectory = path.join(process.cwd(), "xmlconfigs/Grandstream");
 
     // Ensure the directory exists
     await fs.mkdir(saveDirectory, { recursive: true });

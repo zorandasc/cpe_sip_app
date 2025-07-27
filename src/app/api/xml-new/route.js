@@ -58,7 +58,7 @@ export async function POST(request) {
     const filePath1 = path.join(saveDirectory, filename1);
 
     //KREIRAJ XML FAJL
-    xmlContent = createXml(selectedPhone, mac, portConfigs);
+    const xmlContent = createXml(selectedPhone, mac, portConfigs);
 
     // Write the XML content to the file
     await fs.writeFile(filePath, xmlContent);

@@ -1,5 +1,5 @@
 import createCiscoXml from "./createCiscoXml";
-import createGrandstreamXml from "./createGrandStreamXml";
+import createGrandstreamXml from "./createGrandstreamXml";
 import createPolycomXml from "./createPolycomXml";
 
 export default function createXml(selectedPhone, mac, portConfigs) {

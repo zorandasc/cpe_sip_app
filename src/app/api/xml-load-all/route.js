@@ -10,7 +10,7 @@ export async function GET() {
 
   try {
     //GET DIRECTORY PATH
-    const directoryPath = path.join(process.cwd(), "xmlconfigs");
+    const directoryPath = path.join(process.cwd(), "xmlconfigs/Grandstream");
 
     //ALL FILES IN xmlconfigs DIRECTORY
     const dirents = await fs.readdir(directoryPath, { withFileTypes: true });

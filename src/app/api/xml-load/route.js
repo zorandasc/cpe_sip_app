@@ -15,7 +15,7 @@ export async function POST(req) {
   }
   /* ---------- 2. Locate the file ---------- */
   //1. search file in folder by name of file
-  const searchDir = path.join(process.cwd(), "xmlconfigs");
+  const searchDir = path.join(process.cwd(), "xmlconfigs/Grandstream");
 
   try {
     //ALL FILES IN xmlconfigs DIRECTORY
