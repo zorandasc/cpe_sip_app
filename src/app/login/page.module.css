@@ -63,16 +63,17 @@
   background-color: #6c9cc6;
   color: hsl(0, 0%, 100%);
   box-shadow: #6c9cc6 0px 7px 29px 0px;
-  letter-spacing: 1.5px;
+  letter-spacing: 2px;
   font-size: 15px;
   transition: all 0.5s ease;
 }
 
 .loginButton:hover {
-  letter-spacing: 3px;
+  letter-spacing: 1px;
   background-color: white;
   box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5);
   color: #1a202c;
+  transform: translateY(10px);
 }
 
 .loginButton:active {
@@ -80,6 +81,4 @@
   background-color: white;
   box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5);
   color: #1a202c;
-  transform: translateY(10px);
-  transition: 100ms;
 }

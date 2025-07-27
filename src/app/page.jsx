@@ -3,39 +3,7 @@ import React, { useState } from "react";
 import styles from "./page.module.css";
 import toast from "react-hot-toast";
 import SendIcon from "@/components/icons/SendIcon";
-
-const phones = [
-  {
-    name: "SIP telefon (model:GXP_1625)",
-    type: "Grandstream",
-    model: "GXP_1625",
-    port: 1,
-  },
-  {
-    name: "4-portni RGW (model:HT814)",
-    type: "Grandstream",
-    model: "HT814",
-    port: 4,
-  },
-  {
-    name: "8-portni RGW (model:HT818)",
-    type: "Grandstream",
-    model: "HT818",
-    port: 8,
-  },
-  {
-    name: "16-portni RGW (model:GXW4216)",
-    type: "Grandstream",
-    model: "GXW4216",
-    port: 16,
-  },
-  {
-    name: "24-portni RGW (model:GXW4224)",
-    type: "Grandstream",
-    model: "GXW4224",
-    port: 24,
-  },
-];
+import { phones } from "@/utils/phoneOptions";
 
 //FRONTEND HOME STRANICA
 export default function Home() {

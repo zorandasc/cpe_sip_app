@@ -22,10 +22,9 @@
 }
 
 .subtitle {
-  /* Changed from h2 to class .subtitle */
   color: #a0aec0;
   text-align: center;
-  margin-bottom: 2rem;
+
   font-size: 1.2em;
 }
 

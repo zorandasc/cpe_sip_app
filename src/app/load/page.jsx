@@ -189,7 +189,7 @@ export default function Load() {
         }
       } catch (err) {
         console.error("Error fetching allFiles:", err);
-        toast.error(`${}`, {
+        toast.error(`${err}`, {
           position: "top-left",
         });
       } finally {
