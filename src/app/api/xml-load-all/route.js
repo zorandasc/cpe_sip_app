@@ -2,8 +2,7 @@ import { NextResponse } from "next/server";
 import path from "path"; // For path manipulation
 import fs from "fs/promises"; // For file system operations
 
-//BECKEND API ROUTA ZA DOWNLOAD .XML
-// RETURN RAW XML (string or Blob)
+//BECKEND API ROUTA ZA DOWNLOAD ALL .XML
 export async function GET() {
   /* ---------- 2. Locate the file ---------- */
   //1. search file in folder by name of file

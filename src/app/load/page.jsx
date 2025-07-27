@@ -15,6 +15,8 @@ export default function Load() {
   const [allFiles, setAllFiles] = useState([]);
   const [filteredFiles, setFilteredFiles] = useState([]);
 
+  const [folders, setFolder] = useState([]);
+
   const [searchFile, setSearchFile] = useState("");
 
   const [selectedFile, setSelectedFile] = useState(null);

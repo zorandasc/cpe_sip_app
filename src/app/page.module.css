@@ -59,7 +59,7 @@
 .item {
   background-color: #2d3748; /* Dark background */
   color: #e2e8f0; /* Light text */
-  padding: 0.8rem 1.2rem;
+  padding: 0.5rem;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease, border 0.3s ease;

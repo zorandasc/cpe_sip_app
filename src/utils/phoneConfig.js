@@ -1,5 +1,6 @@
 export const phoneConfig = [
   {
+    type: "Grandstream",
     model: "GXP_1625",
     path: "xmlconfigs/Grandstream",
     encrypt: true,
@@ -7,6 +8,7 @@ export const phoneConfig = [
     extension: ".xml",
   },
   {
+    type: "Grandstream",
     model: "HT814",
     path: "xmlconfigs/Grandstream",
     encrypt: true,
@@ -14,6 +16,7 @@ export const phoneConfig = [
     extension: ".xml",
   },
   {
+    type: "Grandstream",
     model: "HT818",
     path: "xmlconfigs/Grandstream",
     encrypt: true,
@@ -21,6 +24,7 @@ export const phoneConfig = [
     extension: ".xml",
   },
   {
+    type: "Grandstream",
     model: "GXW4216",
     path: "xmlconfigs/Grandstream",
     encrypt: true,
@@ -28,6 +32,7 @@ export const phoneConfig = [
     extension: ".xml",
   },
   {
+    type: "Grandstream",
     model: "GXW4224",
     path: "xmlconfigs/Grandstream",
     encrypt: true,
@@ -35,6 +40,7 @@ export const phoneConfig = [
     extension: ".xml",
   },
   {
+    type: "Polycom",
     model: "IP331",
     path: "xmlconfigs",
     encrypt: false,
@@ -42,6 +48,7 @@ export const phoneConfig = [
     extension: ".cfg",
   },
   {
+    type: "Polycom",
     model: "IP650",
     path: "xmlconfigs",
     encrypt: false,
@@ -49,6 +56,7 @@ export const phoneConfig = [
     extension: ".cfg",
   },
   {
+    type: "Cisco",
     model: "502G",
     path: "xmlconfigs/Cisco502G",
     encrypt: false,
@@ -56,6 +64,7 @@ export const phoneConfig = [
     extension: ".xml",
   },
   {
+    type: "Cisco",
     model: "512G",
     path: "xmlconfigs/Cisco512G",
     encrypt: false,
