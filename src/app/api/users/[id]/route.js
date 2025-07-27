@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { openDb } from "@/lib/db.js"; // Ensure correct path including .js extension
+import { openDb } from "@/utils/db.js"; // Ensure correct path including .js extension
 import jwt from "jsonwebtoken";
 
 const JWT_SECRET = process.env.JWT_SECRET;

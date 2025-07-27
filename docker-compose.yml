@@ -47,7 +47,7 @@ services:
       #./host:/guest.  This is the path on your host server 
       #(relative to where you run docker compose up). 
       #Docker will create this folder if it doesn't exist.
-      - ../var/www/html/Grandstream/:/app/xmlconfigs
+      - ../var/www/html/:/app/xmlconfigs
       - ../var/SQLitedatabase/:/app/data
     restart: always # Keep the container running
     env_file:

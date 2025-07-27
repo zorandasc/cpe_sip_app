@@ -1,4 +1,4 @@
-import { openDb } from "@/lib/db";
+import { openDb } from "@/utils/db";
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";

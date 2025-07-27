@@ -1,20 +1,25 @@
-export default function xmlGrandStream(selectedPhone, mac, portConfigs) {
-  let xmlContent = "";
+export default function createGrandstreamXml(selectedPhone, mac, portConfigs) {
   if (selectedPhone.port === 1) {
     //SINGLE PORT GRANDSTREAM
     let config = portConfigs[0];
 
     let sifra = config.sifra ? config.sifra : " ";
+
+    //+38751490227
     let sipUsername = config.brojTelefona ? `+${config.brojTelefona}` : " ";
+
+    //+38751490227@mtel.ba
     let sipAuthenicateId = config.brojTelefona
       ? `+${config.brojTelefona}@mtel.ba`
       : " ";
+
+    //051490227
     let sipDisplay = config.brojTelefona
       ? `0${config.brojTelefona.substring(3)}`
       : " ";
 
     //KREIRAJ XML FAJL
-    xmlContent = `<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n`;
+    const xmlContent = `<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n`;
     xmlContent += `<!-- Grandstream XML Provisioning Configuration -->\n`;
     xmlContent += `<gs_provision version=\"1\">\n`;
     xmlContent += `<mac>${mac}</mac>\n`;
@@ -34,13 +39,56 @@ export default function xmlGrandStream(selectedPhone, mac, portConfigs) {
     xmlContent += `       <P35>${sipUsername}</P35>\n`;
 
     xmlContent += `       <!-- #SIP authenticate ID npr. +38751490227@mtel.ba # -->\n`;
-    xmlContent += `       <P35>${sipAuthenicateId}</P35>\n`;
+    xmlContent += `       <P36>${sipAuthenicateId}</P36>\n`;
 
     xmlContent += `       <!-- #String koji ce biti prikazan na displeju telefona # -->\n`;
     xmlContent += `       <!-- #ovaj string moze biti duzine max 9 znakova, npr 051490227# -->\n`;
     xmlContent += `       <P270>${sipDisplay}</P270>\n`;
 
-    xmlContent += `<!-- ###############cfg_kon.txt################ -->
+    return `${xmlContent}${SINGLE_PORT_BASE_TEMPLATE}`;
+  } else {
+    //MULTI PORT GRANDSTREAM, RGW
+    const xmlContent = `<gs_provision version=\"1\">\n`;
+    xmlContent += ` <mac>${mac}</mac>\n`;
+    xmlContent += ` <config version=\"1\">\n`;
+
+    let userIdTag = 4060;
+    let authIdTag = userIdTag + 30;
+    let passTag = userIdTag + 60;
+    let nameTag = userIdTag + 120;
+
+    //LOOP OWER PHONE PORTS
+    portConfigs.forEach((config, index) => {
+      let sifra = config.sifra ? config.sifra : " ";
+      let sipUserId = config.brojTelefona ? `+${config.brojTelefona}` : " ";
+      let sipAuthenicateId = config.brojTelefona
+        ? `+${config.brojTelefona}@mtel.ba`
+        : " ";
+      let sipDisplay = config.brojTelefona
+        ? `0${config.brojTelefona.substring(3)}`
+        : " ";
+
+      xmlContent += `<!--  ################ FXS ${index} ######################  -->\n`;
+      xmlContent += `<!--  #SIP USER ID; npr. +38751490227  -->\n`;
+      xmlContent += `<P${userIdTag}>${sipUserId}</P${userIdTag}>\n`;
+      xmlContent += `<!--  #Authenticate ID; npr. +38751490227@mtel.ba  -->\n`;
+      xmlContent += `<P${authIdTag}>${sipAuthenicateId}</P${authIdTag}>\n`;
+      xmlContent += `<!--  #Password; npr. abc.123*  -->\n`;
+      xmlContent += `<P${passTag}>${sifra}</P${passTag}>\n`;
+      xmlContent += `<!--  #Name; npr. 051490227  -->\n`;
+      xmlContent += `<P${nameTag}>${sipDisplay}</P${nameTag}>\n`;
+
+      userIdTag = userIdTag + 1;
+      authIdTag = authIdTag + 1;
+      passTag = passTag + 1;
+      nameTag = nameTag + 1;
+    });
+
+    return `${xmlContent}${MULTI_PORT_BASE_TEMPLATE}`;
+  }
+}
+
+const SINGLE_PORT_BASE_TEMPLATE = `<!-- ###############cfg_kon.txt################ -->
               <!-- ##drugi sip nalog## -->
               <!-- #nalog aktivan - Da: 1, Ne: 0# -->
               <P401>0</P401>
@@ -109,44 +157,8 @@ export default function xmlGrandStream(selectedPhone, mac, portConfigs) {
               <P84>60</P84>
             </config>
           </gs_provision>`;
-  } else {
-    //MULTI PORT GRANDSTREAM, RGW
-    xmlContent += `<gs_provision version=\"1\">\n`;
-    xmlContent += ` <mac>${mac}</mac>\n`;
-    xmlContent += ` <config version=\"1\">\n`;
 
-    let userIdTag = 4060;
-    let authIdTag = userIdTag + 30;
-    let passTag = userIdTag + 60;
-    let nameTag = userIdTag + 120;
-
-    //LOOP OWER PHONE PORTS
-    portConfigs.forEach((config, index) => {
-      let sifra = config.sifra ? config.sifra : " ";
-      let sipUserId = config.brojTelefona ? `+${config.brojTelefona}` : " ";
-      let sipAuthenicateId = config.brojTelefona
-        ? `+${config.brojTelefona}@mtel.ba`
-        : " ";
-      let sipDisplay = config.brojTelefona
-        ? `0${config.brojTelefona.substring(3)}`
-        : " ";
-
-      xmlContent += `<!--  ################ FXS ${index} ######################  -->\n`;
-      xmlContent += `<!--  #SIP USER ID; npr. +38751490227  -->\n`;
-      xmlContent += `<P${userIdTag}>${sipUserId}</P${userIdTag}>\n`;
-      xmlContent += `<!--  #Authenticate ID; npr. +38751490227@mtel.ba  -->\n`;
-      xmlContent += `<P${authIdTag}>${sipAuthenicateId}</P${authIdTag}>\n`;
-      xmlContent += `<!--  #Password; npr. abc.123*  -->\n`;
-      xmlContent += `<P${passTag}>${sifra}</P${passTag}>\n`;
-      xmlContent += `<!--  #Name; npr. 051490227  -->\n`;
-      xmlContent += `<P${nameTag}>${sipDisplay}</P${nameTag}>\n`;
-
-      userIdTag = userIdTag + 1;
-      authIdTag = authIdTag + 1;
-      passTag = passTag + 1;
-      nameTag = nameTag + 1;
-    });
-    xmlContent += `<!--  # #### KRAJ PODESAVANJA #######  -->
+const MULTI_PORT_BASE_TEMPLATE = `<!--  # #### KRAJ PODESAVANJA #######  -->
         <!--  #### syslog enable #############  -->
         <!--  #### otkomentarisati po potrebi ###  -->
         <!--  #P207=10.252.64.109  -->
@@ -278,7 +290,3 @@ export default function xmlGrandStream(selectedPhone, mac, portConfigs) {
         <P189>1</P189>
       </config>
     </gs_provision>`;
-  }
-
-  return xmlContent;
-}
