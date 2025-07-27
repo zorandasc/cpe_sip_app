@@ -53,6 +53,7 @@
   flex: 1; /* Allow it to grow and shrink */
   max-width: 400px; /* Limit its maximum width */
   align-self: flex-start; /* Align with the form */
+  margin-bottom: 6rem;
 }
 
 .item {
