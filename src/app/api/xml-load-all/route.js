@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import path from "path"; // For path manipulation
 import fs from "fs/promises"; // For file system operations
+import { phoneConfig } from "@/utils/phoneConfig";
 
 //BECKEND API ROUTA ZA DOWNLOAD ALL .XML
 //AND ALL SUBFOLDERS IN xmlconfigs PARRENT FOLDER
@@ -15,17 +16,24 @@ export async function GET() {
     //ALL FILES AND FOLDERS IN xmlconfigs DIRECTORY
     const dirents = await fs.readdir(directoryPath, { withFileTypes: true });
 
-    const folders = [];
+    const folders = Array.from(
+      // new Set(phoneConfig.map((item) => item.path.split("/").pop()))
+      new Set(phoneConfig.map((item) => item.path))
+    );
+    //["xmlconfigs/Grandstream", "xmlconfigs/", "xmlconfigs/Cisco502G", "xmlconfigs/Cisco512G"]
+
+    console.log(folders);
 
     const seen = new Set();
     const uniqueXmlFiles = [];
 
     for (const dirent of dirents) {
-      if (dirent.isDirectory()) {
-        folders.push(dirent); //PUSHUJ FOLDERE
-      } else if (dirent.isFile()) {
+      if (
+        dirent.isFile() &&
+        (dirent.name.endsWith(".cfg") || dirent.name.endsWith(".xml"))
+      ) {
         const name = dirent.name;
-        const base = name.toLowerCase(); 
+        const base = name.toLowerCase();
         //ONLY SEND UNIQ LOWERCASE TO FRONTEND
         if (!seen.has(base)) {
           seen.add(base);

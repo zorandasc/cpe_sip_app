@@ -42,7 +42,7 @@ export const phoneConfig = [
   {
     type: "Polycom",
     model: "IP331",
-    path: "xmlconfigs",
+    path: "xmlconfigs/",
     encrypt: false,
     prefix: "phone1",
     extension: ".cfg",
@@ -50,7 +50,7 @@ export const phoneConfig = [
   {
     type: "Polycom",
     model: "IP650",
-    path: "xmlconfigs",
+    path: "xmlconfigs/",
     encrypt: false,
     prefix: "phone1",
     extension: ".cfg",

@@ -150,7 +150,7 @@ export default function Load() {
     }, 300); // match duration of animation
   };
 
-  const loadFolderFiles = async (folderName) => {
+  const loadFilesFromFolder = async (folderName) => {
     try {
       const res = await fetch(`/api/xml-load-subfolder?name=${folderName}`);
       const data = await res.json();
@@ -242,25 +242,20 @@ export default function Load() {
         ></input>
       </div>
       <ul className={styles.folderList}>
-        <li
-          onClick={() => loadFolderFiles("/")}
-          className={`${styles.folderItem} ${
-            selectedFolder === "/" ? styles.activeFolder : ""
-          }`}
-        >
-          Polycom
-        </li>
-        {folders.map((folder, i) => (
-          <li
-            key={i}
-            onClick={() => loadFolderFiles(folder.name)}
-            className={`${styles.folderItem} ${
-              selectedFolder === folder.name ? styles.activeFolder : ""
-            }`}
-          >
-            {folder.name}
-          </li>
-        ))}
+        {folders.map((folder, i) => {
+          let folderName = folder.split("/").pop();
+          return (
+            <li
+              key={i}
+              onClick={() => loadFilesFromFolder(folder)}
+              className={`${styles.folderItem} ${
+                selectedFolder === folder ? styles.activeFolder : ""
+              }`}
+            >
+              {folderName ? folderName : "Polycom"}
+            </li>
+          );
+        })}
       </ul>
       <div className={styles.contentWrapper}>
         {filteredFiles.map((fileObj, i) => (

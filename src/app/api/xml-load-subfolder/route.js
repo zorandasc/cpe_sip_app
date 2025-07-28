@@ -16,7 +16,7 @@ export async function GET(req) {
   }
 
   try {
-    const folderPath = path.join(process.cwd(), "xmlconfigs", folder);
+    const folderPath = path.join(process.cwd(), folder);
 
     const dirents = await fs.readdir(folderPath, { withFileTypes: true });
 
@@ -24,7 +24,10 @@ export async function GET(req) {
     const seen = new Set();
 
     for (const dirent of dirents) {
-      if (dirent.isFile()) {
+      if (
+        dirent.isFile() &&
+        (dirent.name.endsWith(".cfg") || dirent.name.endsWith(".xml"))
+      ) {
         const name = dirent.name;
         const base = name.toLowerCase();
         if (!seen.has(base)) {
