@@ -9,7 +9,7 @@ import createXml from "@/utils/createXml";
 
 const PASSWORD = process.env.OPEN_SSL_PASS; // 🔐 Hardcoded password
 
-//BECKEND API ROUTA ZA CUVANJE .XML KONFIG FAJLOVA
+//BECKEND API ROUTA ZA CUVANJE NOVOG VOIP KONFIG FAJLA
 export async function POST(request) {
   try {
     const { selectedPhone, mac, portConfigs } = await request.json();
@@ -64,8 +64,8 @@ export async function POST(request) {
     await fs.writeFile(filePath, xmlContent);
     await fs.writeFile(filePath1, xmlContent);
 
-    console.log(`Successfully saved XML to: ${filePath}`);
-    console.log(`Successfully saved XML to: ${filePath1}`);
+    //console.log(`Successfully saved XML to: ${filePath}`);
+    //console.log(`Successfully saved XML to: ${filePath1}`);
 
     //PETLJA ZA ENKRIPCIJU
     if (config.encrypt) {
@@ -108,6 +108,7 @@ export async function POST(request) {
         );
       }
     } //END ENCRYPT IF
+    return NextResponse.json({ message: "✅ File saved" });
   } catch (error) {
     console.error("Error saving configuration:", error);
     return NextResponse.json({ message: `${error.message}` }, { status: 500 });

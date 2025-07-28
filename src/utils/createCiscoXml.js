@@ -16,13 +16,13 @@ export default function createCiscoXml(portConfigs) {
   <Mini_Certificate_1_ ua="na"></Mini_Certificate_1_>
   <SRTP_Private_Key_1_ ua="na"></SRTP_Private_Key_1_>
   <Resident_Online_Number_1_ ua="na"></Resident_Online_Number_1_>
-  <SIP_URI_1_ ua="na"></SIP_URI_1_>`;
+  <SIP_URI_1_ ua="na"></SIP_URI_1_>\n`;
 
   return `${TOP_PART}${xmlContent}${BOTTOM_PART}`;
 }
 
-const TOP_PART = `	<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<flat-profile xmlns="http://www.sipura.net/xsd/SPA51x-SIP" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sipura.net/xsd/SPA51x-SIP http://www.sipura.net/xsd/SPA51x-SIP/SPA51x-SIP-7-6-1.xsd">
+const TOP_PART = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+  <flat-profile xmlns="http://www.sipura.net/xsd/SPA51x-SIP" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sipura.net/xsd/SPA51x-SIP http://www.sipura.net/xsd/SPA51x-SIP/SPA51x-SIP-7-6-1.xsd">
 
 
   <!-- System Configuration -->
@@ -382,7 +382,7 @@ http://10.252.64.109/Cisco502G/spa502g_$MAU.xml
   <Proxy_Fallback_Intvl_1_ ua="na">3600</Proxy_Fallback_Intvl_1_>
   <Proxy_Redundancy_Method_1_ ua="na">Normal</Proxy_Redundancy_Method_1_> <!-- options: Normal/Based on SRV Port -->
   <Dual_Registration_1_ ua="na">No</Dual_Registration_1_>
-  <Auto_Register_When_Failover_1_ ua="na">No</Auto_Register_When_Failover_1_>`;
+  <Auto_Register_When_Failover_1_ ua="na">No</Auto_Register_When_Failover_1_>\n`;
 
 const BOTTOM_PART = `<!-- Audio Configuration -->
   <Preferred_Codec_1_ ua="na">G711a</Preferred_Codec_1_> <!-- options: G711u/G711a/G726-16/G726-24/G726-32/G726-40/G729a/G722 -->

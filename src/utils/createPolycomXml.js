@@ -7,15 +7,15 @@ export default function createPolycomXml(portConfigs) {
   let sipDisplay = `${config.brojTelefona.substring(5)}`;
 
   let xmlContent = `<reg 
-    reg.1.displayName=${sipDisplay}
-    reg.1.address=${sipAuthenicateId}
-    reg.1.label=${sipLabel} 
+    reg.1.displayName='${sipDisplay}'
+    reg.1.address='${sipAuthenicateId}'
+    reg.1.label='${sipLabel}'
     reg.1.type="private" 
     reg.1.lcs="0" 
     reg.1.csta="" 
     reg.1.thirdPartyName="" 
-    reg.1.auth.userId=${sipAuthenicateId} 
-    reg.1.auth.password=${sifra}
+    reg.1.auth.userId='${sipAuthenicateId}' 
+    reg.1.auth.password='${sifra}'
     reg.1.auth.optimizedInFailover="" 
     reg.1.musicOnHold.uri="" 
     reg.1.server.1.address="mtel.ba" 

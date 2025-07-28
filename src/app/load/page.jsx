@@ -15,7 +15,8 @@ export default function Load() {
   const [allFiles, setAllFiles] = useState([]);
   const [filteredFiles, setFilteredFiles] = useState([]);
 
-  const [folders, setFolder] = useState([]);
+  const [folders, setFolders] = useState([]);
+  const [selectedFolder, setSelectedFolder] = useState("");
 
   const [searchFile, setSearchFile] = useState("");
 
@@ -38,19 +39,12 @@ export default function Load() {
   };
 
   //FETCH XML FROM NETWORK
-  const handleLoadSingleXml = async (file) => {
-    //STRIP .xml EXTENSION AT THE AND ALSO
-    //STRIP cfg AT THE BEGINIBIG
-    const targetBase = file
-      .toLowerCase()
-      .replace(/\.xml$/i, "")
-      .replace(/^cfg/i, "");
-
+  const handleLoadSingleXml = async (fileName) => {
     try {
       const res = await fetch("/api/xml-load", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ searchXmlByMac: targetBase }),
+        body: JSON.stringify({ fileName, selectedFolder }),
       });
 
       //RESPONSE MOZE BITI TEXT ILI BLOB
@@ -90,7 +84,7 @@ export default function Load() {
       //STORE RAW XML TO STATE
       setRawXmlContent(xmlText);
 
-      toast.success(`${file}, loaded.`, {
+      toast.success(`${fileName}, loaded.`, {
         position: "top-right",
         duration: 3000,
       });
@@ -101,9 +95,10 @@ export default function Load() {
   };
 
   //OPEN MODAL AND RETRIEVE XML
-  const handleOpenModal = async (file) => {
-    setSelectedFile(file);
-    handleLoadSingleXml(file);
+  const handleOpenModal = async (fileName) => {
+    console.log("fileName", fileName);
+    setSelectedFile(fileName);
+    handleLoadSingleXml(fileName);
   };
 
   //SAVE AND SAND EDITED XML
@@ -118,9 +113,13 @@ export default function Load() {
       const res = await fetch("/api/xml-edit", {
         method: "POST",
         headers: {
-          "Content-Type": "application/xml",
+          "Content-Type": "application/json",
         },
-        body: rawXmlContent,
+        body: JSON.stringify({
+          fileName: selectedFile,
+          folderName: selectedFolder,
+          xml: rawXmlContent,
+        }),
       });
 
       const data = await res.json();
@@ -151,6 +150,23 @@ export default function Load() {
     }, 300); // match duration of animation
   };
 
+  const loadFolderFiles = async (folderName) => {
+    try {
+      const res = await fetch(`/api/xml-load-subfolder?name=${folderName}`);
+      const data = await res.json();
+
+      //SAVE SELECTED SUBFOLDER
+      setSelectedFolder(folderName);
+
+      //SET NEW FILES FROM SUBFILDER
+      setAllFiles(data);
+      setFilteredFiles(data);
+    } catch (error) {
+      console.log("Could not retrieve file in folder:", error);
+      toast.error(`Could not retrieve file in folder:", ${error}`);
+    }
+  };
+
   //HEPLER FUNCTION
   //CONVERT STRING TO XML FORMAT
   //This converts the string into a DOM object to extract fields.
@@ -168,7 +184,7 @@ export default function Load() {
   };
 
   useEffect(() => {
-    // Function to fetch users from the API
+    // Function to fetch xml and folders
     const fetchFiles = async () => {
       try {
         setLoading(true); // Set loading to true before fetching
@@ -186,8 +202,11 @@ export default function Load() {
           window.location.href = "/login";
         } else {
           const data = await res.json();
-          setAllFiles(data);
-          setFilteredFiles(data);
+          setAllFiles(data.uniqueXmlFiles);
+          setFilteredFiles(data.uniqueXmlFiles);
+          console.log(data.folders);
+
+          setFolders(data.folders);
         }
       } catch (err) {
         console.error("Error fetching allFiles:", err);
@@ -223,6 +242,20 @@ export default function Load() {
           maxLength={25}
         ></input>
       </div>
+      <ul className={styles.folderList}>
+        <li onClick={() => loadFolderFiles("/")} className={styles.folderItem}>
+          Polycom
+        </li>
+        {folders.map((folder, i) => (
+          <li
+            key={i}
+            onClick={() => loadFolderFiles(folder.name)}
+            className={styles.folderItem}
+          >
+            {folder.name}
+          </li>
+        ))}
+      </ul>
       <div className={styles.contentWrapper}>
         {filteredFiles.map((fileObj, i) => (
           <div

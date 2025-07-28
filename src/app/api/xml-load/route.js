@@ -2,48 +2,35 @@ import { NextResponse } from "next/server";
 import path from "path"; // For path manipulation
 import fs from "fs/promises"; // For file system operations
 
-//BECKEND API ROUTA ZA DOWNLOAD .XML
-// RETURN RAW XML (string or Blob)
+//BECKEND API ROUTA ZA DOWNLOAD JEDNOG .XML FAILA BY FILENAME
+//RETURN RAW XML (string or Blob)
 export async function POST(req) {
-  const { searchXmlByMac } = await req.json();
+  const { fileName, selectedFolder } = await req.json();
 
-  if (!searchXmlByMac) {
+  if (!fileName) {
     return NextResponse.json(
-      { message: "Ime .xml fajla je obavezno." },
+      { message: "Ime fajla je obavezno." },
       { status: 400 }
     );
   }
   /* ---------- 2. Locate the file ---------- */
   //1. search file in folder by name of file
-  const searchDir = path.join(process.cwd(), "xmlconfigs/Grandstream");
+  const searchDir = path.join(process.cwd(), "xmlconfigs", selectedFolder);
 
   try {
-    //ALL FILES IN xmlconfigs DIRECTORY
+    //ALL FILES IN  DIRECTORY
     const files = await fs.readdir(searchDir);
-
-    //STRIP .xml EXTENSION AT THE AND ALSO
-    //STRIP cfg AT THE BEGINIBIG IF EXSIST IN GIVEN SEARCHTERM
-    const targetBase = searchXmlByMac
-      .toLowerCase()
-      .replace(/\.xml$/i, "")
-      .replace(/^cfg/i, "");
 
     //We are using .find(), which:
     //✅ Returns the first match only
     //❌ Does not detect or warn about duplicates
     const match = files.find((f) => {
-      //AKO FILE NE ZAVRSAVA SA .xml EKSTENZIJOM PRESKOCI
-      if (!f.toLowerCase().endsWith(".xml")) return false;
-
-      //TAKE LAST PART OF FULL PATH AND STRIP .xml
-      return path.basename(f, ".xml").toLowerCase() === "cfg" + targetBase;
-      //This requires an exact match (case-insensitive) of the
-      //full filename without the .xml extension.
+      return f.toLowerCase() === fileName.toLowerCase();
     });
 
     if (!match) {
       return NextResponse.json(
-        { message: `XML file: cfg${searchXmlByMac}.xml, nije pronađen.` },
+        { message: `File ${fileName}, nije pronađen.` },
         { status: 404 }
       );
     }
