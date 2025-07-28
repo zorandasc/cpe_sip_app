@@ -4,23 +4,26 @@ import { useState, useEffect } from "react";
 import styles from "./page.module.css";
 import SaveIcon from "@/components/icons/SaveIcon";
 
+//["xmlconfigs/Grandstream", "xmlconfigs/", "xmlconfigs/Cisco502G", "xmlconfigs/Cisco512G"]
+import { phoneFolders } from "@/utils/phoneConfig";
+
 import toast from "react-hot-toast";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-xml";
 import "ace-builds/src-noconflict/theme-merbivore_soft";
 import "ace-builds/src-noconflict/ext-searchbox";
 
-//FRONTEND STRANICA SVIH KORISNIKA
+//FRONTEND STRANICA SVIH VOIP KONFIG FAJLOVA
 export default function Load() {
   const [allFiles, setAllFiles] = useState([]);
   const [filteredFiles, setFilteredFiles] = useState([]);
 
-  const [folders, setFolders] = useState([]);
-  const [selectedFolder, setSelectedFolder] = useState("/");
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  //PRVI SELECTOVANI FOLDER JE "xmlconfigs/Grandstream"
+  const [selectedFolder, setSelectedFolder] = useState(phoneFolders[0]);
 
   const [searchFile, setSearchFile] = useState("");
-
-  const [selectedFile, setSelectedFile] = useState(null);
 
   const [rawXmlContent, setRawXmlContent] = useState(null);
 
@@ -41,7 +44,7 @@ export default function Load() {
   //FETCH XML FROM NETWORK
   const handleLoadSingleXml = async (fileName) => {
     try {
-      const res = await fetch("/api/xml-load", {
+      const res = await fetch("/api/xml-load-one", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ fileName, selectedFolder }),
@@ -152,11 +155,16 @@ export default function Load() {
 
   const loadFilesFromFolder = async (folderName) => {
     try {
-      const res = await fetch(`/api/xml-load-subfolder?name=${folderName}`);
+      const res = await fetch(`/api/xml-load-all?folderName=${folderName}`);
+
       const data = await res.json();
 
-      //SAVE SELECTED SUBFOLDER
+      //SAVE SELECTED SUBFOLDER THIS WE USING FOR SAVING XML TO NETWORK
       setSelectedFolder(folderName);
+
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to fetch filess");
+      }
 
       //SET NEW FILES FROM SUBFILDER
       setAllFiles(data);
@@ -164,6 +172,9 @@ export default function Load() {
     } catch (error) {
       console.log("Could not retrieve file in folder:", error);
       toast.error(`Could not retrieve file in folder:", ${error}`);
+
+      setAllFiles([]);
+      setFilteredFiles([]);
     }
   };
 
@@ -189,7 +200,9 @@ export default function Load() {
       try {
         setLoading(true); // Set loading to true before fetching
 
-        const res = await fetch("/api/xml-load-all"); // Make the GET request to your API route
+        const res = await fetch(
+          `/api/xml-load-all?folderName=${selectedFolder}`
+        ); // Make the GET request to your API route
 
         if (!res.ok) {
           // If the response is not OK (e.g., 400, 500 status)
@@ -202,16 +215,12 @@ export default function Load() {
           window.location.href = "/login";
         } else {
           const data = await res.json();
-          setAllFiles(data.uniqueXmlFiles);
-          setFilteredFiles(data.uniqueXmlFiles);
-
-          setFolders(data.folders);
+          setAllFiles(data);
+          setFilteredFiles(data);
         }
       } catch (err) {
         console.error("Error fetching allFiles:", err);
-        toast.error(`${err}`, {
-          position: "top-left",
-        });
+        toast.error(`${err}`, { position: "top-left" });
       } finally {
         setLoading(false);
       }
@@ -242,7 +251,8 @@ export default function Load() {
         ></input>
       </div>
       <ul className={styles.folderList}>
-        {folders.map((folder, i) => {
+        {phoneFolders.map((folder, i) => {
+          //SKINI xmlconfigs/ IZ FOLDER NAME
           let folderName = folder.split("/").pop();
           return (
             <li
@@ -252,24 +262,26 @@ export default function Load() {
                 selectedFolder === folder ? styles.activeFolder : ""
               }`}
             >
+              {/*AKO JE EMPTY STRING ONDA JE PARRENT FOLDER A TO JE POLYCOM */}
               {folderName ? folderName : "Polycom"}
             </li>
           );
         })}
       </ul>
       <div className={styles.contentWrapper}>
-        {filteredFiles.map((fileObj, i) => (
-          <div
-            key={i}
-            className={styles.file}
-            onClick={() => handleOpenModal(fileObj.name)}
-          >
-            <div>{fileObj.name}</div>
-            <small className={styles.time}>
-              {new Date(fileObj.time).toLocaleString()}
-            </small>
-          </div>
-        ))}
+        {Array.isArray(filteredFiles) &&
+          filteredFiles.map((fileObj, i) => (
+            <div
+              key={i}
+              className={styles.file}
+              onClick={() => handleOpenModal(fileObj.name)}
+            >
+              <div>{fileObj.name}</div>
+              <small className={styles.time}>
+                {new Date(fileObj.time).toLocaleString()}
+              </small>
+            </div>
+          ))}
       </div>
       {selectedFile && (
         <div className={`${styles.modalOverlay}`} onClick={closeModal}>

@@ -40,15 +40,17 @@ export async function POST(request) {
     // inside the Docker container. You'll map this via Docker volumes.
     const saveDirectory = path.join(process.cwd(), config.path);
 
-    // Ensure the directory exists
+    // Ensure the directory exists, CREATE DIRECTORY
     await fs.mkdir(saveDirectory, { recursive: true });
 
     // Define the filename (e.g., using MAC address)
     // Sanitize MAC for filename
+    //npr. cfgaabbccddeeffgg.xml
     const filename = `${config.prefix}${mac.replace(/[^a-zA-Z0-9]/g, "_")}${
       config.extension
     }`;
 
+    //npr. cfgAABBCCDDEEFFGG.xml
     const mac1 = mac.toUpperCase();
     const filename1 = `${config.prefix}${mac1.replace(/[^a-zA-Z0-9]/g, "_")}${
       config.extension

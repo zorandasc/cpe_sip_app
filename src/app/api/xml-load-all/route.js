@@ -1,28 +1,26 @@
 import { NextResponse } from "next/server";
 import path from "path"; // For path manipulation
 import fs from "fs/promises"; // For file system operations
-import { phoneConfig } from "@/utils/phoneConfig";
 
 //BECKEND API ROUTA ZA DOWNLOAD ALL .XML
 //AND ALL SUBFOLDERS IN xmlconfigs PARRENT FOLDER
-export async function GET() {
-  /* ---------- 2. Locate the file ---------- */
-  //1. search file in folder by name of file
+export async function GET(req) {
+  const { searchParams } = new URL(req.url);
 
+  const folder = searchParams.get("folderName");
+
+  if (!folder) {
+    return NextResponse.json(
+      { message: "Missing folder name." },
+      { status: 400 }
+    );
+  }
   try {
     //GET DIRECTORY PATH
-    const directoryPath = path.join(process.cwd(), "xmlconfigs");
+    const directoryPath = path.join(process.cwd(), folder);
 
-    //ALL FILES AND FOLDERS IN xmlconfigs DIRECTORY
+    //READ ALL FILES AND FOLDERS IN xmlconfigs DIRECTORY
     const dirents = await fs.readdir(directoryPath, { withFileTypes: true });
-
-    const folders = Array.from(
-      // new Set(phoneConfig.map((item) => item.path.split("/").pop()))
-      new Set(phoneConfig.map((item) => item.path))
-    );
-    //["xmlconfigs/Grandstream", "xmlconfigs/", "xmlconfigs/Cisco502G", "xmlconfigs/Cisco512G"]
-
-    console.log(folders);
 
     const seen = new Set();
     const uniqueXmlFiles = [];
@@ -55,9 +53,17 @@ export async function GET() {
     // Sort by time (descending — newest first)
     uniqueXmlFiles.sort((a, b) => b.time - a.time);
 
-    return NextResponse.json({ folders, uniqueXmlFiles }, { status: 200 });
+    return NextResponse.json(uniqueXmlFiles, { status: 200 });
   } catch (error) {
     console.error(error);
+    //IN CASE DIRECTORY DOES NOT EXIST, SO APP DOESNOT FAIL
+    if (error.code === "ENOENT") {
+      // Directory does not exist
+      return NextResponse.json(
+        { message: `Folder '${folder.split("/").pop()}' not found.` },
+        { status: 404 }
+      );
+    }
     return NextResponse.json(
       { message: error.message ?? "Internal server error." },
       { status: 500 }

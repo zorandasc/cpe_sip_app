@@ -65,7 +65,7 @@ export const config = {
     "/load", //protct load page
     "/api/xml-new",
     "/api/xml-edit",
-    "/api/xml-load",
+    "/api/xml-load-one",
     "/api/xml-load-all",
     "/api/users",
     "/api/users/:path*",

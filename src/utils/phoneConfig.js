@@ -72,3 +72,9 @@ export const phoneConfig = [
     extension: ".xml",
   },
 ];
+
+//GET ALL POSIBLE FOLDERS FROM phoneConfig array
+//["xmlconfigs/Grandstream", "xmlconfigs/", "xmlconfigs/Cisco502G", "xmlconfigs/Cisco512G"]
+export const phoneFolders = Array.from(
+  new Set(phoneConfig.map((item) => item.path))
+);
