@@ -16,7 +16,7 @@ export default function Load() {
   const [filteredFiles, setFilteredFiles] = useState([]);
 
   const [folders, setFolders] = useState([]);
-  const [selectedFolder, setSelectedFolder] = useState("");
+  const [selectedFolder, setSelectedFolder] = useState("/");
 
   const [searchFile, setSearchFile] = useState("");
 
@@ -204,7 +204,6 @@ export default function Load() {
           const data = await res.json();
           setAllFiles(data.uniqueXmlFiles);
           setFilteredFiles(data.uniqueXmlFiles);
-          console.log(data.folders);
 
           setFolders(data.folders);
         }
@@ -243,14 +242,21 @@ export default function Load() {
         ></input>
       </div>
       <ul className={styles.folderList}>
-        <li onClick={() => loadFolderFiles("/")} className={styles.folderItem}>
+        <li
+          onClick={() => loadFolderFiles("/")}
+          className={`${styles.folderItem} ${
+            selectedFolder === "/" ? styles.activeFolder : ""
+          }`}
+        >
           Polycom
         </li>
         {folders.map((folder, i) => (
           <li
             key={i}
             onClick={() => loadFolderFiles(folder.name)}
-            className={styles.folderItem}
+            className={`${styles.folderItem} ${
+              selectedFolder === folder.name ? styles.activeFolder : ""
+            }`}
           >
             {folder.name}
           </li>

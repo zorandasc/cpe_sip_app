@@ -25,6 +25,7 @@ export async function POST(req) {
     // Ensure the directory exists
     await fs.mkdir(saveDirectory, { recursive: true });
 
+    //COBERT TO UPPERCASE MAC
     const ext = path.extname(fileName);
     const nameOnly = path.basename(fileName, ext);
     const prefix = nameOnly.slice(0, -12);
