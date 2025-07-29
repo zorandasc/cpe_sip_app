@@ -1,0 +1,53 @@
+.main {
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+  list-style: none;
+  padding: 1rem;
+  margin: 0;
+  max-width: 1200px; /* ✅ Limit overall width */
+  width: 100%;
+}
+.item {
+  position: relative;
+  width: 100%;
+  max-width: 250px; /* ✅ Limit maximum width */
+  aspect-ratio: 1 / 1; /* Keep it square */
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.item:hover {
+  transform: scale(1.02);
+}
+
+.selectedItem .overlay {
+  background-color: rgba(0, 112, 243, 0.8);
+}
+
+.image {
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 0.5rem;
+  background-color: rgba(34, 22, 22, 0.8);
+
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  font-size: 0.85rem;
+  z-index: 2;
+}

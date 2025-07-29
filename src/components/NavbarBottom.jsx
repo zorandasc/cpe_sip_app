@@ -63,7 +63,6 @@ const NavbarBottom = () => {
             <HomeIcon />
           </Link>
         </li>
-        {/* 
         <li
           className={`${styles.link} ${
             pathname === "/load" ? styles.active : ""
@@ -73,14 +72,13 @@ const NavbarBottom = () => {
             <SearchIcon></SearchIcon>
           </Link>
         </li>
-        */}
         <li
           className={`${styles.link} ${
-            pathname === "/load" ? styles.active : ""
+            pathname === "/imageGrid" ? styles.active : ""
           }`}
         >
-          <Link href="/load">
-             <SearchIcon></SearchIcon>
+          <Link href="/imageGrid">
+           <HomeIcon />
           </Link>
         </li>
         <li
