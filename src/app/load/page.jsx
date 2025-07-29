@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import styles from "./page.module.css";
 import SaveIcon from "@/components/icons/SaveIcon";
+import Paginator from "@/components/Paginator";
 
 //["xmlconfigs/Grandstream", "xmlconfigs/", "xmlconfigs/Cisco502G", "xmlconfigs/Cisco512G"]
 import { phoneFolders } from "@/utils/phoneConfig";
@@ -31,6 +32,14 @@ export default function Load() {
 
   //FOR ANIMATION OF CLOSING MODAL
   const [isClosing, setIsClosing] = useState(false);
+
+  //FOR PAGINATION
+  const [page, setPage] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const [totalCount, setTotalCount] = useState(0);
+
+  const LIMIT = 10;
+  const totalPages = Math.ceil(totalCount / LIMIT);
 
   //LOCAL SEARCH
   const handleSearchFile = (value) => {
@@ -154,8 +163,16 @@ export default function Load() {
   };
 
   const loadFilesFromFolder = async (folderName) => {
+    //KOD PROMJENA FOLDERA SET PAGE TO 0
+    //A SAMIM TIM I OFFSET. NESTO STATE KASNI
+    setPage(0);
+    const params = new URLSearchParams({
+      limit: LIMIT,
+      offset: 0,
+      folderName,
+    });
     try {
-      const res = await fetch(`/api/xml-load-all?folderName=${folderName}`);
+      const res = await fetch(`/api/xml-load-all?${params}`);
 
       const data = await res.json();
 
@@ -167,8 +184,11 @@ export default function Load() {
       }
 
       //SET NEW FILES FROM SUBFILDER
-      setAllFiles(data);
-      setFilteredFiles(data);
+      setAllFiles(data.files);
+      setFilteredFiles(data.files);
+
+      setHasMore(data.hasMore);
+      setTotalCount(data.totalCount);
     } catch (error) {
       console.log("Could not retrieve file in folder:", error);
       toast.error(`Could not retrieve file in folder:", ${error}`);
@@ -194,15 +214,23 @@ export default function Load() {
     return parsed;
   };
 
+  const handleLeftClick = () => setPage((prev) => Math.max(prev - 1, 0));
+
+  const handleRightClick = () =>
+    setPage((prev) => Math.min(prev + 1, totalPages - 1));
+
   useEffect(() => {
+    const params = new URLSearchParams({
+      limit: LIMIT,
+      offset: page * LIMIT,
+      folderName: selectedFolder,
+    });
     // Function to fetch xml and folders
     const fetchFiles = async () => {
       try {
         setLoading(true); // Set loading to true before fetching
 
-        const res = await fetch(
-          `/api/xml-load-all?folderName=${selectedFolder}`
-        ); // Make the GET request to your API route
+        const res = await fetch(`/api/xml-load-all?${params}`);
 
         if (!res.ok) {
           // If the response is not OK (e.g., 400, 500 status)
@@ -215,8 +243,11 @@ export default function Load() {
           window.location.href = "/login";
         } else {
           const data = await res.json();
-          setAllFiles(data);
-          setFilteredFiles(data);
+          setAllFiles(data.files);
+          setFilteredFiles(data.files);
+
+          setHasMore(data.hasMore);
+          setTotalCount(data.totalCount);
         }
       } catch (err) {
         console.error("Error fetching allFiles:", err);
@@ -227,7 +258,7 @@ export default function Load() {
     };
 
     fetchFiles();
-  }, []);
+  }, [page]);
 
   if (loading) {
     return (
@@ -270,6 +301,7 @@ export default function Load() {
           })}
         </ul>
         <div className={styles.itemsContainer}>
+          <div className={styles.total}>{totalCount}</div>
           {Array.isArray(filteredFiles) &&
             filteredFiles.map((fileObj, i) => (
               <div
@@ -283,6 +315,15 @@ export default function Load() {
                 </small>
               </div>
             ))}
+          <Paginator
+            loading={loading}
+            page={page}
+            totalPages={totalPages}
+            hasMore={hasMore}
+            totalCount={totalCount}
+            handleLeftClick={handleLeftClick}
+            handleRightClick={handleRightClick}
+          ></Paginator>
         </div>
       </div>
       {selectedFile && (

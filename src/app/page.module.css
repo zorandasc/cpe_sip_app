@@ -43,7 +43,6 @@
   transform: scale(1.05);
   color: #63b3ed; /* blue-400 */
   box-shadow: 0 0 0 2px #63b3ed;
-
   background: linear-gradient(145deg, #2d3748, #1a202c);
 }
 
@@ -87,7 +86,7 @@
   background: linear-gradient(
     to top,
     rgba(0, 112, 243, 0.9),
-    rgba(0, 112, 243, 0.4)
+    rgba(0, 112, 243, 0.2)
   );
 }
 

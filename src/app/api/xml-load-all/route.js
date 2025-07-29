@@ -7,6 +7,8 @@ import fs from "fs/promises"; // For file system operations
 export async function GET(req) {
   const { searchParams } = new URL(req.url);
 
+  const limit = parseInt(searchParams.get("limit") || 20, 10);
+  const offset = parseInt(searchParams.get("offset") || 0, 10);
   const folder = searchParams.get("folderName");
 
   if (!folder) {
@@ -15,6 +17,7 @@ export async function GET(req) {
       { status: 400 }
     );
   }
+
   try {
     //GET DIRECTORY PATH
     const directoryPath = path.join(process.cwd(), folder);
@@ -50,10 +53,19 @@ export async function GET(req) {
       }
     }
 
-    // Sort by time (descending — newest first)
-    uniqueXmlFiles.sort((a, b) => b.time - a.time);
+    const totalCount = uniqueXmlFiles.length;
+  
+    const filesToSend = uniqueXmlFiles.slice(offset, offset + limit)
+    // Check if more item exist after this page
+    const hasMore = offset + filesToSend.length < totalCount;
 
-    return NextResponse.json(uniqueXmlFiles, { status: 200 });
+    // Sort by time (descending — newest first)
+    filesToSend.sort((a, b) => b.time - a.time);
+
+    return NextResponse.json(
+      { files:filesToSend, hasMore, totalCount },
+      { status: 200 }
+    );
   } catch (error) {
     console.error(error);
     //IN CASE DIRECTORY DOES NOT EXIST, SO APP DOESNOT FAIL
