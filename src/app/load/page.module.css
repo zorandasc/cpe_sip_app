@@ -10,9 +10,12 @@
 }
 
 .contentWrapper {
+  display: flex;
+}
+
+.itemsContainer {
   width: 85%;
   margin: 0 auto;
-  margin-left: 10rem;
   background-color: #232e3e; /* darker neutral (tailwind's gray-800) */
   border-radius: 0.75rem;
   box-shadow: rgba(100, 149, 237, 0.25) 0px 8px 24px;
@@ -20,15 +23,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 1.5rem;
-  place-items: center;
+  place-items: baseline;
   color: #f0f0f0;
-}
-
-.title {
-  font-size: 1.875rem; /* text-3xl */
-  color: #63b3ed; /* text-gray-800 */
-  margin-bottom: 1.5rem; /* mb-6 */
-  text-align: center;
 }
 
 .loadingContainer,
@@ -249,9 +245,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-  position: absolute;
-  left: 1rem;
-  top: 8rem;
+  width: 150px;
 }
 
 .folderItem {

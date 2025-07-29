@@ -250,38 +250,40 @@ export default function Load() {
           maxLength={25}
         ></input>
       </div>
-      <ul className={styles.folderList}>
-        {phoneFolders.map((folder, i) => {
-          //SKINI xmlconfigs/ IZ FOLDER NAME
-          let folderName = folder.split("/").pop();
-          return (
-            <li
-              key={i}
-              onClick={() => loadFilesFromFolder(folder)}
-              className={`${styles.folderItem} ${
-                selectedFolder === folder ? styles.activeFolder : ""
-              }`}
-            >
-              {/*AKO JE EMPTY STRING ONDA JE PARRENT FOLDER A TO JE POLYCOM */}
-              {folderName ? folderName : "Polycom"}
-            </li>
-          );
-        })}
-      </ul>
       <div className={styles.contentWrapper}>
-        {Array.isArray(filteredFiles) &&
-          filteredFiles.map((fileObj, i) => (
-            <div
-              key={i}
-              className={styles.file}
-              onClick={() => handleOpenModal(fileObj.name)}
-            >
-              <div>{fileObj.name}</div>
-              <small className={styles.time}>
-                {new Date(fileObj.time).toLocaleString()}
-              </small>
-            </div>
-          ))}
+        <ul className={styles.folderList}>
+          {phoneFolders.map((folder, i) => {
+            //SKINI xmlconfigs/ IZ FOLDER NAME
+            let folderName = folder.split("/").pop();
+            return (
+              <li
+                key={i}
+                onClick={() => loadFilesFromFolder(folder)}
+                className={`${styles.folderItem} ${
+                  selectedFolder === folder ? styles.activeFolder : ""
+                }`}
+              >
+                {/*AKO JE EMPTY STRING ONDA JE PARRENT FOLDER A TO JE POLYCOM */}
+                {folderName ? folderName : "Polycom"}
+              </li>
+            );
+          })}
+        </ul>
+        <div className={styles.itemsContainer}>
+          {Array.isArray(filteredFiles) &&
+            filteredFiles.map((fileObj, i) => (
+              <div
+                key={i}
+                className={styles.file}
+                onClick={() => handleOpenModal(fileObj.name)}
+              >
+                <div>{fileObj.name}</div>
+                <small className={styles.time}>
+                  {new Date(fileObj.time).toLocaleString()}
+                </small>
+              </div>
+            ))}
+        </div>
       </div>
       {selectedFile && (
         <div className={`${styles.modalOverlay}`} onClick={closeModal}>
