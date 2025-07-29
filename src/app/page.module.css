@@ -155,9 +155,6 @@
   font-size: 0.85em;
   margin-top: 0.5rem; /* Space above message */
   /* Position the error message below the input, aligned with its start */
-  padding-left: calc(
-    120px + 1rem
-  ); /* Aligns with the start of the input field */
   text-align: left;
   width: 100%; /* Take full width of its flex parent to appear on new line */
   box-sizing: border-box; /* Include padding in width */

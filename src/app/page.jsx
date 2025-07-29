@@ -274,6 +274,7 @@ export default function Home() {
               required
               placeholder="Npr. AA:BB:CC:DD:EE:FF"
               className={macErrorMessage ? styles.inputError : ""}
+              maxLength={17}
             />
             {macErrorMessage && (
               <p className={styles.errorMessage}>{macErrorMessage}</p>

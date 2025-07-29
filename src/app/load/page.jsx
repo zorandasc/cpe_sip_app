@@ -17,7 +17,6 @@ import "ace-builds/src-noconflict/ext-searchbox";
 //FRONTEND STRANICA SVIH VOIP KONFIG FAJLOVA
 export default function Load() {
   const [allFiles, setAllFiles] = useState([]);
-  const [filteredFiles, setFilteredFiles] = useState([]);
 
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -44,10 +43,8 @@ export default function Load() {
   //LOCAL SEARCH
   const handleSearchFile = (value) => {
     setSearchFile(value);
-    const filtered = allFiles.filter((file) =>
-      file.name.toLowerCase().includes(value.toLowerCase())
-    );
-    setFilteredFiles(filtered);
+
+    setPage(0);
   };
 
   //FETCH XML FROM NETWORK
@@ -108,7 +105,6 @@ export default function Load() {
 
   //OPEN MODAL AND RETRIEVE XML
   const handleOpenModal = async (fileName) => {
-    console.log("fileName", fileName);
     setSelectedFile(fileName);
     handleLoadSingleXml(fileName);
   };
@@ -166,35 +162,33 @@ export default function Load() {
     //KOD PROMJENA FOLDERA SET PAGE TO 0
     //A SAMIM TIM I OFFSET. NESTO STATE KASNI
     setPage(0);
+
     const params = new URLSearchParams({
       limit: LIMIT,
       offset: 0,
       folderName,
+      search: searchFile,
     });
+
     try {
       const res = await fetch(`/api/xml-load-all?${params}`);
 
       const data = await res.json();
 
-      //SAVE SELECTED SUBFOLDER THIS WE USING FOR SAVING XML TO NETWORK
+      //SAVE SELECTED SUBFOLDER THIS WE ARE USING FOR SAVING XML TO NETWORK
       setSelectedFolder(folderName);
 
       if (!res.ok) {
         throw new Error(data.message || "Failed to fetch filess");
       }
 
-      //SET NEW FILES FROM SUBFILDER
+      //SET NEW FILES FROM SUBFOLDER
       setAllFiles(data.files);
-      setFilteredFiles(data.files);
-
       setHasMore(data.hasMore);
       setTotalCount(data.totalCount);
     } catch (error) {
       console.log("Could not retrieve file in folder:", error);
       toast.error(`Could not retrieve file in folder:", ${error}`);
-
-      setAllFiles([]);
-      setFilteredFiles([]);
     }
   };
 
@@ -224,6 +218,7 @@ export default function Load() {
       limit: LIMIT,
       offset: page * LIMIT,
       folderName: selectedFolder,
+      search: searchFile,
     });
     // Function to fetch xml and folders
     const fetchFiles = async () => {
@@ -244,8 +239,6 @@ export default function Load() {
         } else {
           const data = await res.json();
           setAllFiles(data.files);
-          setFilteredFiles(data.files);
-
           setHasMore(data.hasMore);
           setTotalCount(data.totalCount);
         }
@@ -258,15 +251,7 @@ export default function Load() {
     };
 
     fetchFiles();
-  }, [page]);
-
-  if (loading) {
-    return (
-      <div className={styles.loadingContainer}>
-        <p className={styles.loadingText}>Loading resurces...</p>
-      </div>
-    );
-  }
+  }, [page, searchFile]);
 
   return (
     <div className={styles.pageContainer}>
@@ -302,8 +287,10 @@ export default function Load() {
         </ul>
         <div className={styles.itemsContainer}>
           <div className={styles.total}>{totalCount}</div>
-          {Array.isArray(filteredFiles) &&
-            filteredFiles.map((fileObj, i) => (
+
+          {!loading ? (
+            Array.isArray(allFiles) &&
+            allFiles.map((fileObj, i) => (
               <div
                 key={i}
                 className={styles.file}
@@ -314,7 +301,12 @@ export default function Load() {
                   {new Date(fileObj.time).toLocaleString()}
                 </small>
               </div>
-            ))}
+            ))
+          ) : (
+            <div className={styles.loadingContainer}>
+              <p className={styles.loadingText}>Loading resurces...</p>
+            </div>
+          )}
           <Paginator
             loading={loading}
             page={page}
