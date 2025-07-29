@@ -72,15 +72,7 @@ const NavbarBottom = () => {
             <SearchIcon></SearchIcon>
           </Link>
         </li>
-        <li
-          className={`${styles.link} ${
-            pathname === "/imageGrid" ? styles.active : ""
-          }`}
-        >
-          <Link href="/imageGrid">
-           <HomeIcon />
-          </Link>
-        </li>
+
         <li
           className={`${styles.link} ${
             pathname === "/users" ? styles.active : ""

@@ -1,15 +1,17 @@
 "use client";
-import React, { useState } from "react";
-import styles from "./page.module.css";
+import { useState, useRef } from "react";
+import Image from "next/image";
 import toast from "react-hot-toast";
 import SendIcon from "@/components/icons/SendIcon";
 import { phones } from "@/utils/phoneOptions";
+import styles from "./page.module.css";
 
-//FRONTEND HOME STRANICA
 export default function Home() {
+  const formRef = useRef(null);
+
   const [loading, setLoading] = useState(false);
   //INICIJALNI STATE
-  const [selectedPhone, setSelectedPhone] = useState(phones[0]);
+  const [selectedPhone, setSelectedPhone] = useState(null);
 
   const [mac, setMac] = useState("");
   const [macErrorMessage, setMacErrorMessage] = useState(null);
@@ -26,6 +28,7 @@ export default function Home() {
   const [portValidationErrors, setPortValidationErrors] = useState({});
 
   const handlePhoneSelect = (item) => {
+    console.log(item);
     //PRIKAZI FORMU IZABRANOG TELEFONA
     setSelectedPhone(item);
 
@@ -37,6 +40,10 @@ export default function Home() {
     }));
     setPortConfigs(initialPortConfigs);
     setPortValidationErrors({});
+
+    setTimeout(() => {
+      formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 100);
   };
 
   const handleMacChange = (e) => {
@@ -209,48 +216,71 @@ export default function Home() {
   }
 
   return (
-    <div className={styles.page}>
-      <h1 className={styles.title}>CPE SIP APLIKACIJA</h1>
-      <h2 className={styles.subtitle}>
-        Kreiranje konfiguracionih .xml fajlova za sip telefone
-      </h2>
-      <main className={styles.main}>
-        {/* List of phone models for selection */}
-        <ul className={styles.list}>
+    <main className={styles.main}>
+      {/* Wrapper for 2-column layout */}
+      <div className={styles.twoColumn}>
+        {/* LEFT: Text List */}
+        <div className={styles.textList}>
+          <ul>
+            {phones.map((item) => (
+              <li
+                key={item.name}
+                onClick={() => handlePhoneSelect(item)}
+                className={`${styles.textItem} ${
+                  selectedPhone?.name === item.name ? styles.active : ""
+                }`}
+              >
+                {item.name}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* RIGHT: Image Grid */}
+        <ul className={styles.grid}>
           {phones.map((item) => (
             <li
-              key={item.name} // Use item.name or a unique ID if available for key
-              className={`${styles.item} ${
-                selectedPhone && selectedPhone.name === item.name
-                  ? styles.selectedItem
-                  : ""
-              }`}
+              key={item.name}
               onClick={() => handlePhoneSelect(item)}
+              className={`${styles.item} ${
+                selectedPhone?.name === item.name ? styles.selectedItem : ""
+              }`}
             >
-              {item.name}
+              <div className={styles.imageContainer}>
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  fill
+                  className={styles.image}
+                  priority
+                />
+                <div className={styles.overlay}>{item.name}</div>
+              </div>
             </li>
           ))}
         </ul>
-        {/* Display form only if a phone is selected */}
-        {selectedPhone && (
-          <form onSubmit={handleSubmit} className={styles.form}>
-            <h3>Konfiguracija za: {selectedPhone.name}</h3>
-            <div className={styles.macField}>
-              <label htmlFor="mac">MAC Adresa:</label>
-              <input
-                type="text"
-                id="mac"
-                value={mac}
-                onChange={handleMacChange}
-                required
-                placeholder="Npr. AA:BB:CC:DD:EE:FF"
-                className={macErrorMessage ? styles.inputError : ""}
-              />
-              {macErrorMessage && (
-                <p className={styles.errorMessage}>{macErrorMessage}</p>
-              )}
-            </div>
-            {/* Dynamically render input fields based on selectedPhone.port */}
+      </div>
+      {/* Display form only if a phone is selected */}
+      {selectedPhone && (
+        <form ref={formRef} onSubmit={handleSubmit} className={styles.form}>
+          <h3>Konfiguracija za: {selectedPhone.name}</h3>
+          <div className={styles.macField}>
+            <label htmlFor="mac">MAC Adresa:</label>
+            <input
+              type="text"
+              id="mac"
+              value={mac}
+              onChange={handleMacChange}
+              required
+              placeholder="Npr. AA:BB:CC:DD:EE:FF"
+              className={macErrorMessage ? styles.inputError : ""}
+            />
+            {macErrorMessage && (
+              <p className={styles.errorMessage}>{macErrorMessage}</p>
+            )}
+          </div>
+          {/* Dynamically render input fields based on selectedPhone.port */}
+          <div className={styles.portConfigContainer}>
             {portConfigs.map((config, index) => (
               <div key={index} className={styles.portGroup}>
                 {selectedPhone.port > 1 && (
@@ -301,21 +331,20 @@ export default function Home() {
                 )}
               </div>
             ))}
-
-            <button
-              type="submit"
-              className={styles.submit}
-              disabled={
-                Object.keys(portValidationErrors).length > 0 || macErrorMessage
-                  ? true
-                  : undefined
-              }
-            >
-              Create <SendIcon></SendIcon>
-            </button>
-          </form>
-        )}
-      </main>
-    </div>
+          </div>
+          <button
+            type="submit"
+            className={styles.submit}
+            disabled={
+              Object.keys(portValidationErrors).length > 0 || macErrorMessage
+                ? true
+                : undefined
+            }
+          >
+            Create <SendIcon></SendIcon>
+          </button>
+        </form>
+      )}
+    </main>
   );
 }
