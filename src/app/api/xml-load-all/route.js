@@ -56,6 +56,7 @@ export async function GET(req) {
     const totalCount = uniqueXmlFiles.length;
   
     const filesToSend = uniqueXmlFiles.slice(offset, offset + limit)
+    
     // Check if more item exist after this page
     const hasMore = offset + filesToSend.length < totalCount;
 

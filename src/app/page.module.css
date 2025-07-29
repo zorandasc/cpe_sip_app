@@ -135,6 +135,7 @@
   flex-direction: column;
   gap: 1.5rem; /* Gap between major form sections (MAC field, port groups, button) */
   margin-bottom: 6rem;
+  border: 1px solid #4a5568;
 }
 
 .form h3 {

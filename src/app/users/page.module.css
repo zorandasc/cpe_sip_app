@@ -27,10 +27,9 @@
 }
 
 .pageContainer {
-  background-color: #141923; /* dark background (tailwind gray-900) */
+ 
   padding: 2rem; /* more breathing room */
-  overflow-x: hidden; /* prevent horizontal scroll */
-  overflow-y: auto; /* enable vertical scroll if content overflows */
+  
   display: flex;
   flex-direction: column;
   justify-content: center;

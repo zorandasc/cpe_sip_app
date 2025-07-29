@@ -38,7 +38,7 @@ export default function Load() {
   const [hasMore, setHasMore] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
 
-  const LIMIT = 10;
+  const LIMIT = 100;
   const totalPages = Math.ceil(totalCount / LIMIT);
 
   //LOCAL SEARCH
