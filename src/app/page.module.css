@@ -25,19 +25,26 @@
 }
 
 .textItem {
-  padding: 0.5rem;
   margin-bottom: 0.5rem;
   cursor: pointer;
-  border-radius: 6px;
   transition: all 0.3s ease;
   box-shadow: rgba(108, 156, 198, 0.5) 2px 2px 8px 0px;
-  border-radius: 8px;
+  background-color: #3c495f; /* tailwind gray-700 */
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #cbd5e0;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
 .textItem:hover {
-  background-color: #f0f0f0;
-  color: #1a202c;
-  transform: translateY(-2px);
+  transform: scale(1.05);
+  color: #63b3ed; /* blue-400 */
+  box-shadow: 0 0 0 2px #63b3ed;
+
+  background: linear-gradient(145deg, #2d3748, #1a202c);
 }
 
 .active {
@@ -73,6 +80,7 @@
 }
 .selectedItem {
   box-shadow: rgba(108, 156, 198, 0.5) 4px 4px 8px 0px;
+  border: 1px solid rgba(0, 112, 243, 1);
 }
 
 .selectedItem .overlay {
@@ -119,7 +127,7 @@
 .form {
   flex: 1; /* Allow it to grow and shrink */
   background-color: #2d3748; /* Darker background for the form card */
-  padding: 2.5rem;
+  padding: 2rem;
   border-radius: 10px;
   box-shadow: rgba(108, 156, 198, 0.5) 4px 4px 8px 0px;
   width: 100%;
