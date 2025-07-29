@@ -11,6 +11,7 @@
 
 .contentWrapper {
   display: flex;
+  margin-bottom: 6rem;
 }
 
 .itemsContainer {
@@ -31,7 +32,7 @@
 .total {
   position: absolute;
   right: -10px;
-  top: -20px;
+  top: -10px;
   background-color: #edbe68;
   color: #141923;
   padding: 0.3rem;
@@ -268,23 +269,25 @@
   color: #e2e8f0; /* light text */
   border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.15s ease;
+  transition: all 0.3s ease, transform 0.15s ease;
   font-weight: 500;
 }
 
 .folderItem:hover {
-  background-color: #4a5568; /* darker on hover */
+  background-color: #4a5568;
   transform: scale(1.02);
 }
 
 .folderItem:active {
-  background-color: #5a667a;
+  background-color: #4a5568;
   transform: scale(0.98);
+ 
 }
 
 .activeFolder {
   background-color: #718096;
   color: #63b3ed;
+  box-shadow: rgba(108, 156, 198, 0.5) 4px 4px 8px 0px;
 }
 
 /* Responsive padding */

@@ -101,7 +101,7 @@ export async function POST(request) {
         console.log(`Successfully saved XML to: ${outputPath1}`);
 
         return NextResponse.json({
-          message: "✅ File encrypted and saved",
+          message: `✅ File encrypted and saved: ${filename}`,
         });
       } catch (err) {
         return NextResponse.json(
@@ -110,7 +110,7 @@ export async function POST(request) {
         );
       }
     } //END ENCRYPT IF
-    return NextResponse.json({ message: "✅ File saved" });
+    return NextResponse.json({ message: `✅ File saved: ${filename}` });
   } catch (error) {
     console.error("Error saving configuration:", error);
     return NextResponse.json({ message: `${error.message}` }, { status: 500 });

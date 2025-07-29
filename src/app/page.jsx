@@ -28,7 +28,6 @@ export default function Home() {
   const [portValidationErrors, setPortValidationErrors] = useState({});
 
   const handlePhoneSelect = (item) => {
-    console.log(item);
     //PRIKAZI FORMU IZABRANOG TELEFONA
     setSelectedPhone(item);
 
@@ -179,7 +178,6 @@ export default function Home() {
           duration: 4000,
           position: "top-left",
         });
-        //console.log("Server response:", data);
 
         //reset form after successful save
         handlePhoneSelect(selectedPhone);

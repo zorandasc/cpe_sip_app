@@ -73,15 +73,17 @@ const NavbarBottom = () => {
           </Link>
         </li>
 
-        <li
-          className={`${styles.link} ${
-            pathname === "/users" ? styles.active : ""
-          }`}
-        >
-          <Link href="/users">
-            <UsersIcon></UsersIcon>
-          </Link>
-        </li>
+        {user && user.role === "admin" && (
+          <li
+            className={`${styles.link} ${
+              pathname === "/users" ? styles.active : ""
+            }`}
+          >
+            <Link href="/users">
+              <UsersIcon></UsersIcon>
+            </Link>
+          </li>
+        )}
         {user && (
           <li
             className={`${styles.link} ${
