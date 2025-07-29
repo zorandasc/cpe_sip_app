@@ -25,7 +25,7 @@ export const phones = [
     type: "Grandstream",
     model: "GXW4216",
     port: 16,
-    image: "/images/GXW4216.png",
+    image: "/images/GXW4216.jpg",
   },
   {
     name: "Grandstream GXW4224 (24-portni RGW)",
