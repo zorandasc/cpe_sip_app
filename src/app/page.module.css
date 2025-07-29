@@ -251,7 +251,7 @@
   color: whitesmoke;
   border: none;
   padding: 0.5rem 1.2rem;
-  border-radius: 6px;
+  border-radius: 12px;
   font-size: 0.95rem;
   letter-spacing: 2px;
   cursor: pointer;
@@ -264,7 +264,7 @@
 
 .submit svg {
   transition: all 0.5s ease;
-  margin-left: 0.8rem;
+  margin-left: 0.3rem;
 }
 .submit:hover {
   background-color: #2369a2;

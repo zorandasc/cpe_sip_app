@@ -155,7 +155,7 @@
 .addButton {
   margin-top: 1rem;
   padding: 5px 30px;
-  border-radius: 6px;
+   border-radius: 12px;
   cursor: pointer;
   border: 0;
   background-color: #4299e1;
