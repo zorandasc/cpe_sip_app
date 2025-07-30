@@ -351,12 +351,12 @@ export default function Home() {
                     <span className={styles.phonePrefix}>+</span>
                     <input
                       type="tel"
-                      pattern="[0-9]*"
+                      //pattern="[0-9]*"
                       id={`brojTelefona-${index}`}
                       value={config.brojTelefona}
                       placeholder="Npr. 38751123456, 051223456, 51123456"
-                      minLength={8}
-                      maxLength={11}
+                      //minLength={8}
+                      //maxLength={11}
                       onChange={(e) =>
                         handlePortInputChange(
                           index,
