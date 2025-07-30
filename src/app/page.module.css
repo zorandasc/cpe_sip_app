@@ -47,7 +47,11 @@
 }
 
 .active {
-  background-color: #0070f3;
+  background: linear-gradient(
+    to top,
+    rgba(0, 112, 243, 0.9),
+    rgba(0, 112, 243, 0.2)
+  );
   color: white;
 }
 
@@ -125,10 +129,10 @@
 
 .form {
   flex: 1; /* Allow it to grow and shrink */
-  background-color: #2d3748; /* Darker background for the form card */
+  background-color: #232e3e; /* Darker background for the form card */
   padding: 2rem;
   border-radius: 10px;
-  box-shadow: rgba(108, 156, 198, 0.5) 4px 4px 8px 0px;
+  box-shadow: #6c9cc6 0px 7px 29px 0px;
   width: 100%;
   display: flex;
   align-items: self-start;
