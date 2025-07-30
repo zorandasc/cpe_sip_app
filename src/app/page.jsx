@@ -64,7 +64,9 @@ export default function Home() {
       currentErrorMessage =
         "Dozvoljeni su samo heksadecimalni karakteri (0-9, A-F), dvotačke (:) ili crtice (-).";
 
-      toast("Nevažeći karakteri uklonjeni.");
+      toast("Nevažeći karakteri uklonjeni.", {
+        style: { background: "#d5ae66" },
+      });
     }
 
     const cleanedMacLength = getCleanMac(value).length;
