@@ -1,10 +1,18 @@
 export default function createPolycomXml(portConfigs) {
   let config = portConfigs[0];
 
+  //config={brojTelefona:"51330181",sifra:"123xxx"}
+
   let sifra = config.sifra;
-  let sipAuthenicateId = `+${config.brojTelefona}@mtel.ba`;
-  let sipLabel = `Lokal-${config.brojTelefona.substring(8)}`;
-  let sipDisplay = `${config.brojTelefona.substring(5)}`;
+
+  //"330181"
+  let sipDisplay = `${config.brojTelefona.substring(2)}`;
+
+  //+38751330181@mtel.ba"
+  let sipAuthenicateId = `+387${config.brojTelefona}@mtel.ba`;
+
+  //Lokal-181
+  let sipLabel = `Lokal-${config.brojTelefona.substring(5)}`;
 
   let xmlContent = `<reg 
     reg.1.displayName='${sipDisplay}'

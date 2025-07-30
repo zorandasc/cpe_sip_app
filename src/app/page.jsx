@@ -89,7 +89,52 @@ export default function Home() {
     return rawMac.replace(/[^0-9a-fA-F]/g, "").toLowerCase();
   };
 
+  //TO CHECK VALIDITY OF PHONE NUMBER
+  function isValidPhoneNumber(input) {
+    // Remove all non-digit characters (spaces, dashes, etc.)
+    const cleaned = input.replace(/\D/g, "");
+
+    if (!/^\d{8,11}$/.test(cleaned)) {
+      return false; // Not 8–11 digits
+    }
+
+    if (cleaned.length === 11) {
+      return cleaned.startsWith("387");
+    }
+
+    if (cleaned.length === 9) {
+      return cleaned.startsWith("0");
+    }
+
+    return cleaned.length === 8; // No prefix rule
+  }
+
+  //TO CLEAN PHONE NUMBER TO 5123456 IN SUBMIT
+  //? CLEAN THE NUMBER TO BE IN THIS FORMAT 51234417
+  function cleanPhoneNumber(input) {
+    const digits = input.replace(/\D/g, "");
+
+    // If it's 11 digits and starts with 387 → strip "387"
+    if (digits.length === 11 && digits.startsWith("387")) {
+      return digits.slice(3);
+    }
+
+    // If it's 9 digits and starts with 0 → strip "0"
+    if (digits.length === 9 && digits.startsWith("0")) {
+      return digits.slice(1);
+    }
+
+    // If it's already 8 digits
+    if (digits.length === 8) {
+      return digits;
+    }
+
+    // Fallback: return as-is (or empty)
+    return "";
+  }
+
   const handlePortInputChange = (index, fieldName, value) => {
+    //UPDATE STATE
     const updatedPortConfigs = portConfigs.map((config, i) => {
       if (index === i) {
         return { ...config, [fieldName]: value };
@@ -97,21 +142,20 @@ export default function Home() {
       return config;
     });
 
-    const isBrojTelefonaEmpty =
-      updatedPortConfigs[index].brojTelefona.trim() === "";
+    let phone = updatedPortConfigs[index].brojTelefona;
+    let pass = updatedPortConfigs[index].sifra;
 
-    const isSifraEmpty = updatedPortConfigs[index].sifra.trim() === "";
+    const isBrojTelefonaEmpty = phone.trim() === "";
+    const isSifraEmpty = pass.trim() === "";
 
     let newErrors = { ...portValidationErrors }; // Copy current errors
 
     // Validation logic:
-    //if: AKO BROJ NE POCINJE SA 387-> GRESKA, OSIM AKO BROJ NIJE PRAZAN
-    //else: AKO JE JEDNO POLJE PRAZNO A DRUGO NIJE -> GRESKA
-    if (
-      !isBrojTelefonaEmpty &&
-      !updatedPortConfigs[index].brojTelefona.trim().startsWith("387")
-    ) {
-      newErrors[index] = "Broj mora početi sa 387.";
+    //if: NUMBER NOT VALIDATED CORRECTLY->ERROR
+    //else: IF ONE OF THE FIELD EMPTY -> ERROR
+    if (!isBrojTelefonaEmpty && !isValidPhoneNumber(phone)) {
+      newErrors[index] =
+        'Invalid phone number. Must be 8–11 digits. "387" for 11 digits, "0" for 9 digits.';
     } else if (
       (isBrojTelefonaEmpty && !isSifraEmpty) ||
       (!isBrojTelefonaEmpty && isSifraEmpty)
@@ -158,11 +202,23 @@ export default function Home() {
       setMacErrorMessage(null);
     }
 
+    //CLEANING PHONE NUMBERS FOR SENDING
+    //EVERY PHONE NUMBER WILL BE IN 8-DIGIT FORMAT: 51234417
+    const cleanedConfigs = portConfigs.map((config) => {
+      const phone = config.brojTelefona.trim();
+
+      const cleanedPhone = isValidPhoneNumber(phone)
+        ? cleanPhoneNumber(phone)
+        : "";
+
+      return { ...config, brojTelefona: cleanedPhone };
+    });
+
     //PRIPREMA PODATAKA ZA SLANJE
     const formData = {
       selectedPhone,
       mac: cleanedMac,
-      portConfigs,
+      portConfigs: cleanedConfigs,
     };
 
     try {
@@ -298,8 +354,8 @@ export default function Home() {
                       pattern="[0-9]*"
                       id={`brojTelefona-${index}`}
                       value={config.brojTelefona}
-                      placeholder="Npr. 38751123456"
-                      minLength={11}
+                      placeholder="Npr. 38751123456, 051223456, 51123456"
+                      minLength={8}
                       maxLength={11}
                       onChange={(e) =>
                         handlePortInputChange(

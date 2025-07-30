@@ -4,20 +4,20 @@ export default function createGrandstreamXml(selectedPhone, mac, portConfigs) {
     //SINGLE PORT GRANDSTREAM
     let config = portConfigs[0];
 
+    //config={brojTelefona:"51123456",sifra:"123xxx"}
+
     let sifra = config.sifra ? config.sifra : " ";
 
-    //+38751490227
-    let sipUsername = config.brojTelefona ? `+${config.brojTelefona}` : " ";
+    //+38751123456
+    let sipUsername = config.brojTelefona ? `+387${config.brojTelefona}` : " ";
 
-    //+38751490227@mtel.ba
+    //+38751123456@mtel.ba
     let sipAuthenicateId = config.brojTelefona
-      ? `+${config.brojTelefona}@mtel.ba`
+      ? `+387${config.brojTelefona}@mtel.ba`
       : " ";
 
-    //051490227
-    let sipDisplay = config.brojTelefona
-      ? `0${config.brojTelefona.substring(3)}`
-      : " ";
+    //051123456
+    let sipDisplay = config.brojTelefona ? `0${config.brojTelefona}` : " ";
 
     //KREIRAJ XML FAJL
     xmlContent = `<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n`;
@@ -61,13 +61,11 @@ export default function createGrandstreamXml(selectedPhone, mac, portConfigs) {
     //LOOP OWER PHONE PORTS
     portConfigs.forEach((config, index) => {
       let sifra = config.sifra ? config.sifra : " ";
-      let sipUserId = config.brojTelefona ? `+${config.brojTelefona}` : " ";
+      let sipUserId = config.brojTelefona ? `+387${config.brojTelefona}` : " ";
       let sipAuthenicateId = config.brojTelefona
-        ? `+${config.brojTelefona}@mtel.ba`
+        ? `+387${config.brojTelefona}@mtel.ba`
         : " ";
-      let sipDisplay = config.brojTelefona
-        ? `0${config.brojTelefona.substring(3)}`
-        : " ";
+      let sipDisplay = config.brojTelefona ? `0${config.brojTelefona}` : " ";
 
       xmlContent += `<!--  ################ FXS ${index} ######################  -->\n`;
       xmlContent += `<!--  #SIP USER ID; npr. +38751490227  -->\n`;

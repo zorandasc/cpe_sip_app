@@ -1,9 +1,11 @@
 export default function createCiscoXml(portConfigs) {
   let config = portConfigs[0];
 
+  //config={brojTelefona:"51123456",sifra:"123xxx"}
+
   let sifra = config.sifra;
-  let sipAuthenicateId = `+${config.brojTelefona}@mtel.ba`;
-  let sipUserId = `+${config.brojTelefona}`;
+  let sipAuthenicateId = `+387${config.brojTelefona}@mtel.ba`;
+  let sipUserId = `+387${config.brojTelefona}`;
 
   let xmlContent = ` <!-- Subscriber Information -->
 
