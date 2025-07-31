@@ -54,9 +54,10 @@ export async function POST(req) {
     await fs.writeFile(upperCaseFilePath, xml);
     await fs.writeFile(lowerCaseFilePath, xml);
 
-    //console.log(`Successfully saved XML to: ${lowerCaseFilePath}`);
-    //console.log(`Successfully saved XML to: ${upperCasefileName}`);
+    console.log(`Successfully saved XML to: ${lowerCaseFilePath}`);
+    console.log(`Successfully saved XML to: ${upperCasefileName}`);
 
+    //NA OSNOVU PREFIKSA I EKSTENZIJE PRONACI PRVI phonConfig
     const config = phoneConfig.find(
       (phone) => phone.extension == ext && phone.prefix === prefix
     );

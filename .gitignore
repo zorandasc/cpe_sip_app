@@ -44,8 +44,8 @@ xmlconfigs/
 
 .tar.gz
 
-/script
-src/script/addAdminUser.js
+#/script
+#src/script/addAdminUser.js
 
 #database.db
 
