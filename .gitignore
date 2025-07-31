@@ -46,12 +46,13 @@ xmlconfigs/
 
 /script
 src/script/addAdminUser.js
-database.db
 
-*.db
-*.db
-*.db-wal
-*.db-shm
+#database.db
+
+#*.db
+#*.db
+#*.db-wal
+#*.db-shm
 
 
 docker-compose.prod.yml
