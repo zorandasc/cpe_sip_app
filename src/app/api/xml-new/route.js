@@ -66,8 +66,8 @@ export async function POST(request) {
     await fs.writeFile(filePath, xmlContent);
     await fs.writeFile(filePath1, xmlContent);
 
-    //console.log(`Successfully saved XML to: ${filePath}`);
-    //console.log(`Successfully saved XML to: ${filePath1}`);
+    console.log(`Successfully saved XML to: ${filePath}`);
+    console.log(`Successfully saved XML to: ${filePath1}`);
 
     //PETLJA ZA ENKRIPCIJU
     if (config.encrypt) {
@@ -98,7 +98,7 @@ export async function POST(request) {
         await execAsync(cmd1);
 
         console.log(`Successfully encrypted XML to: ${outputPath}`);
-        console.log(`Successfully saved XML to: ${outputPath1}`);
+        console.log(`Successfully encrypted XML to: ${outputPath1}`);
 
         return NextResponse.json({
           message: `✅ File encrypted and saved: ${filename}`,

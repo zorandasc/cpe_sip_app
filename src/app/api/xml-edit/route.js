@@ -55,7 +55,7 @@ export async function POST(req) {
     await fs.writeFile(lowerCaseFilePath, xml);
 
     console.log(`Successfully saved XML to: ${lowerCaseFilePath}`);
-    console.log(`Successfully saved XML to: ${upperCasefileName}`);
+    console.log(`Successfully saved XML to: ${upperCaseFilePath}`);
 
     //NA OSNOVU PREFIKSA I EKSTENZIJE PRONACI PRVI phonConfig
     const config = phoneConfig.find(
@@ -91,7 +91,7 @@ export async function POST(req) {
         await execAsync(cmd1);
 
         console.log(`Successfully encrypted XML to: ${outputPath}`);
-        console.log(`Successfully saved XML to: ${outputPath1}`);
+        console.log(`Successfully encrypted XML to: ${outputPath1}`);
 
         return NextResponse.json({
           message: "✅ File encrypted and saved",
