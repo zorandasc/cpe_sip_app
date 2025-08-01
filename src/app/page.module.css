@@ -57,10 +57,10 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1rem;
   list-style: none;
-  padding-bottom: 2rem;
+  padding-bottom: 4rem;
   margin: 0;
   flex: 1;
 }
@@ -74,12 +74,14 @@
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.3s ease;
+  background-color: #fff;
 }
 
 .item:hover {
   transform: scale(1.03);
   box-shadow: rgba(108, 156, 198, 0.5) 4px 4px 8px 0px;
   transition: all 0.3s ease;
+  background-color: #fff;
 }
 .selectedItem {
   box-shadow: rgba(108, 156, 198, 0.5) 4px 4px 8px 0px;
@@ -102,7 +104,7 @@
 }
 
 .image {
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 12px;
 }
 
@@ -111,7 +113,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 10px;
+  padding: 12px 10px;
   color: white;
   font-weight: bold;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4));
