@@ -31,6 +31,10 @@ export default function Home() {
     //PRIKAZI FORMU IZABRANOG TELEFONA
     setSelectedPhone(item);
 
+    //AKO PROMJENIS TELEFON IZBRISI GRESKE ZA MAC
+    //AKO POSTOJE OD PRIJSANJEG TELEFONA
+    setMacErrorMessage(null);
+
     //INICIJALIZUJ SVA POLJA NA CISTO. MAC I PORTOVE
     setMac("");
     const initialPortConfigs = Array.from({ length: item.port }, () => ({
@@ -115,7 +119,7 @@ export default function Home() {
     const digits = input.replace(/\D/g, "");
 
     // If it's 11 digits and starts with 387 → strip "387"
-    if (digits.length === 11 && digits.startsWith("387")) {
+    if (digits.length >= 11 && digits.startsWith("387")) {
       return digits.slice(3);
     }
 
@@ -348,13 +352,13 @@ export default function Home() {
                     Broj Telefona:
                   </label>
                   <div className={styles.phoneInputContainer}>
-                    <span className={styles.phonePrefix}>+</span>
+                    
                     <input
                       type="tel"
                       //pattern="[0-9]*"
                       id={`brojTelefona-${index}`}
                       value={config.brojTelefona}
-                      placeholder="Npr. 38751123456, 051223456, 51123456"
+                      placeholder="Npr. +38751123456, 051223456, 51123456"
                       //minLength={8}
                       //maxLength={11}
                       onChange={(e) =>
