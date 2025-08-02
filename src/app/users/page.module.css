@@ -29,10 +29,10 @@
 .pageContainer {
  
   padding: 2rem; /* more breathing room */
-  
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   gap: 2rem;
 }

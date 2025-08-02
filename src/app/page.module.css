@@ -5,6 +5,7 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  
 }
 
 .twoColumn {
@@ -28,7 +29,7 @@
   margin-bottom: 0.5rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: rgba(108, 156, 198, 0.5) 2px 2px 8px 0px;
+
   background-color: #3c495f; /* tailwind gray-700 */
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
@@ -41,18 +42,24 @@
 
 .textItem:hover {
   transform: scale(1.05);
-  color: #63b3ed; /* blue-400 */
-  box-shadow: 0 0 0 2px #63b3ed;
-  background: linear-gradient(145deg, #2d3748, #1a202c);
+  background: #bdc3c7; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to bottom,
+    #bdc3c7,
+    #2c3e50
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #bdc3c7, #2c3e50);
 }
 
 .active {
-  background: linear-gradient(
-    to top,
-    rgba(0, 112, 243, 0.9),
-    rgba(0, 112, 243, 0.2)
-  );
-  color: white;
+  background: #bdc3c7; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to bottom,
+    #bdc3c7,
+    #2c3e50
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #bdc3c7, #2c3e50);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
 .grid {
@@ -78,7 +85,7 @@
 }
 
 .item:hover {
-  transform: scale(1.03);
+  transform: scale(1.05);
   box-shadow: rgba(108, 156, 198, 0.5) 4px 4px 8px 0px;
   transition: all 0.3s ease;
   background-color: #fff;
@@ -113,6 +120,7 @@
   bottom: 0;
   left: 0;
   right: 0;
+  height: 4rem;
   padding: 12px 10px;
   color: white;
   font-weight: bold;
@@ -131,21 +139,34 @@
 
 .form {
   flex: 1; /* Allow it to grow and shrink */
-  background-color: #232e3e; /* Darker background for the form card */
+  /* Darker background for the form card */
   padding: 2rem;
   border-radius: 10px;
-  box-shadow: #6c9cc6 0px 7px 29px 0px;
   width: 100%;
   display: flex;
   align-items: self-start;
   flex-direction: column;
   gap: 1.5rem; /* Gap between major form sections (MAC field, port groups, button) */
   margin-bottom: 6rem;
-  border: 1px solid #4a5568;
+  background: #bdc3c7; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to bottom,
+    #bdc3c7,
+    #2c3e50
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #bdc3c7,
+    #2c3e50
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  
+  box-shadow: rgba(108, 156, 198, 0.5) 4px 4px 8px 0px;
+
 }
 
 .form h3 {
-  color: #63b3ed;
+  color: #242b38;
   margin-top: 0;
   margin-bottom: 1rem;
   text-align: center;
@@ -154,6 +175,7 @@
 /* Style for the single MAC address field container */
 .macField label {
   margin-right: 1rem;
+  color: #242b38 !important;
 }
 
 .errorMessage {
@@ -175,10 +197,11 @@
 
 /* Style for individual port group inputs */
 .portGroup {
-  border: 1px dashed #4a5568; /* Dashed border to separate port groups */
+  background-color: #ffffff;
+  border: 1px dashed #cbd5e0; /* Dashed border to separate port groups */
   padding: 1rem;
   border-radius: 8px;
-  background-color: #242b38; /* Slightly darker background for port group */
+  background-color: #545b69; /* Slightly darker background for port group */
   display: flex; /* Make portGroup a flex container too */
   flex-direction: column; /* Stack its internal divs vertically */
   gap: 1rem; /* Space between the port heading and the field divs */
@@ -189,7 +212,7 @@
 }
 
 .portHeading {
-  color: #63b3ed;
+  color: #4299e1;
   margin-top: 0;
   margin-bottom: 0.5rem;
   text-align: center;
@@ -209,7 +232,7 @@
   min-width: 100px; /* Ensure a minimum width */
   text-align: right; /* Align label text to the right */
   margin-bottom: 0; /* Remove default bottom margin */
-  color: #a0aec0; /* Lighter color for labels */
+  color: #d1c8c8; /* Lighter color for labels */
   font-size: 1.1em;
 }
 
@@ -220,12 +243,13 @@
   /* --- MODIFIED --- */
   padding: 0.6rem 0.8rem; /* Reduced padding */
   /* --- END MODIFIED --- */
-  border: 1px solid #4a5568; /* Medium dark gray for borders */
+  /* Medium dark gray for borders */
   border-radius: 5px;
   font-size: 1em;
-  color: #e2e8f0; /* Light text color for input values */
-  background-color: #2d3748; /* Match form background */
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  color: #1a202c;
+  background-color: #edf2f7;
+  border: 1px solid #cbd5e0;
 }
 
 .main form input[type="text"] {
@@ -301,22 +325,12 @@
   transform: none;
 }
 
-.footer {
-  padding: 1rem;
-  text-align: center;
-  color: #a0aec0; /* Lighter text color for footer */
-  font-size: 0.9em;
-  border-top: 1px solid #2d3748;
-  background-color: #1a202c; /* Matches page background */
-}
-
 .phoneInputContainer {
   display: flex; /* Makes prefix and input align horizontally */
   align-items: center; /* Vertically centers them */
-  border: 1px solid #4a5568; /* Match input border */
+  border: 1px solid #677284; /* Match input border */
   border-radius: 8px; /* Match input border-radius */
   overflow: hidden; /* Ensures no content spills out */
-
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -327,7 +341,7 @@
 
 .phonePrefix {
   padding: 0.8rem 0.5rem 0.8rem 1rem; /* Padding for the prefix */
-  color: #c7b0b0; /* Slightly muted color for the prefix */
+  color: #b0b5c7; /* Slightly muted color for the prefix */
   font-size: 1rem;
   /* Ensure it doesn't shrink */
   flex-shrink: 0;
