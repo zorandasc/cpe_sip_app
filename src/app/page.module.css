@@ -198,7 +198,7 @@
 /* Style for individual port group inputs */
 .portGroup {
   background-color: #ffffff;
-  border: 1px dashed #cbd5e0; /* Dashed border to separate port groups */
+  border: 1px solid #cbd5e0; /* Dashed border to separate port groups */
   padding: 1rem;
   border-radius: 8px;
   background-color: #545b69; /* Slightly darker background for port group */
