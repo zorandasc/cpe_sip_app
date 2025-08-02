@@ -124,9 +124,8 @@
   padding: 12px 10px;
   color: white;
   font-weight: bold;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4));
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5));
+  
 }
 
 .fullWidthForm {
@@ -212,7 +211,7 @@
 }
 
 .portHeading {
-  color: #4299e1;
+  color: #bdc3c7;
   margin-top: 0;
   margin-bottom: 0.5rem;
   text-align: center;
