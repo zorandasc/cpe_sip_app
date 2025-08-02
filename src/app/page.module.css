@@ -5,7 +5,6 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  
 }
 
 .twoColumn {
@@ -96,11 +95,17 @@
 }
 
 .selectedItem .overlay {
+  background: #4b6cb7; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to bottom,
+    #182848,
+    #4b6cb7
+  ); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(
-    to top,
-    rgba(0, 112, 243, 0.9),
-    rgba(0, 112, 243, 0.2)
-  );
+    to bottom,
+    #182848,
+    #4b6cb7
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .imageContainer {
@@ -125,7 +130,6 @@
   color: white;
   font-weight: bold;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5));
-  
 }
 
 .fullWidthForm {
@@ -159,9 +163,7 @@
     #2c3e50
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
-  
   box-shadow: rgba(108, 156, 198, 0.5) 4px 4px 8px 0px;
-
 }
 
 .form h3 {
@@ -276,7 +278,18 @@
 }
 
 .submit {
-  background-color: #4299e1; /* A strong, clear blue */
+  background: #4b6cb7; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to bottom,
+    #182848,
+    #4b6cb7
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #182848,
+    #4b6cb7
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5);
   color: whitesmoke;
   border: none;
   padding: 0.5rem 1.2rem;
@@ -296,7 +309,7 @@
   margin-left: 0.3rem;
 }
 .submit:hover {
-  background-color: #2369a2;
+  box-shadow: none;
 
   transform: translateY(5px);
 }
@@ -306,7 +319,7 @@
 }
 
 .submit:active {
-  background-color: #2b6cb0;
+  box-shadow: none;
 
   box-shadow: none;
   transform: translateY(5px);

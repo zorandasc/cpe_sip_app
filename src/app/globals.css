@@ -26,8 +26,11 @@ body {
   /*ADDED FOR STIKCY POSTION*/
   overflow: visible;
   font-size: 16px;
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+ /*
+  background: #000000;
+  background: -webkit-linear-gradient(to bottom, #000000, #434343); 
+  background: linear-gradient(to bottom, #000000, #434343);
+*/
 }
 
 * {

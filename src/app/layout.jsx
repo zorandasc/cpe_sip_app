@@ -36,8 +36,11 @@ export default function RootLayout({ children }) {
                   secondary: "black",
                 },
                 style: {
-                  background: "aquamarine",
-                  color: "black",
+                  background: "#44A08D",
+
+                  background: "linear-gradient(to bottom, #093637, #44A08D)",
+
+                  color: "whitesmoke",
                   fontSize: "1rem",
                 },
               },
@@ -47,8 +50,11 @@ export default function RootLayout({ children }) {
                   secondary: "red",
                 },
                 style: {
-                  background: "salmon",
-                  color: "#333",
+                  background: "#ff0084",
+
+                  background: "linear-gradient(to bottom, #33001b, #ff0084)",
+
+                  color: "whitesmoke",
                   fontSize: "1rem",
                 },
               },
