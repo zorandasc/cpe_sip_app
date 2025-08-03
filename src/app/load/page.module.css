@@ -17,15 +17,25 @@
   position: relative;
   width: 85%;
   margin: 0 auto;
-  background-color: #232e3e; /* darker neutral (tailwind's gray-800) */
   border-radius: 0.75rem;
-  box-shadow: #6c9cc6 0px 7px 29px 0px;
   padding: 1rem;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 1.5rem;
   place-items: baseline;
   color: #f0f0f0;
+  background: -webkit-linear-gradient(
+    to bottom,
+    #bdc3c7,
+    #2c3e50
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #bdc3c7,
+    #2c3e50
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  box-shadow: rgba(108, 156, 198, 0.5) 4px 4px 8px 0px;
 }
 
 .total {
@@ -51,6 +61,7 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  padding: 10px;
 }
 
 .loadingText {
@@ -149,7 +160,7 @@
   border-radius: 12px;
   width: 90%;
   max-width: 900px;
-  max-height: 90vh;
+  max-height: 95vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -190,6 +201,8 @@
 .modalHeader {
   padding: 0.5rem 1.5rem;
   border-bottom: 1px solid #333;
+  display: flex;
+  justify-content: space-between;
 }
 
 .modalTitle {
@@ -216,9 +229,35 @@
   border-top: 1px solid #333;
 }
 
-.saveButton {
-  background-color: #4caf50;
+.themeButton {
   color: white;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  background: #3e5151; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to bottom,
+    #3e5151,
+    #decba4
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #3e5151, #decba4);
+}
+
+.themeButton:hover {
+  background-color: #666;
+}
+
+.saveButton {
+  background: #67b26f; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to bottom,
+    #67b26f,
+    #4ca2cd
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #67b26f, #4ca2cd);
   border: none;
   padding: 0.5rem 1.25rem;
   border-radius: 6px;
@@ -228,6 +267,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5);
+  transition: all 0.5s ease;
 }
 
 .saveButton svg {
@@ -235,6 +276,8 @@
 }
 .saveButton:hover {
   background-color: #45a043;
+  box-shadow: none;
+  transform: scale(0.9);
 }
 
 .closeButton {

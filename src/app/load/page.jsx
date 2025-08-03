@@ -12,6 +12,7 @@ import toast from "react-hot-toast";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-xml";
 import "ace-builds/src-noconflict/theme-merbivore_soft";
+import "ace-builds/src-noconflict/theme-kuroir";
 import "ace-builds/src-noconflict/ext-searchbox";
 
 //FRONTEND STRANICA SVIH VOIP KONFIG FAJLOVA
@@ -36,6 +37,8 @@ export default function Load() {
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
+
+  const [theme, setTheme] = useState("kuroir");
 
   const LIMIT = 50;
   const totalPages = Math.ceil(totalCount / LIMIT);
@@ -163,6 +166,8 @@ export default function Load() {
     //A SAMIM TIM I OFFSET. NESTO STATE KASNI
     setPage(0);
 
+    //console.log(folderName);
+
     const params = new URLSearchParams({
       limit: LIMIT,
       offset: 0,
@@ -187,6 +192,8 @@ export default function Load() {
       setHasMore(data.hasMore);
       setTotalCount(data.totalCount);
     } catch (error) {
+      setAllFiles([]);
+      setTotalCount(0);
       console.log("Could not retrieve file in folder:", error);
       toast.error(`Could not retrieve file in folder:", ${error}`);
     }
@@ -212,6 +219,12 @@ export default function Load() {
 
   const handleRightClick = () =>
     setPage((prev) => Math.min(prev + 1, totalPages - 1));
+
+  const handleToggleTheme = () => {
+    setTheme((prev) =>
+      prev === "merbivore_soft" ? "kuroir" : "merbivore_soft"
+    );
+  };
 
   useEffect(() => {
     const params = new URLSearchParams({
@@ -327,14 +340,22 @@ export default function Load() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className={styles.modalHeader}>
-              <h2 className={styles.modalTitle}>Editing File</h2>
-              <p className={styles.filename}>{selectedFile}</p>
+              <div>
+                <h2 className={styles.modalTitle}>Editing File</h2>
+                <p className={styles.filename}>{selectedFile}</p>
+              </div>
+              <button
+                onClick={handleToggleTheme}
+                className={styles.themeButton}
+              >
+                {theme === "merbivore_soft" ? "Light" : "Dark"} Theme
+              </button>
             </div>
 
             <div className={styles.editorContainer}>
               <AceEditor
                 mode="xml"
-                theme="merbivore_soft"
+                theme={theme}
                 value={rawXmlContent}
                 onChange={(val) => setRawXmlContent(val)}
                 name="xml_editor"

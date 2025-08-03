@@ -180,7 +180,7 @@
 }
 
 .errorMessage {
-  color: tomato; /* Red text for error message */
+  color: #c93116;; /* Red text for error message */
   font-size: 0.85em;
   margin-top: 0.5rem; /* Space above message */
   /* Position the error message below the input, aligned with its start */

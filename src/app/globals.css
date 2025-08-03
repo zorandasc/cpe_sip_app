@@ -26,7 +26,7 @@ body {
   /*ADDED FOR STIKCY POSTION*/
   overflow: visible;
   font-size: 16px;
- /*
+  /*
   background: #000000;
   background: -webkit-linear-gradient(to bottom, #000000, #434343); 
   background: linear-gradient(to bottom, #000000, #434343);
@@ -51,7 +51,7 @@ a {
 }
 
 /*FOR AceEditor */
-
+/*DARK THEME*/
 .ace-merbivore-soft .ace_comment {
   color: #86bdcb !important; /* or any custom color */
   font-style: italic;
@@ -69,4 +69,30 @@ a {
 
 .ace-merbivore-soft .ace_marker-layer .ace_selected-word {
   background-color: #2d0f97 !important;
+}
+
+.ace_editor .ace_marker-layer .ace_selection {
+  background-color: #1e90ff66 !important; /* dodgerblue with transparency */
+}
+
+/*LIGHT THEME*/
+.ace-kuroir .ace_comment {
+  color: #686079 !important; /* or any custom color */
+  font-style: italic;
+}
+.ace-kuroir .ace_text {
+  color: #660c3e !important; /* or any custom color */
+  font-style: italic;
+  font-weight: bold !important;
+}
+
+.ace-kuroir .ace_tag {
+  font-weight: bold !important;
+  font-style: italic;
+}
+
+
+.ace-kuroir .ace_attribute-value {
+  color: #8b5d0f !important; /* your desired color */
+  font-style: italic;
 }
