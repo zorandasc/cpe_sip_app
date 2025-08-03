@@ -23,17 +23,13 @@
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 1.5rem;
   place-items: baseline;
-  color: #f0f0f0;
+  background: #c9d6ff; /* fallback for old browsers */
   background: -webkit-linear-gradient(
     to bottom,
-    #bdc3c7,
-    #2c3e50
+    #c9d6ff,
+    #e2e2e2
   ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to bottom,
-    #bdc3c7,
-    #2c3e50
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to bottom, #c9d6ff, #e2e2e2);
 
   box-shadow: rgba(108, 156, 198, 0.5) 4px 4px 8px 0px;
 }
@@ -327,7 +323,7 @@
 
 .activeFolder {
   background-color: #718096;
-  color: #63b3ed;
+  color: #1a202c;
   box-shadow: rgba(108, 156, 198, 0.5) 4px 4px 8px 0px;
 }
 
