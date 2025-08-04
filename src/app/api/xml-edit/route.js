@@ -9,9 +9,9 @@ const PASSWORD = process.env.OPEN_SSL_PAS; // 🔐 Hardcoded password
 
 //BECKEND API ROUTA ZA CUVANJE EDITOVANOG VOIP KONFIG FAJLA
 export async function POST(req) {
-  const { fileName, folderName, xml } = await req.json();
+  const { fileName, folderPath, xml } = await req.json();
 
-  //npr. fileName=cfgADC356BF67FD.xml, folderName: xmlconfigs/Grandstream
+  //npr. fileName=cfgADC356BF67FD.xml, folderPath: xmlconfigs/Grandstream
 
   if (!fileName || !xml) {
     return NextResponse.json(
@@ -23,7 +23,7 @@ export async function POST(req) {
     // Define the directory where files will be saved
     // IMPORTANT: This path is relative to where your Next.js app is running
     // inside the Docker container. You'll map this via Docker volumes.
-    const saveDirectory = path.join(process.cwd(), folderName);
+    const saveDirectory = path.join(process.cwd(), folderPath);
 
     // Ensure the directory exists
     await fs.mkdir(saveDirectory, { recursive: true });

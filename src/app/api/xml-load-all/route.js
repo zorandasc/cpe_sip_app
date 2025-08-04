@@ -9,19 +9,19 @@ export async function GET(req) {
 
   const limit = parseInt(searchParams.get("limit") || 20, 10);
   const offset = parseInt(searchParams.get("offset") || 0, 10);
-  const folder = searchParams.get("folderName");
+  const folderPath = searchParams.get("folderPath");
   const search = searchParams.get("search")?.toLowerCase() || "";
 
-  if (!folder) {
+  if (!folderPath) {
     return NextResponse.json(
-      { message: "Missing folder name." },
+      { message: "Missing folder path." },
       { status: 400 }
     );
   }
 
   try {
     //GET DIRECTORY PATH
-    const directoryPath = path.join(process.cwd(), folder);
+    const directoryPath = path.join(process.cwd(), folderPath);
 
     //READ ALL FILES AND FOLDERS IN xmlconfigs DIRECTORY
     const dirents = await fs.readdir(directoryPath, { withFileTypes: true });
@@ -81,7 +81,7 @@ export async function GET(req) {
     if (error.code === "ENOENT") {
       // Directory does not exist
       return NextResponse.json(
-        { message: `Folder '${folder.split("/").pop()}' not found.` },
+        { message: `Folder '${folderPath}' not found.` },
         { status: 404 }
       );
     }

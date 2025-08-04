@@ -1,4 +1,4 @@
-export default function createPolycomXml(portConfigs) {
+export default function createPolycomXml(selectedPhone, mac, portConfigs) {
   let config = portConfigs[0];
 
   //config={brojTelefona:"51330181",sifra:"123xxx"}

@@ -56,7 +56,7 @@ export default function Load() {
       const res = await fetch("/api/xml-load-one", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fileName, selectedFolder }),
+        body: JSON.stringify({ fileName, folderPath: selectedFolder.path }),
       });
 
       //RESPONSE MOZE BITI TEXT ILI BLOB
@@ -117,8 +117,10 @@ export default function Load() {
   const handleSaveAndSendXml = async (e) => {
     e.preventDefault();
 
+    const isXml = selectedFile.slice(-4).toLowerCase() === ".xml";
+
     //AKO POSTOJI GRESKA U XML STRUKTURI RETURN
-    if (!parseAndValidateXml(rawXmlContent)) return;
+    if (isXml && !parseAndValidateXml(rawXmlContent)) return;
 
     try {
       const res = await fetch("/api/xml-edit", {
@@ -128,7 +130,7 @@ export default function Load() {
         },
         body: JSON.stringify({
           fileName: selectedFile,
-          folderName: selectedFolder,
+          folderPath: selectedFolder.path,
           xml: rawXmlContent,
         }),
       });
@@ -161,17 +163,18 @@ export default function Load() {
     }, 300); // match duration of animation
   };
 
-  const loadFilesFromFolder = async (folderName) => {
+  const loadFilesFromFolder = async (folder) => {
     //KOD PROMJENA FOLDERA SET PAGE TO 0
     //A SAMIM TIM I OFFSET. NESTO STATE KASNI
     setPage(0);
 
-    //console.log(folderName);
+    //SAVE SELECTED SUBFOLDER THIS WE ARE USING FOR SAVING XML TO NETWORK
+    setSelectedFolder(folder);
 
     const params = new URLSearchParams({
       limit: LIMIT,
       offset: 0,
-      folderName,
+      folderPath: folder.path,
       search: searchFile,
     });
 
@@ -179,9 +182,6 @@ export default function Load() {
       const res = await fetch(`/api/xml-load-all?${params}`);
 
       const data = await res.json();
-
-      //SAVE SELECTED SUBFOLDER THIS WE ARE USING FOR SAVING XML TO NETWORK
-      setSelectedFolder(folderName);
 
       if (!res.ok) {
         throw new Error(data.message || "Failed to fetch filess");
@@ -230,7 +230,7 @@ export default function Load() {
     const params = new URLSearchParams({
       limit: LIMIT,
       offset: page * LIMIT,
-      folderName: selectedFolder,
+      folderPath: selectedFolder.path,
       search: searchFile,
     });
     // Function to fetch xml and folders
@@ -282,18 +282,17 @@ export default function Load() {
       <div className={styles.contentWrapper}>
         <ul className={styles.folderList}>
           {phoneFolders.map((folder, i) => {
-            //SKINI xmlconfigs/ IZ FOLDER NAME
-            let folderName = folder.split("/").pop();
             return (
               <li
                 key={i}
                 onClick={() => loadFilesFromFolder(folder)}
                 className={`${styles.folderItem} ${
-                  selectedFolder === folder ? styles.activeFolder : ""
+                  selectedFolder.folderName === folder.folderName
+                    ? styles.activeFolder
+                    : ""
                 }`}
               >
-                {/*AKO JE EMPTY STRING ONDA JE PARRENT FOLDER A TO JE POLYCOM */}
-                {folderName ? folderName : "Polycom"}
+                {folder.folderName}
               </li>
             );
           })}

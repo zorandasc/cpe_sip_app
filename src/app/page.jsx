@@ -27,6 +27,7 @@ export default function Home() {
 
   const [portValidationErrors, setPortValidationErrors] = useState({});
 
+  //item je phoneOptions item
   const handlePhoneSelect = (item) => {
     //PRIKAZI FORMU IZABRANOG TELEFONA
     setSelectedPhone(item);
@@ -352,7 +353,6 @@ export default function Home() {
                     Broj Telefona:
                   </label>
                   <div className={styles.phoneInputContainer}>
-                    
                     <input
                       type="tel"
                       //pattern="[0-9]*"

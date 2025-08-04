@@ -5,7 +5,6 @@ import { exec } from "child_process";
 import { promisify } from "util"; //FOR PROMISIFIKACIJU execa
 
 import { phoneConfig } from "@/utils/phoneConfig";
-import createXml from "@/utils/createXml";
 
 const PASSWORD = process.env.OPEN_SSL_PASS; // 🔐 Hardcoded password
 
@@ -22,18 +21,22 @@ export async function POST(request) {
       );
     }
 
-    //MODEL SELEKTOVANOG TELEFONA
-    const model = selectedPhone?.model;
-
     //DOBAVI CONFIG SELEKTOVANOG TELEFONA
-    const config = phoneConfig.find((c) => c.model === model);
+    const config = phoneConfig.find(
+      (c) => c.model === selectedPhone.model && c.type === selectedPhone.type
+    );
 
-    if (!config) {
+    if (!config || !config.generator) {
       return NextResponse.json(
         { message: "Unsupported phone model" },
         { status: 400 }
       );
     }
+
+    //const fullPhone = { ...selectedPhone, ...config };
+
+    //KREIRAJ XML FAJL
+    const xmlContent = config.generator(selectedPhone, mac, portConfigs);
 
     // Define the directory where files will be saved
     // IMPORTANT: This path is relative to where your Next.js app is running
@@ -58,9 +61,6 @@ export async function POST(request) {
 
     const filePath = path.join(saveDirectory, filename);
     const filePath1 = path.join(saveDirectory, filename1);
-
-    //KREIRAJ XML FAJL
-    const xmlContent = createXml(selectedPhone, mac, portConfigs);
 
     // Write the XML content to the file
     await fs.writeFile(filePath, xmlContent);

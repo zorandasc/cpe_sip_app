@@ -62,4 +62,25 @@ export const phones = [
     port: 1,
     image: "/images/SPA512G.png",
   },
+  {
+    name: "Fanvil V62GG (SIP telefon)",
+    type: "Fanvil",
+    model: "V62G",
+    port: 1,
+    image: "/images/V62G.png",
+  },
+  {
+    name: "Fanvil X3U (SIP telefon)",
+    type: "Fanvil",
+    model: "X3U",
+    port: 1,
+    image: "/images/X3U.png",
+  },
+  {
+    name: "Fanvil X7C (SIP telefon)",
+    type: "Fanvil",
+    model: "X7C",
+    port: 1,
+    image: "/images/X7C.png",
+  },
 ];

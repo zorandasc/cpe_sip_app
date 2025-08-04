@@ -1,4 +1,4 @@
-export default function createCiscoXml(portConfigs) {
+export default function createCiscoXml(selectedPhone, mac, portConfigs) {
   let config = portConfigs[0];
 
   //config={brojTelefona:"51123456",sifra:"123xxx"}

@@ -5,7 +5,9 @@ import fs from "fs/promises"; // For file system operations
 //BECKEND API ROUTA ZA DOWNLOAD JEDNOG .XML FAILA BY FILENAME
 //RETURN RAW XML (string or Blob)
 export async function POST(req) {
-  const { fileName, selectedFolder } = await req.json();
+  const { fileName, folderPath } = await req.json();
+
+  console.log(fileName, folderPath);
 
   if (!fileName) {
     return NextResponse.json(
@@ -15,7 +17,7 @@ export async function POST(req) {
   }
   /* ---------- 2. Locate the file ---------- */
   //1. search file in folder by name of file
-  const searchDir = path.join(process.cwd(), selectedFolder);
+  const searchDir = path.join(process.cwd(), folderPath);
 
   try {
     //ALL FILES IN  DIRECTORY
