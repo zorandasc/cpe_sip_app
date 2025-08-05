@@ -369,7 +369,7 @@
 }
 
 .portErrorMessage {
-  color: tomato;
+  color: #f68470;
   text-shadow: 1px 1px 1px black;
   font-size: 0.95rem;
 }

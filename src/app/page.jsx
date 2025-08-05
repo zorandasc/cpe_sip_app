@@ -160,7 +160,7 @@ export default function Home() {
     //else: IF ONE OF THE FIELD EMPTY -> ERROR
     if (!isBrojTelefonaEmpty && !isValidPhoneNumber(phone)) {
       newErrors[index] =
-        'Invalid phone number. Must be 8–11 digits. "387" for 11 digits, "0" for 9 digits.';
+        'Ne validan broj telefona. Mora biti 8–11 brojeva. "387" za 11 brojeva, "0" za 9 brojeva.';
     } else if (
       (isBrojTelefonaEmpty && !isSifraEmpty) ||
       (!isBrojTelefonaEmpty && isSifraEmpty)
