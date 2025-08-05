@@ -16,7 +16,7 @@
 }
 
 .paginationControls span {
-  color: #fff;
+  color: var(--foreground);
   text-shadow: 1px 1px #373333;
 }
 
@@ -24,6 +24,7 @@
   background: none;
   border: none;
   cursor: pointer;
+  color: var(--foreground);
 }
 .paginationButton:disabled {
   opacity: 0.5;
@@ -35,6 +36,6 @@
   font-size: 26px;
   text-decoration: none;
   border-radius: 5px;
-  color: #fff;
+  color: var(--foreground);
   transition: all 0.4s;
 }

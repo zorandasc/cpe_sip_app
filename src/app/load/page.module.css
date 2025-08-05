@@ -52,7 +52,7 @@
 }
 
 .loadingContainer {
-  background-color: #1a202c; /* bg-gray-100 */
+  background-color: transparent; /* bg-gray-100 */
   position: absolute;
   left: 50%;
   top: 50%;
@@ -62,7 +62,7 @@
 
 .loadingText {
   font-size: 1.25rem; /* text-xl */
-  color: #63b3ed; /* text-gray-800 */
+  color: var(--foreground); /* text-gray-800 */
 }
 
 .errorContainer {
@@ -226,24 +226,14 @@
 }
 
 .themeButton {
-  color: white;
   border: none;
-  padding: 0.5rem 1.25rem;
+  padding: 0.5rem;
   border-radius: 6px;
   font-size: 0.85rem;
   cursor: pointer;
   transition: background-color 0.2s;
-  background: #3e5151; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to bottom,
-    #3e5151,
-    #decba4
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #3e5151, #decba4);
-}
-
-.themeButton:hover {
-  background-color: #666;
+  background-color:transparent;
+  
 }
 
 .saveButton {

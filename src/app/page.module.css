@@ -81,6 +81,7 @@
   cursor: pointer;
   transition: transform 0.3s ease;
   background-color: #fff;
+  box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5);
 }
 
 .item:hover {

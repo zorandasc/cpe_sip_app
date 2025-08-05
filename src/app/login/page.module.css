@@ -1,3 +1,8 @@
+:global([data-theme="light"]) .pageContainer {
+  background-image: url("/board142_light.png");
+  background-color: var(--background);
+}
+
 .pageContainer {
   color: #e2e8f0;
   position: relative;

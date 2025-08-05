@@ -9,12 +9,12 @@
 }
 
 .loadingContainer {
-  background-color: #1a202c; /* bg-gray-100 */
+  background-color: transparent; /* bg-gray-100 */
 }
 
 .loadingText {
   font-size: 1.25rem; /* text-xl */
-  color: #63b3ed; /* text-gray-800 */
+  color: var(--foreground); /* text-gray-800 */
 }
 
 .errorContainer {

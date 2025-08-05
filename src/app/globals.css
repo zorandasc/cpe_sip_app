@@ -10,6 +10,18 @@
   }
 }
 
+/* Manual light theme override */
+[data-theme="light"] {
+  --background: #eae3da;
+  --foreground: #000000;
+}
+
+/* Manual dark theme override */
+[data-theme="dark"] {
+  --background: #1a202c;
+  --foreground: #ededed;
+}
+
 /*#eae3da;*/
 
 html,
@@ -22,17 +34,13 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
+  transition: background 0.3s ease, color 0.3s ease;
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /*ADDED FOR STIKCY POSTION*/
   overflow: visible;
   font-size: 16px;
-  /*
-  background: #000000;
-  background: -webkit-linear-gradient(to bottom, #000000, #434343); 
-  background: linear-gradient(to bottom, #000000, #434343);
-*/
 }
 
 * {
@@ -92,7 +100,6 @@ a {
   font-weight: bold !important;
   font-style: italic;
 }
-
 
 .ace-kuroir .ace_attribute-value {
   color: #b54204 !important; /* your desired color */

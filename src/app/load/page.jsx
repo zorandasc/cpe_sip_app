@@ -347,7 +347,7 @@ export default function Load() {
                 onClick={handleToggleTheme}
                 className={styles.themeButton}
               >
-                {theme === "merbivore_soft" ? "Light" : "Dark"} Theme
+                {theme === "merbivore_soft" ? "☀️" : "🌙"}
               </button>
             </div>
 

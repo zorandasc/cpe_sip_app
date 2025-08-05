@@ -3,7 +3,9 @@ import "./globals.css";
 
 import NavbarBottom from "../components/NavbarBottom";
 import { UserProvider } from "@/context/UserContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 import { Toaster } from "react-hot-toast";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,41 +27,44 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <UserProvider>
-          {children}
-          <NavbarBottom></NavbarBottom>
-          <Toaster
-            position="top-center"
-            toastOptions={{
-              success: {
-                iconTheme: {
-                  primary: "whitesmoke",
-                  secondary: "black",
-                },
-                style: {
-                  background: "#44A08D",
+          <ThemeProvider>
+            <ThemeToggle></ThemeToggle>
+            {children}
+            <NavbarBottom></NavbarBottom>
+            <Toaster
+              position="top-center"
+              toastOptions={{
+                success: {
+                  iconTheme: {
+                    primary: "whitesmoke",
+                    secondary: "black",
+                  },
+                  style: {
+                    background: "#44A08D",
 
-                  background: "linear-gradient(to bottom, #093637, #44A08D)",
+                    background: "linear-gradient(to bottom, #093637, #44A08D)",
 
-                  color: "whitesmoke",
-                  fontSize: "1rem",
+                    color: "whitesmoke",
+                    fontSize: "1rem",
+                  },
                 },
-              },
-              error: {
-                iconTheme: {
-                  primary: "whitesmoke",
-                  secondary: "red",
-                },
-                style: {
-                  background: "#ff0084",
+                error: {
+                  iconTheme: {
+                    primary: "whitesmoke",
+                    secondary: "red",
+                  },
+                  style: {
+                    background: "#ff0084",
 
-                  background: "linear-gradient(to bottom, #33001b, #ff0084)",
+                    background: "linear-gradient(to bottom, #33001b, #ff0084)",
 
-                  color: "whitesmoke",
-                  fontSize: "1rem",
+                    color: "whitesmoke",
+                    fontSize: "1rem",
+                  },
                 },
-              },
-            }}
-          />
+              }}
+            />
+          </ThemeProvider>
         </UserProvider>
       </body>
     </html>

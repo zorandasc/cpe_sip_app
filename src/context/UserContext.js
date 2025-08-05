@@ -56,6 +56,7 @@ export function UserProvider({ children }) {
           minHeight: "100vh",
           fontSize: "1.5rem",
           color: "#63b3ed",
+          backgroundColor: "transparent",
         }}
       >
         Loading application...
