@@ -1,11 +1,12 @@
 .pageContainer {
   color: #e2e8f0;
   position: relative;
-  background-image: url("/board142.png");
+  background-image: url("/board142_dark.png");
   background-size: contain;
   background-position: right bottom;
   background-repeat: no-repeat;
   background-color: #121a22;
+  /*background-color: #eae3da;*/ /*LIGHT VERZION*/
   height: 100vh;
   min-height: 100vh;
   width: 100%;
