@@ -149,7 +149,7 @@
   display: flex;
   align-items: self-start;
   flex-direction: column;
-  gap: 1.5rem; /* Gap between major form sections (MAC field, port groups, button) */
+  gap: 1rem; /* Gap between major form sections (MAC field, port groups, button) */
   margin-bottom: 6rem;
   background: #bdc3c7; /* fallback for old browsers */
   background: -webkit-linear-gradient(
@@ -169,7 +169,7 @@
 .form h3 {
   color: #242b38;
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   text-align: center;
 }
 
@@ -180,10 +180,10 @@
 }
 
 .errorMessage {
-  color: #c93116;; /* Red text for error message */
-  font-size: 0.85em;
+  color: tomato; /* Red text for error message */
+  text-shadow: 1px 1px 1px black;
+  font-size: 0.95em;
   margin-top: 0.5rem; /* Space above message */
-  /* Position the error message below the input, aligned with its start */
   text-align: left;
   width: 100%; /* Take full width of its flex parent to appear on new line */
   box-sizing: border-box; /* Include padding in width */
@@ -205,7 +205,7 @@
   background-color: #545b69; /* Slightly darker background for port group */
   display: flex; /* Make portGroup a flex container too */
   flex-direction: column; /* Stack its internal divs vertically */
-  gap: 1rem; /* Space between the port heading and the field divs */
+  gap: 0.5rem; /* Space between the port heading and the field divs */
 }
 
 .portGroup:last-child {
@@ -326,7 +326,7 @@
 }
 
 .submit:disabled {
-  background-color: tomato;
+  background: tomato !important;
   cursor: not-allowed;
   transform: none;
   letter-spacing: 2px;
@@ -369,8 +369,7 @@
 }
 
 .portErrorMessage {
-  color: tomato; /* A red color for error messages */
-  font-size: 0.875rem; /* Smaller font size */
-  margin-top: 0.5rem; /* Spacing above the message */
-  margin-bottom: 0.5rem;
+  color: tomato;
+  text-shadow: 1px 1px 1px black;
+  font-size: 0.95rem;
 }
