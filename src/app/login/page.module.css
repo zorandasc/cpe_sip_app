@@ -1,9 +1,9 @@
 .pageContainer {
   color: #e2e8f0;
   position: relative;
-  background-image: url("/board12.png");
+  background-image: url("/board14.png");
   background-size: cover;
-  background-position: bottom;
+  background-position: right bottom;
   background-repeat: no-repeat;
   height: 100vh;
   min-height: 100vh;
@@ -53,7 +53,7 @@
   padding: 0.75rem 1rem;
   font-size: 1rem;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 3px solid #154155;
   box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5);
   outline: none;
   transition: border 0.2s;
@@ -79,7 +79,7 @@
   background: linear-gradient(to bottom, #67b26f, #4ca2cd);
 
   color: hsl(0, 0%, 100%);
-  box-shadow: #6c9cc6 0px 7px 29px 0px;
+  box-shadow: 2px 6px 12px rgba(178, 176, 176, 0.5);
   letter-spacing: 2px;
   font-size: 15px;
   transition: all 0.5s ease;
