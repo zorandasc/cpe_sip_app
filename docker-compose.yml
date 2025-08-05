@@ -48,6 +48,7 @@ services:
       #(relative to where you run docker compose up). 
       #Docker will create this folder if it doesn't exist.
       - ../var/www/html/:/app/xmlconfigs
+      - ../var/lib/tftpboot:/app/tftpboot
       - ../var/SQLitedatabase/:/app/data
     restart: always # Keep the container running
     env_file:
