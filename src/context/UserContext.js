@@ -47,21 +47,7 @@ export function UserProvider({ children }) {
 
   // You can optionally render a loading spinner or null while user data is being fetched
   if (loadingUser) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "100vh",
-          fontSize: "1.5rem",
-          color: "#63b3ed",
-          backgroundColor: "transparent",
-        }}
-      >
-        Loading application...
-      </div>
-    );
+    return <div className="loading-screen">Loading application...</div>;
   }
 
   return (
