@@ -86,7 +86,7 @@
   background: linear-gradient(to bottom, #67b26f, #4ca2cd);
 
   color: hsl(0, 0%, 100%);
-  box-shadow: 2px 6px 12px rgba(178, 176, 176, 0.5);
+  box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5);
   letter-spacing: 2px;
   font-size: 15px;
   transition: all 0.5s ease;
@@ -95,12 +95,12 @@
 .loginButton:hover {
   letter-spacing: 1px;
   background-color: white;
-  box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.5);
   transform: translateY(5px);
 }
 
 .loginButton:active {
   letter-spacing: 3px;
   background-color: white;
-  box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.5);
 }
