@@ -1,12 +1,12 @@
 :root {
-  --background: #ffffff;
+  --background: #eae3da;
   --foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #1a202c;
-    --foreground: #ededed;
+    --foreground: #eae3da;
   }
 }
 
@@ -19,7 +19,7 @@
 /* Manual dark theme override */
 [data-theme="dark"] {
   --background: #1a202c;
-  --foreground: #ededed;
+  --foreground: #eae3da;
 }
 
 /*#eae3da;*/

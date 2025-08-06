@@ -1,3 +1,8 @@
+:global([data-theme="light"]) .form {
+  background: #ffefba;
+  background: linear-gradient(to right, #ffefba, #ffffff);
+}
+
 .main {
   padding: 2rem;
   max-width: 1300px;
@@ -41,23 +46,25 @@
 
 .textItem:hover {
   transform: scale(1.05);
-  background: #bdc3c7; /* fallback for old browsers */
+  background: #4b6cb7; /* fallback for old browsers */
   background: -webkit-linear-gradient(
     to bottom,
-    #bdc3c7,
-    #2c3e50
+    #182848,
+    #4b6cb7
   ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #bdc3c7, #2c3e50);
+  background: linear-gradient(to bottom, #182848, #4b6cb7);
+  border: 1px solid whitesmoke;
 }
 
 .active {
-  background: #bdc3c7; /* fallback for old browsers */
+  background: #4b6cb7; /* fallback for old browsers */
   background: -webkit-linear-gradient(
     to bottom,
-    #bdc3c7,
-    #2c3e50
+    #182848,
+    #4b6cb7
   ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #bdc3c7, #2c3e50);
+  background: linear-gradient(to bottom, #182848, #4b6cb7);
+  border: 1px solid whitesmoke;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
@@ -93,6 +100,7 @@
 .selectedItem {
   box-shadow: rgba(108, 156, 198, 0.5) 4px 4px 8px 0px;
   border: 1px solid rgba(0, 112, 243, 1);
+  border: 1px solid whitesmoke;
 }
 
 .selectedItem .overlay {
@@ -164,7 +172,7 @@
     #2c3e50
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
-  box-shadow: rgba(108, 156, 198, 0.5) 4px 4px 8px 0px;
+  box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5);
 }
 
 .form h3 {

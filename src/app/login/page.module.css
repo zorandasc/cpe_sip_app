@@ -3,6 +3,11 @@
   background-color: var(--background);
 }
 
+:global([data-theme="light"]) .title{
+  color: #e7bba7;
+}
+
+
 .pageContainer {
   color: #e2e8f0;
   position: relative;
@@ -37,7 +42,7 @@
   margin-top: 2rem;
   margin-bottom: 2rem;
   font-size: 2.5em;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
 }
 
 .error {

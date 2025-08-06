@@ -26,12 +26,16 @@ export default function LoginPage() {
       const data = await res.json();
 
       if (!res.ok) {
-        toast.error(`Login failed: ${data.message}`);
+        toast.error(`Login failed: ${data.message}`, {
+          position: "top-left",
+        });
 
         return;
       }
 
-      toast.success(`${data.message}. 'Happy Hunting'`);
+      toast.success(`${data.message}. 'Happy Hunting'`, {
+        position: "top-left",
+      });
 
       // OPTIMIZATION: update CONTEXT LOGOVANIM KORISNIKOM
       setUser(data.user);
@@ -42,7 +46,9 @@ export default function LoginPage() {
       }, 1200);
     } catch (err) {
       console.log("Something went wrong", err);
-      toast.error(`Something went wrong", ${err}`);
+      toast.error(`Something went wrong", ${err}`, {
+        position: "top-left",
+      });
     }
   };
 
