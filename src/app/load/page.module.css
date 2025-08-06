@@ -1,3 +1,12 @@
+:global([data-theme="light"]) .itemsContainer {
+  background: #ffefba;
+  background: linear-gradient(to right, #ffefba, #ffffff);
+}
+
+:global([data-theme="light"]) .loadingText {
+  color: var(--foreground);
+}
+
 .pageContainer {
   min-height: 100vh;
   padding: 2rem; /* more breathing room */
@@ -62,7 +71,7 @@
 
 .loadingText {
   font-size: 1.25rem; /* text-xl */
-  color: var(--foreground); /* text-gray-800 */
+  /* text-gray-800 */
 }
 
 .errorContainer {
@@ -115,6 +124,7 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   width: 100%;
   word-break: break-word;
+  box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5);
 }
 
 .file:hover {

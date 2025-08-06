@@ -1,4 +1,24 @@
-/* src/app/users/page.module.css */
+:global([data-theme="light"]) .contentWrapper {
+  background: #ffefba; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #ffefba,
+    #ffffff
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #ffefba, #ffffff);
+}
+
+:global([data-theme="light"]) .userTable {
+  background-color: #c4c7cc;
+}
+
+:global([data-theme="light"]) .tableHeader {
+  background-color: #6b6d6f;
+}
+
+:global([data-theme="light"]) .tableCell {
+  color: #242b38;
+}
 
 .loadingContainer,
 .errorContainer {
@@ -67,7 +87,7 @@
     #2c3e50
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
-  box-shadow: rgba(108, 156, 198, 0.5) 4px 4px 8px 0px;
+  box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5);
 }
 
 .title {
@@ -123,11 +143,11 @@
 }
 
 .tableCell {
-  padding: 0.75rem 1rem; /* py-3 px-4 */
+  padding: 0.5rem 1rem; /* py-3 px-4 */
   white-space: nowrap; /* whitespace-nowrap */
   font-size: 1.2rem; /* text-sm */
   color: #a0aec0; /* text-gray-800 */
-  border-bottom: 1px solid #e5e7eb; /* Add border-bottom to cells for row separation */
+  border-bottom: 1px solid #ffffff; /* Add border-bottom to cells for row separation */
 }
 
 /* Remove border-bottom from the last cell of the last row */
@@ -181,7 +201,7 @@
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
   color: hsl(0, 0%, 100%);
-  box-shadow: 2px 6px 12px rgba(178, 176, 176, 0.5);
+  box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5);
   letter-spacing: 2px;
   font-size: 15px;
   transition: all 0.5s ease;
