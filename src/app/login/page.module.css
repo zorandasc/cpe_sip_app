@@ -3,10 +3,19 @@
   background-color: var(--background);
 }
 
-:global([data-theme="light"]) .title{
+:global([data-theme="light"]) .title {
   color: #e7bba7;
 }
 
+:global([data-theme="light"]) .form input {
+  background-color: whitesmoke;
+  border: 3px solid #8f979b;
+  color: var(--foreground);
+}
+
+:global([data-theme="light"]) .form input:focus {
+  border-color: #e7bba7;
+}
 
 .pageContainer {
   color: #e2e8f0;
