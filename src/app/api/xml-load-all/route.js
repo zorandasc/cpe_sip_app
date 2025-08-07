@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import path from "path"; // For path manipulation
 import fs from "fs/promises"; // For file system operations
 
+import { phoneConfig } from "@/utils/phoneConfig";
+
 //BECKEND API ROUTA ZA DOWNLOAD ALL .XML
 //AND ALL SUBFOLDERS IN xmlconfigs PARRENT FOLDER
 export async function GET(req) {
@@ -19,6 +21,16 @@ export async function GET(req) {
     );
   }
 
+  //DOBAVI CONFIG SELEKTOVANOG TELEFONA
+  const config = phoneConfig.find((phone) => phone.path == folderPath);
+
+  if (!config) {
+    return NextResponse.json(
+      { message: "Unsupported phone model" },
+      { status: 400 }
+    );
+  }
+
   try {
     //GET DIRECTORY PATH
     const directoryPath = path.join(process.cwd(), folderPath);
@@ -29,11 +41,12 @@ export async function GET(req) {
     const seen = new Set();
     const uniqueXmlFiles = [];
 
-    //FORMING FILES ARRAY ONLY OF .xml, .cfg
+    //FORMING FILES ARRAY ONLY OF PREFIX AND EXSTENZIONS
     for (const dirent of dirents) {
       if (
         dirent.isFile() &&
-        (dirent.name.endsWith(".cfg") || dirent.name.endsWith(".xml"))
+        dirent.name.startsWith(config.prefix) &&
+        dirent.name.endsWith(config.extension)
       ) {
         const name = dirent.name;
         const base = name.toLowerCase();

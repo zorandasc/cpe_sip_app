@@ -7,14 +7,14 @@ import fs from "fs/promises"; // For file system operations
 export async function POST(req) {
   const { fileName, folderPath } = await req.json();
 
-  console.log(fileName, folderPath);
-
   if (!fileName) {
     return NextResponse.json(
       { message: "Ime fajla je obavezno." },
       { status: 400 }
     );
   }
+
+  
   /* ---------- 2. Locate the file ---------- */
   //1. search file in folder by name of file
   const searchDir = path.join(process.cwd(), folderPath);

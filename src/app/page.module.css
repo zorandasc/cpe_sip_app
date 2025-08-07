@@ -3,7 +3,6 @@
   background: linear-gradient(to right, #ffefba, #ffffff);
 }
 
-
 :global([data-theme="light"]) .portGroup {
   background-color: #90969c;
 }
@@ -19,6 +18,10 @@
   color: #89cffe;
 }
 
+:global([data-theme="light"]) .portErrorMessage {
+  color: #9c0b27;
+  text-shadow: 1px 1px 1px #a98282;
+}
 .main {
   padding: 2rem;
   max-width: 1300px;
@@ -403,4 +406,13 @@
   color: #f68470;
   text-shadow: 1px 1px 2px black;
   font-size: 0.95rem;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-size: 1.5rem;
+  color: var(--foreground);
 }

@@ -90,6 +90,7 @@ export default function Load() {
 
       if (!xmlText) {
         toast.error("Unexpected response type — expected XML.");
+        setRawXmlContent(xmlText);
         return;
       }
 
@@ -192,8 +193,8 @@ export default function Load() {
       setAllFiles([]);
       setTotalCount(0);
       console.log("Could not retrieve file in folder:", error);
-      toast.error(`Could not retrieve file in folder:", ${error}`,{
-        position:"top-left"
+      toast.error(`Could not retrieve file in folder:", ${error}`, {
+        position: "top-left",
       });
     }
   };

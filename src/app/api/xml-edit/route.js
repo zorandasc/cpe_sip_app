@@ -20,6 +20,34 @@ export async function POST(req) {
     );
   }
   try {
+    //EXTRACT EXTENZIJU (.xml, .cfg)
+    const ext = path.extname(fileName);
+
+    //ODUZMI OD CIJELOG IMENA EKSTENZIJU
+    //npr. cfgADC356BF67FD
+    const nameOnly = path.basename(fileName, ext);
+
+    //ODUZMI OD CIJELOG IMENA 12 KARAKTERA ODZADA
+    //PREFIX:,NPR cfg, phone1
+    const prefix = nameOnly.slice(0, -12);
+
+    //NA OSNOVU FOLDERA, PREFIKSA I EKSTENZIJE PRONACI PRAVI phonConfig
+    const config = phoneConfig.find(
+      (phone) =>
+        phone.path == folderPath &&
+        phone.extension == ext &&
+        phone.prefix === prefix
+    );
+
+    if (!config) {
+      return NextResponse.json(
+        {
+          message: "Unsupported: phone, file ext. and folder name combination.",
+        },
+        { status: 400 }
+      );
+    }
+
     // Define the directory where files will be saved
     // IMPORTANT: This path is relative to where your Next.js app is running
     // inside the Docker container. You'll map this via Docker volumes.
@@ -29,16 +57,6 @@ export async function POST(req) {
     await fs.mkdir(saveDirectory, { recursive: true });
 
     //CONVERT TO UPPERCASE MAC
-    //EXTRACT EXTENZIJU (.xml, .cfg)
-    const ext = path.extname(fileName);
-
-    //ODUZMI OD CIJELOG IMENA EKSTENZIJU
-    //npr. cfgADC356BF67FD
-    const nameOnly = path.basename(fileName, ext);
-
-    //PREFIX:,NPR cfg
-    const prefix = nameOnly.slice(0, -12);
-
     //SLICE 12 MIJESTA UNAZAD DA EKSTRAKTUJES MAC
     //npr. ADC356BF67FD
     const upperCaseMac = nameOnly.slice(-12).toUpperCase();
@@ -56,11 +74,6 @@ export async function POST(req) {
 
     console.log(`Successfully saved XML to: ${lowerCaseFilePath}`);
     console.log(`Successfully saved XML to: ${upperCaseFilePath}`);
-
-    //NA OSNOVU PREFIKSA I EKSTENZIJE PRONACI PRVI phonConfig
-    const config = phoneConfig.find(
-      (phone) => phone.extension == ext && phone.prefix === prefix
-    );
 
     //ENKTIPCIJA .xml FAJLA
     //DEFINISI DIREKTORIJ FOR STORING ENCRYPTED

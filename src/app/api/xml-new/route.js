@@ -23,12 +23,13 @@ export async function POST(request) {
 
     //DOBAVI CONFIG SELEKTOVANOG TELEFONA
     const config = phoneConfig.find(
-      (c) => c.model === selectedPhone.model && c.type === selectedPhone.type
+      (phone) =>
+        phone.model === selectedPhone.model && phone.type === selectedPhone.type
     );
 
     if (!config || !config.generator) {
       return NextResponse.json(
-        { message: "Unsupported phone model" },
+        { message: "Unsupported phone model." },
         { status: 400 }
       );
     }

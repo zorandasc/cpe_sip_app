@@ -260,20 +260,7 @@ export default function Home() {
   };
 
   if (loading) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "100vh",
-          fontSize: "1.5rem",
-          color: "#63b3ed",
-        }}
-      >
-        Sending data...
-      </div>
-    );
+    return <div className={styles.loading}>Sending data...</div>;
   }
 
   return (
