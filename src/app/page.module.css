@@ -3,18 +3,9 @@
   background: linear-gradient(to right, #ffefba, #ffffff);
 }
 
-:global([data-theme="light"]) .main form input[type="text"],
-.main form input[type="password"] {
-  color: #1a202c !important;
-  background-color: #edf2f7 !important;
-}
 
-:global([data-theme="light"]) .phoneInput {
-  color: #1a202c !important;
-  background-color: #edf2f7 !important;
-}
 :global([data-theme="light"]) .portGroup {
-  background-color: #6b6d6f;
+  background-color: #90969c;
 }
 
 :global([data-theme="light"]) .portGroup label {
@@ -22,7 +13,10 @@
 }
 
 :global([data-theme="light"]) .phonePrefix {
-  color: #63b3ed;
+  color: #89cffe;
+}
+:global([data-theme="light"]) .portHeading {
+  color: #89cffe;
 }
 
 .main {
@@ -275,6 +269,8 @@
   font-size: 1em;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
   border: 1px solid #cbd5e0;
+  color: #1a202c !important;
+  background-color: #edf2f7 !important;
 }
 
 .main form input[type="text"],
@@ -405,6 +401,6 @@
 
 .portErrorMessage {
   color: #f68470;
-  text-shadow: 1px 1px 1px black;
+  text-shadow: 1px 1px 2px black;
   font-size: 0.95rem;
 }
