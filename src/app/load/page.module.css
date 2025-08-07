@@ -263,6 +263,7 @@
     #4ca2cd
   ); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to bottom, #67b26f, #4ca2cd);
+  color: whitesmoke;
   border: none;
   padding: 0.5rem 1.25rem;
   border-radius: 6px;

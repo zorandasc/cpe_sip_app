@@ -96,10 +96,7 @@ export default function Load() {
       //STORE RAW XML TO STATE
       setRawXmlContent(xmlText);
 
-      toast.success(`${fileName}, loaded.`, {
-        position: "top-right",
-        duration: 3000,
-      });
+      toast.success(`${fileName}, loaded.`, {});
     } catch (err) {
       console.log("Something went wrong", err);
       toast.error(`Something went wrong", ${err}`);
@@ -195,7 +192,9 @@ export default function Load() {
       setAllFiles([]);
       setTotalCount(0);
       console.log("Could not retrieve file in folder:", error);
-      toast.error(`Could not retrieve file in folder:", ${error}`);
+      toast.error(`Could not retrieve file in folder:", ${error}`,{
+        position:"top-left"
+      });
     }
   };
 
