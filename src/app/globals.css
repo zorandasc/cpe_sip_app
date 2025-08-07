@@ -1,17 +1,17 @@
 :root {
-  --background: #1a202c;
+  --background: #141b23;/*#141b23*/
   --foreground: #eae3da;
 }
 
 /* Manual light theme override */
 [data-theme="light"] {
   --background: #eae3da;
-  --foreground: #171717;
+  --foreground: #141b23;
 }
 
 /* Manual dark theme override */
 [data-theme="dark"] {
-  --background: #1a202c;
+  --background: #141b23;
   --foreground: #eae3da;
 }
 

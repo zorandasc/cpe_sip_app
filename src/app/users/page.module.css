@@ -171,8 +171,8 @@
   font-size: 1rem;
   border-radius: 8px;
   border: 1px solid #ccc;
-  background-color: #edf2f7;
-  color: #1a202c;
+  color: #1a202c !important;
+  background-color: #edf2f7 !important;
   outline: none;
   transition: border 0.2s;
 }
