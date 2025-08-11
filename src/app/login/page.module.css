@@ -1,6 +1,7 @@
 :global([data-theme="light"]) .pageContainer {
   background-image: url("/board142_light.png");
   background-color: var(--background);
+  transition: all 0.3s ease;
 }
 
 :global([data-theme="light"]) .title {
@@ -24,8 +25,6 @@
   background-size: contain;
   background-position: right bottom;
   background-repeat: no-repeat;
-  background-color: #121a22;
-  /*background-color: #eae3da;*/ /*LIGHT VERZION*/
   height: 100vh;
   min-height: 100vh;
   width: 100%;
@@ -36,6 +35,7 @@
   color: white; /* Example: ensure content is visible */
   text-align: center; /* Example */
   z-index: 1; /* Give the container a z-index for its content */
+  transition: all 0.3s ease;
 }
 
 .container {

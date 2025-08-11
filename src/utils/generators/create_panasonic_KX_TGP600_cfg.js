@@ -1,0 +1,374 @@
+export default function create_panasonic_KX_TGP600_cfg(
+  selectedPhone,
+  mac,
+  portConfigs
+) {
+  let config = portConfigs[0];
+
+  //config={brojTelefona:"51330181",sifra:"123xxx"}
+
+  let PHONE_NUMBER = `+387${config.brojTelefona}`;
+
+  //+38751330181@mtel.ba"
+  let SIP_AUTHID = `+387${config.brojTelefona}@mtel.ba`;
+
+  let SIP_PASS = config.sifra;
+
+  //"330181"
+  let DISPLAY_NAME = `${config.brojTelefona.substring(2)}`;
+
+  let xmlContent = `#----------------------------------------------------------#
+# Setting for line 1 #
+#----------------------------------------------------------#
+## SIP Settings
+
+# U polje Phone number upisati SIPuserID u obliku +387xxaaabbb
+
+PHONE_NUMBER_1="${PHONE_NUMBER}"
+
+# U polje SIPauthID upisati broj u obliku +387xxaaabbb@mtel.ba
+
+SIP_AUTHID_1="${SIP_AUTHID}"
+
+# U polje SIPpass upisati password za SIP nalog
+
+SIP_PASS_1="${SIP_PASS}"
+
+# U polje Display name upisati broj u obliku aaabbb
+DISPLAY_NAME_1="${DISPLAY_NAME}"
+
+SIP_RGSTR_ADDR_1="mtel.ba"
+SIP_PRXY_ADDR_1="10.252.64.110"
+SIP_OUTPROXY_ADDR_1="10.252.64.110"
+SIP_SVCDOMAIN_1="mtel.ba"
+REG_EXPIRE_TIME_1="3600"
+REG_INTERVAL_RATE_1="55"
+REG_RTX_INTVL_1="10"
+SIP_SESSION_TIME_1="1800"
+SIP_SESSION_METHOD_1="0"
+SIP_100REL_ENABLE_1="Y"
+KEEP_EARLYMEDIA_1="Y"
+RINGTONE_183_180_ENABLE_1="Y"
+
+## CODEC Settings
+CODEC_G729_PARAM_1="0"
+CODEC_ENABLE0_1="Y"
+CODEC_ENABLE1_1="Y"
+CODEC_ENABLE2_1="Y"
+CODEC_ENABLE3_1="Y"
+CODEC_ENABLE4_1="Y"
+CODEC_PRIORITY0_1="4"
+CODEC_PRIORITY1_1="1"
+CODEC_PRIORITY2_1="5"
+CODEC_PRIORITY3_1="3"
+CODEC_PRIORITY4_1="2"`;
+
+  return `${HEADER}${xmlContent}${BASE_TEMPLATE}`;
+}
+
+const HEADER = `# Panasonic SIP Phone Standard Format File # DO NOT CHANGE THIS LINE!
+
+############################################################
+# This is a sample configuration file. #
+# Most of the parameters below are just default values... #
+############################################################
+
+############################################################
+# System Settings #
+############################################################
+## System Settings
+MULTI_NUMBER_ENABLE="N"
+WIDEBAND_AUDIO_ENABLE="Y"
+SIP_TRUNK_MODE_ENABLE="N"
+
+## LCD_BACKLIGHT_STBY_MENU_ENABLE="Y"
+
+## NTP Settings
+NTP_ADDR="10.252.64.109"
+TIME_SYNC_INTVL="60"
+TIME_QUERY_INTVL="43200"
+
+## Time Settings
+LOCAL_TIME_ZONE_POSIX=""
+TIME_ZONE="60"
+DST_ENABLE="Y"
+DST_OFFSET="60"
+DST_START_MONTH="3"
+DST_START_ORDINAL_DAY="5"
+DST_START_DAY_OF_WEEK="0"
+DST_START_TIME="60"
+DST_STOP_MONTH="10"
+DST_STOP_ORDINAL_DAY="5"
+DST_STOP_DAY_OF_WEEK="0"
+DST_STOP_TIME="60"
+
+
+## NAT Settings
+STUN_SERV_ADDR="10.252.64.110"
+STUN_SERV_PORT="3478"
+STUN_INTVL="60"
+
+## Tone Settings
+OUTSIDE_DIAL_TONE_FRQ="425,0"
+OUTSIDE_DIAL_TONE_GAIN="0"
+OUTSIDE_DIAL_TONE_RPT="1"
+OUTSIDE_DIAL_TONE_TIMING="800,200,300,700"
+REORDER_TONE_ENABLE="Y"
+TONE_LEN_DISCONNECT="3"
+DIAL_TONE1_FRQ="425,0"
+DIAL_TONE1_GAIN="0"
+DIAL_TONE1_RPT="1"
+DIAL_TONE1_TIMING="800,200,300,700"
+DIAL_TONE2_FRQ="425,0"
+DIAL_TONE2_GAIN="0"
+DIAL_TONE2_RPT="1"
+DIAL_TONE2_TIMING="800,200,300,700"
+DIAL_TONE4_FRQ="425,0"
+DIAL_TONE4_GAIN="0"
+DIAL_TONE4_RPT="1"
+DIAL_TONE4_TIMING="800,200,300,700"
+BUSY_TONE_FRQ="425,0"
+BUSY_TONE_GAIN="0"
+BUSY_TONE_RPT="1"
+BUSY_TONE_TIMING="500,500"
+REORDER_TONE_FRQ="480,620"
+REORDER_TONE_GAIN="0"
+REORDER_TONE_RPT="1"
+REORDER_TONE_TIMING="250,250"
+RINGBACK_TONE_FRQ="425,0"
+RINGBACK_TONE_GAIN="0"
+RINGBACK_TONE_RPT="1"
+RINGBACK_TONE_TIMING="100,1000,4000,1000,4000,1000,4000,1000,4000,1000"
+HOLD_TONE_FRQ="425"
+HOLD_TONE_GAIN="0"`;
+
+const BASE_TEMPLATE = `#----------------------------------------------------------#
+# Setting for line 2 #
+#----------------------------------------------------------#
+## SIP Settings
+## PHONE_NUMBER_2=""
+##SIP_AUTHID_2=""
+##SIP_PASS_2=""
+SIP_RGSTR_ADDR_2="mtel.ba"
+SIP_PRXY_ADDR_2="10.252.64.110"
+SIP_OUTPROXY_ADDR_2="10.252.64.110"
+SIP_SVCDOMAIN_2="mtel.ba"
+REG_EXPIRE_TIME_2="3600"
+REG_INTERVAL_RATE_2="55"
+REG_RTX_INTVL_2="10"
+SIP_SESSION_TIME_2="1800"
+SIP_SESSION_METHOD_2="0"
+SIP_100REL_ENABLE_2="Y"
+KEEP_EARLYMEDIA_2="Y"
+RINGTONE_183_180_ENABLE_2="Y"
+
+## CODEC Settings
+CODEC_G729_PARAM_2="0"
+CODEC_ENABLE0_2="Y"
+CODEC_ENABLE1_2="Y"
+CODEC_ENABLE2_2="Y"
+CODEC_ENABLE3_2="Y"
+CODEC_ENABLE4_2="Y"
+CODEC_PRIORITY0_2="4"
+CODEC_PRIORITY1_2="1"
+CODEC_PRIORITY2_2="5"
+CODEC_PRIORITY3_2="3"
+CODEC_PRIORITY4_2="2"
+
+#----------------------------------------------------------#
+# Setting for line 3 #
+#----------------------------------------------------------#
+## SIP Settings
+##PHONE_NUMBER_3=""
+##SIP_AUTHID_3=""
+##SIP_PASS_3=""
+SIP_RGSTR_ADDR_3="mtel.ba"
+SIP_PRXY_ADDR_3="10.252.64.110"
+SIP_OUTPROXY_ADDR_3="10.252.64.110"
+SIP_SVCDOMAIN_3="mtel.ba"
+REG_EXPIRE_TIME_3="3600"
+REG_INTERVAL_RATE_3="55"
+REG_RTX_INTVL_3="10"
+SIP_SESSION_TIME_3="1800"
+SIP_SESSION_METHOD_3="0"
+SIP_100REL_ENABLE_3="Y"
+KEEP_EARLYMEDIA_3="Y"
+RINGTONE_183_180_ENABLE_3="Y"
+
+## CODEC Settings
+CODEC_G729_PARAM_3="0"
+CODEC_ENABLE0_3="Y"
+CODEC_ENABLE1_3="Y"
+CODEC_ENABLE2_3="Y"
+CODEC_ENABLE3_3="Y"
+CODEC_ENABLE4_3="Y"
+CODEC_PRIORITY0_3="4"
+CODEC_PRIORITY1_3="1"
+CODEC_PRIORITY2_3="5"
+CODEC_PRIORITY3_3="3"
+CODEC_PRIORITY4_3="2"
+
+#----------------------------------------------------------#
+# Setting for line 4 #
+#----------------------------------------------------------#
+## SIP Settings
+##PHONE_NUMBER_4=""
+##SIP_AUTHID_4=""
+##SIP_PASS_4=""
+SIP_RGSTR_ADDR_4="mtel.ba"
+SIP_PRXY_ADDR_4="10.252.64.110"
+SIP_OUTPROXY_ADDR_4="10.252.64.110"
+SIP_SVCDOMAIN_4="mtel.ba"
+REG_EXPIRE_TIME_4="3600"
+REG_INTERVAL_RATE_4="55"
+REG_RTX_INTVL_4="10"
+SIP_SESSION_TIME_4="1800"
+SIP_SESSION_METHOD_4="0"
+SIP_100REL_ENABLE_4="Y"
+KEEP_EARLYMEDIA_4="Y"
+RINGTONE_183_180_ENABLE_4="Y"
+
+## CODEC Settings
+CODEC_G729_PARAM_4="0"
+CODEC_ENABLE0_4="Y"
+CODEC_ENABLE1_4="Y"
+CODEC_ENABLE2_4="Y"
+CODEC_ENABLE3_4="Y"
+CODEC_ENABLE4_4="Y"
+CODEC_PRIORITY0_4="4"
+CODEC_PRIORITY1_4="1"
+CODEC_PRIORITY2_4="5"
+CODEC_PRIORITY3_4="3"
+CODEC_PRIORITY4_4="2"
+
+#----------------------------------------------------------#
+# Setting for line 5 #
+#----------------------------------------------------------#
+## SIP Settings
+##PHONE_NUMBER_5=""
+##SIP_AUTHID_5=""
+##SIP_PASS_5=""
+SIP_RGSTR_ADDR_5="mtel.ba"
+SIP_PRXY_ADDR_5="10.252.64.110"
+SIP_OUTPROXY_ADDR_5="10.252.64.110"
+SIP_SVCDOMAIN_5="mtel.ba"
+REG_EXPIRE_TIME_5="3600"
+REG_INTERVAL_RATE_5="55"
+REG_RTX_INTVL_5="10"
+SIP_SESSION_TIME_5="1800"
+SIP_SESSION_METHOD_5="0"
+SIP_100REL_ENABLE_5="Y"
+KEEP_EARLYMEDIA_5="Y"
+RINGTONE_183_180_ENABLE_5="Y"
+
+## CODEC Settings
+CODEC_G729_PARAM_5="0"
+CODEC_ENABLE0_5="Y"
+CODEC_ENABLE1_5="Y"
+CODEC_ENABLE2_5="Y"
+CODEC_ENABLE3_5="Y"
+CODEC_ENABLE4_5="Y"
+CODEC_PRIORITY0_5="4"
+CODEC_PRIORITY1_5="1"
+CODEC_PRIORITY2_5="5"
+CODEC_PRIORITY3_5="3"
+CODEC_PRIORITY4_5="2"
+
+#----------------------------------------------------------#
+# Setting for line 6 #
+#----------------------------------------------------------#
+## SIP Settings
+##PHONE_NUMBER_6=""
+##SIP_AUTHID_6=""
+##SIP_PASS_6=""
+SIP_RGSTR_ADDR_6="mtel.ba"
+SIP_PRXY_ADDR_6="10.252.64.110"
+SIP_OUTPROXY_ADDR_6="10.252.64.110"
+SIP_SVCDOMAIN_6="mtel.ba"
+REG_EXPIRE_TIME_6="3600"
+REG_INTERVAL_RATE_6="55"
+REG_RTX_INTVL_6="10"
+SIP_SESSION_TIME_6="1800"
+SIP_SESSION_METHOD_6="0"
+SIP_100REL_ENABLE_6="Y"
+KEEP_EARLYMEDIA_6="Y"
+RINGTONE_183_180_ENABLE_6="Y"
+
+## CODEC Settings
+CODEC_G729_PARAM_6="0"
+CODEC_ENABLE0_6="Y"
+CODEC_ENABLE1_6="Y"
+CODEC_ENABLE2_6="Y"
+CODEC_ENABLE3_6="Y"
+CODEC_ENABLE4_6="Y"
+CODEC_PRIORITY0_6="4"
+CODEC_PRIORITY1_6="1"
+CODEC_PRIORITY2_6="5"
+CODEC_PRIORITY3_6="3"
+CODEC_PRIORITY4_6="2"
+
+#----------------------------------------------------------#
+# Setting for line 7 #
+#----------------------------------------------------------#
+## SIP Settings
+##PHONE_NUMBER_7=""
+##SIP_AUTHID_7=""
+##SIP_PASS_7=""
+SIP_RGSTR_ADDR_7="mtel.ba"
+SIP_PRXY_ADDR_7="10.252.64.110"
+SIP_OUTPROXY_ADDR_7="10.252.64.110"
+SIP_SVCDOMAIN_7="mtel.ba"
+REG_EXPIRE_TIME_7="3600"
+REG_INTERVAL_RATE_7="55"
+REG_RTX_INTVL_7="10"
+SIP_SESSION_TIME_7="1800"
+SIP_SESSION_METHOD_7="0"
+SIP_100REL_ENABLE_7="Y"
+KEEP_EARLYMEDIA_7="Y"
+RINGTONE_183_180_ENABLE_7="Y"
+
+## CODEC Settings
+CODEC_G729_PARAM_7="0"
+CODEC_ENABLE0_7="Y"
+CODEC_ENABLE1_7="Y"
+CODEC_ENABLE2_7="Y"
+CODEC_ENABLE3_7="Y"
+CODEC_ENABLE4_7="Y"
+CODEC_PRIORITY0_7="4"
+CODEC_PRIORITY1_7="1"
+CODEC_PRIORITY2_7="5"
+CODEC_PRIORITY3_7="3"
+CODEC_PRIORITY4_7="2"
+
+#----------------------------------------------------------#
+# Setting for line 8 #
+#----------------------------------------------------------#
+## SIP Settings
+##PHONE_NUMBER_8=""
+##SIP_AUTHID_8=""
+##SIP_PASS_8=""
+SIP_RGSTR_ADDR_8="mtel.ba"
+SIP_PRXY_ADDR_8="10.252.64.110"
+SIP_OUTPROXY_ADDR_8="10.252.64.110"
+SIP_SVCDOMAIN_8="mtel.ba"
+REG_EXPIRE_TIME_8="3600"
+REG_INTERVAL_RATE_8="55"
+REG_RTX_INTVL_8="10"
+SIP_SESSION_TIME_8="1800"
+SIP_SESSION_METHOD_8="0"
+SIP_100REL_ENABLE_8="Y"
+KEEP_EARLYMEDIA_8="Y"
+RINGTONE_183_180_ENABLE_8="Y"
+
+## CODEC Settings
+CODEC_G729_PARAM_8="0"
+CODEC_ENABLE0_8="Y"
+CODEC_ENABLE1_8="Y"
+CODEC_ENABLE2_8="Y"
+CODEC_ENABLE3_8="Y"
+CODEC_ENABLE4_8="Y"
+CODEC_PRIORITY0_8="4"
+CODEC_PRIORITY1_8="1"
+CODEC_PRIORITY2_8="5"
+CODEC_PRIORITY3_8="3"
+CODEC_PRIORITY4_8="2"`;

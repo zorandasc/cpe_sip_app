@@ -4,6 +4,13 @@ import createCiscoXml from "./generators/createCiscoXml";
 import createFanvil_V62G_Xml from "./generators/createFanvil_V62G_Xml";
 import createFanvil_X3U_Cfg from "./generators/createFanvil_X3U_Cfg";
 import createFanvil_X7C_Cfg from "./generators/createFanvil_X7C_Cfg";
+import createTeYalink_DECT_Cfg from "./generators/createTeYalink_DECT_Cfg";
+import createTeYalink_T31G_Cfg from "./generators/createTeYalink_T31G_Cfg";
+import createTeYalink_T43U_Cfg from "./generators/createTeYalink_T43U_Cfg";
+import create_panasonic_KX_TGP600_cfg from "./generators/create_panasonic_KX_TGP600_cfg";
+import create_VVX350_cfg from "./generators/create_VVX350_cfg";
+import create_VVX350_phone_cfg from "./generators/create_VVX350_phone_cfg";
+import create_VVX350_web_cfg from "./generators/create_VVX350_web_cfg";
 
 export const phoneConfig = [
   {
@@ -12,9 +19,9 @@ export const phoneConfig = [
     path: "xmlconfigs/Grandstream",
     folderName: "Grandstream",
     encrypt: true,
-    prefix: "cfg",
-    extension: ".xml",
-    generator: createGrandstreamXml,
+    outputs: [
+      { prefix: "cfg", extension: ".xml", generator: createGrandstreamXml },
+    ],
   },
   {
     type: "Grandstream",
@@ -22,9 +29,9 @@ export const phoneConfig = [
     path: "xmlconfigs/Grandstream",
     folderName: "Grandstream",
     encrypt: true,
-    prefix: "cfg",
-    extension: ".xml",
-    generator: createGrandstreamXml,
+    outputs: [
+      { prefix: "cfg", extension: ".xml", generator: createGrandstreamXml },
+    ],
   },
   {
     type: "Grandstream",
@@ -32,9 +39,9 @@ export const phoneConfig = [
     path: "xmlconfigs/Grandstream",
     folderName: "Grandstream",
     encrypt: true,
-    prefix: "cfg",
-    extension: ".xml",
-    generator: createGrandstreamXml,
+    outputs: [
+      { prefix: "cfg", extension: ".xml", generator: createGrandstreamXml },
+    ],
   },
   {
     type: "Grandstream",
@@ -42,9 +49,9 @@ export const phoneConfig = [
     path: "xmlconfigs/Grandstream",
     folderName: "Grandstream",
     encrypt: true,
-    prefix: "cfg",
-    extension: ".xml",
-    generator: createGrandstreamXml,
+    outputs: [
+      { prefix: "cfg", extension: ".xml", generator: createGrandstreamXml },
+    ],
   },
   {
     type: "Grandstream",
@@ -52,9 +59,9 @@ export const phoneConfig = [
     path: "xmlconfigs/Grandstream",
     folderName: "Grandstream",
     encrypt: true,
-    prefix: "cfg",
-    extension: ".xml",
-    generator: createGrandstreamXml,
+    outputs: [
+      { prefix: "phone1", extension: ".cfg", generator: createPolycomXml },
+    ],
   },
   {
     type: "Polycom",
@@ -62,9 +69,9 @@ export const phoneConfig = [
     path: "xmlconfigs/",
     folderName: "Polycom",
     encrypt: false,
-    prefix: "phone1",
-    extension: ".cfg",
-    generator: createPolycomXml,
+    outputs: [
+      { prefix: "phone1", extension: ".cfg", generator: createPolycomXml },
+    ],
   },
   {
     type: "Polycom",
@@ -72,9 +79,25 @@ export const phoneConfig = [
     path: "xmlconfigs/",
     folderName: "Polycom",
     encrypt: false,
-    prefix: "phone1",
-    extension: ".cfg",
-    generator: createPolycomXml,
+    outputs: [
+      { prefix: "phone1", extension: ".cfg", generator: createPolycomXml },
+    ],
+  },
+  {
+    type: "Polycom",
+    model: "VVX350",
+    path: "PlcmSpIp/",
+    folderName: "Polycom-VVX350",
+    encrypt: false,
+    outputs: [
+      { prefix: "", extension: ".cfg", generator: create_VVX350_cfg },
+      {
+        prefix: "",
+        extension: "-phone.cfg",
+        generator: create_VVX350_phone_cfg,
+      },
+      { prefix: "", extension: "-web.cfg", generator: create_VVX350_web_cfg },
+    ],
   },
   {
     type: "Cisco",
@@ -82,9 +105,9 @@ export const phoneConfig = [
     path: "xmlconfigs/Cisco502G",
     folderName: "Cisco502G",
     encrypt: false,
-    prefix: "spa502g_",
-    extension: ".xml",
-    generator: createCiscoXml,
+    outputs: [
+      { prefix: "spa502g_", extension: ".xml", generator: createCiscoXml },
+    ],
   },
   {
     type: "Cisco",
@@ -92,9 +115,9 @@ export const phoneConfig = [
     path: "xmlconfigs/Cisco512G",
     folderName: "Cisco512G",
     encrypt: false,
-    prefix: "spa512g_",
-    extension: ".xml",
-    generator: createCiscoXml,
+    outputs: [
+      { prefix: "spa512g_", extension: ".xml", generator: createCiscoXml },
+    ],
   },
   {
     type: "Fanvil",
@@ -102,9 +125,9 @@ export const phoneConfig = [
     path: "tftpboot/",
     folderName: "Fanvil",
     encrypt: false,
-    prefix: "",
-    extension: ".cfg",
-    generator: createFanvil_V62G_Xml,
+    outputs: [
+      { prefix: "", extension: ".cfg", generator: createFanvil_V62G_Xml },
+    ],
   },
   {
     type: "Fanvil",
@@ -112,9 +135,9 @@ export const phoneConfig = [
     path: "tftpboot/",
     folderName: "Fanvil",
     encrypt: false,
-    prefix: "",
-    extension: ".cfg",
-    generator: createFanvil_X3U_Cfg,
+    outputs: [
+      { prefix: "", extension: ".cfg", generator: createFanvil_X3U_Cfg },
+    ],
   },
   {
     type: "Fanvil",
@@ -122,9 +145,53 @@ export const phoneConfig = [
     path: "tftpboot/",
     folderName: "Fanvil",
     encrypt: false,
-    prefix: "",
-    extension: ".cfg",
-    generator: createFanvil_X7C_Cfg,
+    outputs: [
+      { prefix: "", extension: ".cfg", generator: createFanvil_X7C_Cfg },
+    ],
+  },
+  {
+    type: "Yealink",
+    model: "DECT",
+    path: "xmlconfigs/Yealink",
+    folderName: "Yealink",
+    encrypt: false,
+    outputs: [
+      { prefix: "", extension: ".cfg", generator: createTeYalink_DECT_Cfg },
+    ],
+  },
+  {
+    type: "Yealink",
+    model: "T31G",
+    path: "xmlconfigs/Yealink",
+    folderName: "Yealink",
+    encrypt: false,
+    outputs: [
+      { prefix: "", extension: ".cfg", generator: createTeYalink_T31G_Cfg },
+    ],
+  },
+  {
+    type: "Yealink",
+    model: "T43U",
+    path: "xmlconfigs/Yealink",
+    folderName: "Yealink",
+    encrypt: false,
+    outputs: [
+      { prefix: "", extension: ".cfg", generator: createTeYalink_T43U_Cfg },
+    ],
+  },
+  {
+    type: "Panasonic",
+    model: "KX-TGP600",
+    path: "xmlconfigs/PanasonicDECT",
+    folderName: "Panasonic",
+    encrypt: false,
+    outputs: [
+      {
+        prefix: "Config",
+        extension: ".cfg",
+        generator: create_panasonic_KX_TGP600_cfg,
+      },
+    ],
   },
 ];
 

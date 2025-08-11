@@ -27,7 +27,7 @@ export async function POST(request) {
         phone.model === selectedPhone.model && phone.type === selectedPhone.type
     );
 
-    if (!config || !config.generator) {
+    if (!config || !config.outputs?.length) {
       return NextResponse.json(
         { message: "Unsupported phone model." },
         { status: 400 }
@@ -36,82 +36,68 @@ export async function POST(request) {
 
     //const fullPhone = { ...selectedPhone, ...config };
 
+    //exec(cmd, callback) is asynchronous. The try/catch only wraps
+    //synchronous code and awaited promises.
+    //pa iz tog razloga vrsimo:
+    //Wrap exec() in a Promise and await it
+    const execAsync = promisify(exec);
+
     //KREIRAJ XML FAJL
-    const xmlContent = config.generator(selectedPhone, mac, portConfigs);
+    for (const output of config.outputs) {
+      const xmlContent = output.generator(selectedPhone, mac, portConfigs);
 
-    // Define the directory where files will be saved
-    // IMPORTANT: This path is relative to where your Next.js app is running
-    // inside the Docker container. You'll map this via Docker volumes.
-    const saveDirectory = path.join(process.cwd(), config.path);
+      //LOWER MAC ADDRESS
+      let filename = `${output.prefix}${mac.replace(/[^a-zA-Z0-9]/g, "_")}${
+        output.extension
+      }`;
 
-    // Ensure the directory exists, CREATE DIRECTORY
-    await fs.mkdir(saveDirectory, { recursive: true });
+      //UPPER MAC ADDRESS
+      let filenameUpper = `${output.prefix}${mac
+        .toUpperCase()
+        .replace(/[^a-zA-Z0-9]/g, "_")}${output.extension}`;
 
-    // Define the filename (e.g., using MAC address)
-    // Sanitize MAC for filename
-    //npr. cfgaabbccddeeffgg.xml
-    const filename = `${config.prefix}${mac.replace(/[^a-zA-Z0-9]/g, "_")}${
-      config.extension
-    }`;
+      // Define the directory where files will be saved
+      // IMPORTANT: This path is relative to where your Next.js app is running
+      // inside the Docker container. You'll map this via Docker volumes.
+      const saveDirectory = path.join(process.cwd(), config.path);
+      // Ensure the directory exists, CREATE DIRECTORY
+      await fs.mkdir(saveDirectory, { recursive: true });
 
-    //npr. cfgAABBCCDDEEFFGG.xml
-    const mac1 = mac.toUpperCase();
-    const filename1 = `${config.prefix}${mac1.replace(/[^a-zA-Z0-9]/g, "_")}${
-      config.extension
-    }`;
+      const filePath = path.join(saveDirectory, filename);
+      const filePathUpper = path.join(saveDirectory, filenameUpper);
 
-    const filePath = path.join(saveDirectory, filename);
-    const filePath1 = path.join(saveDirectory, filename1);
+      // Write the XML content to the file
+      await fs.writeFile(filePath, xmlContent);
+      await fs.writeFile(filePathUpper, xmlContent);
 
-    // Write the XML content to the file
-    await fs.writeFile(filePath, xmlContent);
-    await fs.writeFile(filePath1, xmlContent);
+      console.log(`Saved: ${filePath}`);
+      console.log(`Saved: ${filePathUpper}`);
 
-    console.log(`Successfully saved XML to: ${filePath}`);
-    console.log(`Successfully saved XML to: ${filePath1}`);
-
-    //PETLJA ZA ENKRIPCIJU
-    if (config.encrypt) {
-      //DEFINISI SUB DIREKTORIJ ZA ENKRIPTOVANE .xml FAJLAOVE
-      const encryptedDirectory = path.join(
-        process.cwd(),
-        `${config.path}/encrypted`
-      );
-
-      // Ensure the directory exists
-      await fs.mkdir(encryptedDirectory, { recursive: true });
-
-      const outputPath = path.join(encryptedDirectory, filename);
-      const outputPath1 = path.join(encryptedDirectory, filename1);
-
-      //exec(cmd, callback) is asynchronous. The try/catch only wraps
-      //synchronous code and awaited promises.
-      //pa iz tog razloga vrsimo:
-      //Wrap exec() in a Promise and await it
-      const execAsync = promisify(exec);
-
-      //CLI COMMAND FOR ENCRYPTION
-      const cmd = `openssl enc -e -aes-256-cbc -salt -md md5 -in "${filePath}" -out "${outputPath}" -pass pass:"${PASSWORD}"`;
-      const cmd1 = `openssl enc -e -aes-256-cbc -salt -md md5 -in "${filePath1}" -out "${outputPath1}" -pass pass:"${PASSWORD}"`;
-
-      try {
-        await execAsync(cmd);
-        await execAsync(cmd1);
-
-        console.log(`Successfully encrypted XML to: ${outputPath}`);
-        console.log(`Successfully encrypted XML to: ${outputPath1}`);
-
-        return NextResponse.json({
-          message: `✅ File encrypted and saved: ${filename}`,
-        });
-      } catch (err) {
-        return NextResponse.json(
-          { message: "❌ Encryption failed", error: err.message },
-          { status: 500 }
+      //PETLJA ZA ENKRIPCIJU
+      if (config.encrypt) {
+        //DEFINISI SUB DIREKTORIJ ZA ENKRIPTOVANE .xml FAJLAOVE
+        const encryptedDirectory = path.join(
+          process.cwd(),
+          `${config.path}/encrypted`
         );
+        // Ensure the directory exists
+        await fs.mkdir(encryptedDirectory, { recursive: true });
+
+        const encryptedPath = path.join(encryptedDirectory, filename);
+        const encryptedPathUpper = path.join(encryptedDirectory, filenameUpper);
+
+        //CLI COMMAND FOR ENCRYPTION
+        const cmd = `openssl enc -e -aes-256-cbc -salt -md md5 -in "${filePath}" -out "${encryptedPath}" -pass pass:"${PASSWORD}"`;
+        const cmdUpper = `openssl enc -e -aes-256-cbc -salt -md md5 -in "${filePathUpper}" -out "${encryptedPathUpper}" -pass pass:"${PASSWORD}"`;
+
+        await execAsync(cmd);
+        await execAsync(cmdUpper);
+
+        console.log(`Encrypted: ${encryptedPath}`);
+        console.log(`Encrypted: ${encryptedPathUpper}`);
       }
-    } //END ENCRYPT IF
-    return NextResponse.json({ message: `✅ File saved: ${filename}` });
+    }
+    return NextResponse.json({ message: "✅ All files created and saved." });
   } catch (error) {
     console.error("Error saving configuration:", error);
     return NextResponse.json({ message: `${error.message}` }, { status: 500 });

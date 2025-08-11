@@ -35,7 +35,7 @@ export async function GET(req) {
     //GET DIRECTORY PATH
     const directoryPath = path.join(process.cwd(), folderPath);
 
-    //READ ALL FILES AND FOLDERS IN xmlconfigs DIRECTORY
+    //READ ALL FILES AND FOLDERS IN folderPath DIRECTORY
     const dirents = await fs.readdir(directoryPath, { withFileTypes: true });
 
     const seen = new Set();
@@ -43,28 +43,37 @@ export async function GET(req) {
 
     //FORMING FILES ARRAY ONLY OF PREFIX AND EXSTENZIONS
     for (const dirent of dirents) {
-      if (
-        dirent.isFile() &&
-        dirent.name.startsWith(config.prefix) &&
-        dirent.name.endsWith(config.extension)
-      ) {
-        const name = dirent.name;
-        const base = name.toLowerCase();
-        //ONLY SEND UNIQ LOWERCASE TO FRONTEND
-        if (!seen.has(base)) {
-          seen.add(base);
+      //IF NOT FILE EXIT
+      if (!dirent.isFile()) continue;
 
-          //WE NEED FULL PATH TO GET FILE STATS
-          const fullPath = path.join(directoryPath, name);
-          const stats = await fs.stat(fullPath);
+      const fileName = dirent.name;
+      const lowerName = fileName.toLowerCase();
 
-          //ctimeMs	Creation or metadata change time
-          //mtimeMs	Last modified time
-          uniqueXmlFiles.push({
-            name,
-            time: stats.mtimeMs,
-          }); // keep original casing (first occurrence)
-        }
+      // Check if file matches ANY allowed output config
+      const matchesOutput = config.outputs.some(
+        ({ prefix, extension }) =>
+          lowerName.startsWith(prefix.toLowerCase()) &&
+          lowerName.endsWith(extension.toLowerCase())
+      );
+
+      //THIS FILE DOESNOT HAVE prefix/extension COMBINATION
+      if (!matchesOutput) continue;
+
+      //ONLY SEND UNIQ LOWERCASE TO FRONTEND
+      if (!seen.has(lowerName)) {
+        seen.add(lowerName);
+
+        //WE NEED FULL PATH TO GET FILE STATS
+        //fileNam preserve original casing
+        const fullPath = path.join(directoryPath, fileName);
+        const stats = await fs.stat(fullPath);
+
+        //ctimeMs	Creation or metadata change time
+        //mtimeMs	Last modified time
+        uniqueXmlFiles.push({
+          name: fileName, // preserve original casing
+          time: stats.mtimeMs,
+        }); // keep original casing (first occurrence)
       }
     }
 

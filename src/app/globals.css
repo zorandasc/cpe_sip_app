@@ -1,17 +1,17 @@
 :root {
-  --background: #141b23;/*#141b23*/
+  --background: #141c24; /*#141b23*/
   --foreground: #eae3da;
 }
 
 /* Manual light theme override */
 [data-theme="light"] {
   --background: #eae3da;
-  --foreground: #141b23;
+  --foreground: #141c24;
 }
 
 /* Manual dark theme override */
 [data-theme="dark"] {
-  --background: #141b23;
+  --background: #141c24;
   --foreground: #eae3da;
 }
 
@@ -59,7 +59,7 @@ a {
   font-size: 2rem;
   color: whitesmoke;
   background: #3c495f;
-  background: linear-gradient(to bottom,#1a202c, #eae3da );
+  background: linear-gradient(to bottom, #1a202c, #eae3da);
 }
 
 /*FOR AceEditor */

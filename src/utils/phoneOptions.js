@@ -49,6 +49,13 @@ export const phones = [
     image: "/images/IP650.jpg",
   },
   {
+    name: "Polycom VVX350 (SIP telefon)",
+    type: "Polycom",
+    model: "VVX350",
+    port: 1,
+    image: "/images/VVX350.png",
+  },
+  {
     name: "Cisco 502G (SIP telefon)",
     type: "Cisco",
     model: "502G",
@@ -82,5 +89,33 @@ export const phones = [
     model: "X7C",
     port: 1,
     image: "/images/X7C.png",
+  },
+  {
+    name: "Yealink DECT (SIP telefon)",
+    type: "Yealink",
+    model: "DECT",
+    port: 1,
+    image: "/images/DECT.webp",
+  },
+  {
+    name: "Yealink T31G (SIP telefon)",
+    type: "Yealink",
+    model: "T31G",
+    port: 1,
+    image: "/images/SIP-T31G.png",
+  },
+  {
+    name: "Yealink T430U (SIP telefon)",
+    type: "Yealink",
+    model: "T430U",
+    port: 1,
+    image: "/images/SIP-T430U.jpg",
+  },
+  {
+    name: "Panasonic KX-TGP600 DECT (SIP telefon)",
+    type: "Panasonic",
+    model: "KX-TGP600",
+    port: 1,
+    image: "/images/KX-TGP600.png",
   },
 ];
