@@ -88,6 +88,10 @@ a {
 }
 
 /*LIGHT THEME*/
+
+.ace-kuroir {
+  background-color: #f5efef !important; /* your desired background */
+}
 .ace-kuroir .ace_comment {
   color: #686079 !important; /* or any custom color */
   font-style: italic;
@@ -104,6 +108,6 @@ a {
 }
 
 .ace-kuroir .ace_attribute-value {
-  color: #b54204 !important; /* your desired color */
+  color: #b50d04 !important; /* your desired color */
   font-style: italic;
 }

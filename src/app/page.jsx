@@ -13,7 +13,7 @@ export default function Home() {
   //INICIJALNI STATE
   const [selectedPhone, setSelectedPhone] = useState(null);
 
-  const [selectedPhoneType, setSelectedPhoneType] = useState(null);
+  const [selectedPhoneType, setSelectedPhoneType] = useState(phoneTypes[0]);
 
   const [mac, setMac] = useState("");
   const [macErrorMessage, setMacErrorMessage] = useState(null);
