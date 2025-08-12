@@ -19,35 +19,22 @@ export async function POST(req) {
       { status: 400 }
     );
   }
-  try {
-    //EXTRACT EXTENZIJU (.xml, .cfg)
-    const ext = path.extname(fileName);
 
-    //ODUZMI OD CIJELOG IMENA EKSTENZIJU
-    //npr. cfgADC356BF67FD
-    const nameOnly = path.basename(fileName, ext);
+  //NA OSNOVU FOLDERA PRONACI PRVI phonConfig
+  //ZA BUDUCNOST, STA AKO IMAS FAJLS SA ISTIM FOLDERPATH
+  //ALI JEDNA TREBA ENCRIPT DRUGI NE?
+  const config = phoneConfig.find((phone) => phone.path == folderPath);
 
-    //ODUZMI OD CIJELOG IMENA 12 KARAKTERA ODZADA
-    //PREFIX:,NPR cfg, phone1
-    const prefix = nameOnly.slice(0, -12);
-
-    //NA OSNOVU FOLDERA, PREFIKSA I EKSTENZIJE PRONACI PRAVI phonConfig
-    const config = phoneConfig.find(
-      (phone) =>
-        phone.path == folderPath &&
-        phone.extension == ext &&
-        phone.prefix === prefix
+  if (!config) {
+    return NextResponse.json(
+      {
+        message: "Unsupported: phone, file ext. and folder name combination.",
+      },
+      { status: 400 }
     );
+  }
 
-    if (!config) {
-      return NextResponse.json(
-        {
-          message: "Unsupported: phone, file ext. and folder name combination.",
-        },
-        { status: 400 }
-      );
-    }
-
+  try {
     // Define the directory where files will be saved
     // IMPORTANT: This path is relative to where your Next.js app is running
     // inside the Docker container. You'll map this via Docker volumes.
@@ -56,28 +43,38 @@ export async function POST(req) {
     // Ensure the directory exists
     await fs.mkdir(saveDirectory, { recursive: true });
 
-    //CONVERT TO UPPERCASE MAC
-    //SLICE 12 MIJESTA UNAZAD DA EKSTRAKTUJES MAC
-    //npr. ADC356BF67FD
-    const upperCaseMac = nameOnly.slice(-12).toUpperCase();
-    const lowerCaseMac = nameOnly.slice(-12).toLowerCase();
+    // Match prefix + MAC (12 hex chars) + extension
+    const regex = /^(.*)([0-9A-Fa-f]{12})(.*)$/;
+    const match = fileName.match(regex);
 
-    const upperCasefileName = `${prefix}${upperCaseMac}${ext}`;
-    const lowerCasefileName = `${prefix}${lowerCaseMac}${ext}`;
+    if (!match) {
+      return NextResponse.json(
+        { message: "Unsupported or bad file name." },
+        { status: 400 }
+      );
+    }
 
-    const upperCaseFilePath = path.join(saveDirectory, upperCasefileName);
-    const lowerCaseFilePath = path.join(saveDirectory, lowerCasefileName);
+    const prefix = match[1]; // before MAC
+    const macAddress = match[2]; // MAC itself
+    const ext = match[3]; // after MAC
+
+    const fileNameUpper = `${prefix}${macAddress.toUpperCase()}${ext}`;
+    const fileNameLower = `${prefix}${macAddress.toLowerCase()}${ext}`;
+
+    const filePathUpper = path.join(saveDirectory, fileNameUpper);
+    const filePathLower = path.join(saveDirectory, fileNameLower);
 
     // Write the XML content to the file
-    await fs.writeFile(upperCaseFilePath, xml);
-    await fs.writeFile(lowerCaseFilePath, xml);
+    await fs.writeFile(filePathUpper, xml);
+    await fs.copyFile(filePathUpper, filePathLower);
 
-    console.log(`Successfully saved XML to: ${lowerCaseFilePath}`);
-    console.log(`Successfully saved XML to: ${upperCaseFilePath}`);
+    console.log(`Successfully saved XML to: ${filePathUpper}`);
+    console.log(`Successfully saved XML to: ${filePathLower}`);
 
     //ENKTIPCIJA .xml FAJLA
     //DEFINISI DIREKTORIJ FOR STORING ENCRYPTED
     if (config.encrypt) {
+      //DEFINE DIRECORY FOR ENCRYPTED FILES
       const encryptedDirectory = path.join(
         process.cwd(),
         `${config.path}/encrypted`
@@ -86,8 +83,8 @@ export async function POST(req) {
       // Ensure the directory exists
       await fs.mkdir(encryptedDirectory, { recursive: true });
 
-      const outputPath = path.join(encryptedDirectory, lowerCasefileName);
-      const outputPath1 = path.join(encryptedDirectory, upperCasefileName);
+      const encryptedPathUpper = path.join(encryptedDirectory, fileNameUpper);
+      const encryptedPathLower = path.join(encryptedDirectory, fileNameLower);
 
       //exec(cmd, callback) is asynchronous. The try/catch only wraps
       //synchronous code and awaited promises.
@@ -96,27 +93,20 @@ export async function POST(req) {
       const execAsync = promisify(exec);
 
       //CLI COMMAND FOR ENCRYPTION
-      const cmd = `openssl enc -e -aes-256-cbc -salt -md md5 -in "${lowerCaseFilePath}" -out "${outputPath}" -pass pass:"${PASSWORD}"`;
-      const cmd1 = `openssl enc -e -aes-256-cbc -salt -md md5 -in "${upperCaseFilePath}" -out "${outputPath1}" -pass pass:"${PASSWORD}"`;
+      const cmdUpper = `openssl enc -e -aes-256-cbc -salt -md md5 -in "${filePathUpper}" -out "${encryptedPathUpper}" -pass pass:"${PASSWORD}"`;
+      const cmdLower = `openssl enc -e -aes-256-cbc -salt -md md5 -in "${filePathLower}" -out "${encryptedPathLower}" -pass pass:"${PASSWORD}"`;
 
-      try {
-        await execAsync(cmd);
-        await execAsync(cmd1);
+      await execAsync(cmdUpper);
+      await execAsync(cmdLower);
 
-        console.log(`Successfully encrypted XML to: ${outputPath}`);
-        console.log(`Successfully encrypted XML to: ${outputPath1}`);
+      console.log(`Successfully encrypted XML to: ${encryptedPathUpper}`);
+      console.log(`Successfully encrypted XML to: ${encryptedPathLower}`);
 
-        return NextResponse.json({
-          message: "✅ File encrypted and saved",
-        });
-      } catch (err) {
-        return NextResponse.json(
-          { message: "❌ Encryption failed", error: err.message },
-          { status: 500 }
-        );
-      }
+      return NextResponse.json({
+        message: "✅ File encrypted and saved",
+      });
     } //END OF ENCRYPTION LOGIC
-    return NextResponse.json({ message: "✅ File saved." });
+    return NextResponse.json({ message: "✅ File encrypted and saved" });
   } catch (error) {
     console.error("Error saving configuration:", error);
     return NextResponse.json({ message: `${error.message}` }, { status: 500 });

@@ -68,7 +68,7 @@ export async function POST(request) {
 
       // Write the XML content to the file
       await fs.writeFile(filePath, xmlContent);
-      await fs.writeFile(filePathUpper, xmlContent);
+      await fs.copyFile(filePath, filePathUpper);
 
       console.log(`Saved: ${filePath}`);
       console.log(`Saved: ${filePathUpper}`);
