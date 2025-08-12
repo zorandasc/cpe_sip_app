@@ -360,7 +360,7 @@ export default function Load() {
                 name="xml_editor"
                 editorProps={{ $blockScrolling: true }}
                 width="100%"
-                height="650px"
+                height="550px"
                 fontSize={14}
                 lineHeight={22}
                 showPrintMargin={false}

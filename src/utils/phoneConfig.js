@@ -103,7 +103,7 @@ export const phoneConfig = [
     type: "Cisco",
     model: "502G",
     path: "xmlconfigs/Cisco502G",
-    folderName: "Cisco502G",
+    folderName: "Cisco-502G",
     encrypt: false,
     outputs: [
       { prefix: "spa502g_", extension: ".xml", generator: createCiscoXml },
@@ -113,7 +113,7 @@ export const phoneConfig = [
     type: "Cisco",
     model: "512G",
     path: "xmlconfigs/Cisco512G",
-    folderName: "Cisco512G",
+    folderName: "Cisco-512G",
     encrypt: false,
     outputs: [
       { prefix: "spa512g_", extension: ".xml", generator: createCiscoXml },

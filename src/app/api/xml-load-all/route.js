@@ -43,7 +43,7 @@ export async function GET(req) {
 
     //FORMING FILES ARRAY ONLY OF PREFIX AND EXSTENZIONS
     for (const dirent of dirents) {
-      //IF NOT FILE EXIT
+      //IF NOT FILE, EXIT AND GRAB NEXT ONE
       if (!dirent.isFile()) continue;
 
       const fileName = dirent.name;
@@ -57,6 +57,7 @@ export async function GET(req) {
       );
 
       //THIS FILE DOESNOT HAVE prefix/extension COMBINATION
+      //EXIT AND GRAB NEXT FILE TO CHECK
       if (!matchesOutput) continue;
 
       //ONLY SEND UNIQ LOWERCASE TO FRONTEND
