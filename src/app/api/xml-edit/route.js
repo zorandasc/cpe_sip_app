@@ -72,7 +72,6 @@ export async function POST(req) {
     console.log(`Successfully saved XML to: ${filePathLower}`);
 
     //ENKTIPCIJA .xml FAJLA
-    //DEFINISI DIREKTORIJ FOR STORING ENCRYPTED
     if (config.encrypt) {
       //DEFINE DIRECORY FOR ENCRYPTED FILES
       const encryptedDirectory = path.join(
@@ -101,12 +100,9 @@ export async function POST(req) {
 
       console.log(`Successfully encrypted XML to: ${encryptedPathUpper}`);
       console.log(`Successfully encrypted XML to: ${encryptedPathLower}`);
-
-      return NextResponse.json({
-        message: "✅ File encrypted and saved",
-      });
-    } //END OF ENCRYPTION LOGIC
-    return NextResponse.json({ message: "✅ File encrypted and saved" });
+      //END OF ENCRYPTION LOGIC
+    }
+    return NextResponse.json({ message: "✅ All files created and saved." });
   } catch (error) {
     console.error("Error saving configuration:", error);
     return NextResponse.json({ message: `${error.message}` }, { status: 500 });
