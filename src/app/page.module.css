@@ -37,12 +37,12 @@
   width: 100%;
 }
 
-.textList {
+.phoneTypeList{
   width: 250px;
   flex-shrink: 0;
 }
 
-.textList ul {
+.phoneTypeList ul {
   list-style: none;
   padding: 0;
   margin: 0;

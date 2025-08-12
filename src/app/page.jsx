@@ -3,7 +3,7 @@ import { useState, useRef } from "react";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import SendIcon from "@/components/icons/SendIcon";
-import { phones } from "@/utils/phoneOptions";
+import { phones, phoneTypes } from "@/utils/phoneOptions";
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -12,6 +12,8 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   //INICIJALNI STATE
   const [selectedPhone, setSelectedPhone] = useState(null);
+
+  const [selectedPhoneType, setSelectedPhoneType] = useState(null);
 
   const [mac, setMac] = useState("");
   const [macErrorMessage, setMacErrorMessage] = useState(null);
@@ -26,6 +28,12 @@ export default function Home() {
   ]);
 
   const [portValidationErrors, setPortValidationErrors] = useState({});
+
+  const handlePhoneTypeSelect = (phoneType) => {
+    setSelectedPhoneType(phoneType);
+    //WHWN CHANGE TYPE DESELECT PREVIUS SELECTED PHONE
+    setSelectedPhone(null);
+  };
 
   //item je phoneOptions item
   const handlePhoneSelect = (item) => {
@@ -268,17 +276,17 @@ export default function Home() {
       {/* Wrapper for 2-column layout */}
       <div className={styles.twoColumn}>
         {/* LEFT: Text List */}
-        <div className={styles.textList}>
+        <div className={styles.phoneTypeList}>
           <ul>
-            {phones.map((item) => (
+            {phoneTypes.map((item) => (
               <li
-                key={item.name}
-                onClick={() => handlePhoneSelect(item)}
+                key={item}
+                onClick={() => handlePhoneTypeSelect(item)}
                 className={`${styles.textItem} ${
-                  selectedPhone?.name === item.name ? styles.active : ""
+                  selectedPhoneType === item ? styles.active : ""
                 }`}
               >
-                {item.name}
+                {item}
               </li>
             ))}
           </ul>
@@ -286,26 +294,31 @@ export default function Home() {
 
         {/* RIGHT: Image Grid */}
         <ul className={styles.grid}>
-          {phones.map((item) => (
-            <li
-              key={item.name}
-              onClick={() => handlePhoneSelect(item)}
-              className={`${styles.item} ${
-                selectedPhone?.name === item.name ? styles.selectedItem : ""
-              }`}
-            >
-              <div className={styles.imageContainer}>
-                <Image
-                  src={item.image}
-                  alt={item.name}
-                  fill
-                  className={styles.image}
-                  priority
-                />
-                <div className={styles.overlay}>{item.name}</div>
-              </div>
-            </li>
-          ))}
+          {phones
+            .filter(
+              (item) =>
+                selectedPhoneType === null || item.type === selectedPhoneType
+            )
+            .map((item) => (
+              <li
+                key={item.name}
+                onClick={() => handlePhoneSelect(item)}
+                className={`${styles.item} ${
+                  selectedPhone?.name === item.name ? styles.selectedItem : ""
+                }`}
+              >
+                <div className={styles.imageContainer}>
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    fill
+                    className={styles.image}
+                    priority
+                  />
+                  <div className={styles.overlay}>{item.name}</div>
+                </div>
+              </li>
+            ))}
         </ul>
       </div>
       {/* Display form only if a phone is selected */}

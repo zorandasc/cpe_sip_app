@@ -119,3 +119,7 @@ export const phones = [
     image: "/images/KX-TGP600.png",
   },
 ];
+
+export const phoneTypes = Array.from(
+  new Set(phones.map((phone) => phone.type))
+);
