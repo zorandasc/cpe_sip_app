@@ -293,19 +293,20 @@ export default function Home() {
         </div>
 
         {/* RIGHT: Image Grid */}
-        <ul className={styles.grid}>
+        <ul key={selectedPhoneType || "all"} className={styles.grid}>
           {phones
             .filter(
               (item) =>
                 selectedPhoneType === null || item.type === selectedPhoneType
             )
-            .map((item) => (
+            .map((item, index) => (
               <li
                 key={item.name}
                 onClick={() => handlePhoneSelect(item)}
                 className={`${styles.item} ${
                   selectedPhone?.name === item.name ? styles.selectedItem : ""
                 }`}
+                style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className={styles.imageContainer}>
                   <Image

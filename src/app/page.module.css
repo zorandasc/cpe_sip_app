@@ -37,7 +37,7 @@
   width: 100%;
 }
 
-.phoneTypeList{
+.phoneTypeList {
   width: 250px;
   flex-shrink: 0;
 }
@@ -53,7 +53,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   background-color: #3c495f; /* tailwind gray-700 */
-  padding: 0.5rem 1rem;
+  padding: 1rem;
   border-radius: 0.5rem;
   text-align: center;
   font-weight: 500;
@@ -88,7 +88,7 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1rem;
   list-style: none;
   padding-bottom: 4rem;
@@ -107,6 +107,17 @@
   transition: transform 0.3s ease;
   background-color: #fff;
   box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5);
+  /* Animation initial state */
+  transform: translateX(-50px) scale(0); /* Start scaled to zero */
+  transform-origin: center center; /* Scale from the left side */
+  animation: slideAndScale 0.5s ease-out forwards; /* Animation for scaling */
+}
+
+/* Keyframes for the scale animation */
+@keyframes slideAndScale {
+  to {
+    transform: translateX(0) scale(1); /* Slide to original position and scale to full size */
+  }
 }
 
 .item:hover {
@@ -115,6 +126,7 @@
   transition: all 0.3s ease;
   background-color: #fff;
 }
+
 .selectedItem {
   box-shadow: rgba(108, 156, 198, 0.5) 4px 4px 8px 0px;
   border: 1px solid rgba(0, 112, 243, 1);
