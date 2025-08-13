@@ -323,91 +323,93 @@ export default function Home() {
         </ul>
       </div>
       {/* Display form only if a phone is selected */}
-      {selectedPhone && (
-        <form ref={formRef} onSubmit={handleSubmit} className={styles.form}>
-          <h3>Konfiguracija za: {selectedPhone.name}</h3>
-          <div className={styles.macField}>
-            <label htmlFor="mac">MAC Adresa:</label>
-            <input
-              type="text"
-              id="mac"
-              value={mac}
-              onChange={handleMacChange}
-              required
-              placeholder="Npr. AA:BB:CC:DD:EE:FF"
-              className={macErrorMessage ? styles.inputError : ""}
-              maxLength={17}
-            />
-            {macErrorMessage && (
-              <p className={styles.errorMessage}>{macErrorMessage}</p>
-            )}
-          </div>
-          {/* Dynamically render input fields based on selectedPhone.port */}
-          <div className={styles.portConfigContainer}>
-            {portConfigs.map((config, index) => (
-              <div key={index} className={styles.portGroup}>
-                {selectedPhone.port > 1 && (
-                  <h4 className={styles.portHeading}>Port {index + 1}</h4>
-                )}
-                <div>
-                  <label htmlFor={`brojTelefona-${index}`}>
-                    Broj Telefona:
-                  </label>
-                  <div className={styles.phoneInputContainer}>
+      {
+        <div  className={styles.formContainer} style={{ display: selectedPhone ? "flex" : "none" }}>
+          <form ref={formRef} onSubmit={handleSubmit} className={styles.form}>
+            <h3>Konfiguracija za: {selectedPhone?.name}</h3>
+            <div className={styles.macField}>
+              <label htmlFor="mac">MAC Adresa:</label>
+              <input
+                type="text"
+                id="mac"
+                value={mac}
+                onChange={handleMacChange}
+                required
+                placeholder="Npr. AA:BB:CC:DD:EE:FF"
+                className={macErrorMessage ? styles.inputError : ""}
+                maxLength={17}
+              />
+              {macErrorMessage && (
+                <p className={styles.errorMessage}>{macErrorMessage}</p>
+              )}
+            </div>
+            {/* Dynamically render input fields based on selectedPhone.port */}
+            <div className={styles.portConfigContainer}>
+              {portConfigs.map((config, index) => (
+                <div key={index} className={styles.portGroup}>
+                  {selectedPhone?.port > 1 && (
+                    <h4 className={styles.portHeading}>Port {index + 1}</h4>
+                  )}
+                  <div>
+                    <label htmlFor={`brojTelefona-${index}`}>
+                      Broj Telefona:
+                    </label>
+                    <div className={styles.phoneInputContainer}>
+                      <input
+                        type="tel"
+                        //pattern="[0-9]*"
+                        id={`brojTelefona-${index}`}
+                        value={config.brojTelefona}
+                        className={styles.phoneInput}
+                        placeholder="Npr. +38751123456, 051223456, 51123456"
+                        //minLength={8}
+                        //maxLength={11}
+                        onChange={(e) =>
+                          handlePortInputChange(
+                            index,
+                            "brojTelefona",
+                            e.target.value
+                          )
+                        }
+                      />
+                      <span className={styles.phonePrefix}>@mtel.ba</span>
+                    </div>
+                  </div>
+                  <div>
+                    <label htmlFor={`sifra-${index}`}>Šifra:</label>
                     <input
-                      type="tel"
-                      //pattern="[0-9]*"
-                      id={`brojTelefona-${index}`}
-                      value={config.brojTelefona}
-                      className={styles.phoneInput}
-                      placeholder="Npr. +38751123456, 051223456, 51123456"
-                      //minLength={8}
-                      //maxLength={11}
+                      type="text"
+                      minLength={8}
+                      maxLength={8}
+                      id={`sifra-${index}`}
+                      value={config.sifra}
                       onChange={(e) =>
-                        handlePortInputChange(
-                          index,
-                          "brojTelefona",
-                          e.target.value
-                        )
+                        handlePortInputChange(index, "sifra", e.target.value)
                       }
                     />
-                    <span className={styles.phonePrefix}>@mtel.ba</span>
                   </div>
+                  {portValidationErrors[index] && (
+                    <p className={styles.portErrorMessage}>
+                      {portValidationErrors[index]}
+                    </p>
+                  )}
                 </div>
-                <div>
-                  <label htmlFor={`sifra-${index}`}>Šifra:</label>
-                  <input
-                    type="text"
-                    minLength={8}
-                    maxLength={8}
-                    id={`sifra-${index}`}
-                    value={config.sifra}
-                    onChange={(e) =>
-                      handlePortInputChange(index, "sifra", e.target.value)
-                    }
-                  />
-                </div>
-                {portValidationErrors[index] && (
-                  <p className={styles.portErrorMessage}>
-                    {portValidationErrors[index]}
-                  </p>
-                )}
-              </div>
-            ))}
-          </div>
-          <button
-            type="submit"
-            className={styles.submit}
-            disabled={
-              Object.keys(portValidationErrors).length > 0 || macErrorMessage
-                ? true
-                : undefined
-            }
-          >
-            Create <SendIcon></SendIcon>
-          </button>
-        </form>
-      )}
+              ))}
+            </div>
+            <button
+              type="submit"
+              className={styles.submit}
+              disabled={
+                Object.keys(portValidationErrors).length > 0 || macErrorMessage
+                  ? true
+                  : undefined
+              }
+            >
+              Create <SendIcon></SendIcon>
+            </button>
+          </form>
+        </div>
+      }
     </main>
   );
 }

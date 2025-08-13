@@ -1,10 +1,16 @@
-:global([data-theme="light"]) .form {
-  background: #ffefba;
-  background: linear-gradient(to right, #ffefba, #ffffff);
+:global([data-theme="light"]) .formContainer {
+  background-image: url("/bcg.png");
 }
 
 :global([data-theme="light"]) .portGroup {
   background-color: #90969c;
+}
+:global([data-theme="light"]) .form h3 {
+  color: #242b38;
+}
+
+:global([data-theme="light"]) .macField label {
+  color: #242b38;
 }
 
 :global([data-theme="light"]) .portGroup label {
@@ -32,7 +38,7 @@
 .twoColumn {
   display: flex;
   width: 100%;
-  max-width: 1400px;
+  max-width: 1300px;
   margin: 0 auto;
 }
 
@@ -179,36 +185,52 @@
   width: 100%;
 }
 
+.formContainer {
+  flex: 1;
+  background-image: url("/bcg-invert.png");
+  background-size: contain;
+  background-position: right top;
+  background-repeat: repeat-y;
+  max-width: 1300px;
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: 6rem;
+  transition: transform 0.3s ease;
+  /* Animation initial state */
+  transform: translateY(500px) scale(0); /* Start scaled to zero */
+  transform-origin: bottom bottom; /* Scale from the left side */
+  animation: scale 0.5s ease-out forwards; /* Animation for scaling */
+}
+
 .form {
-  flex: 1; /* Allow it to grow and shrink */
+  /* Allow it to grow and shrink */
   /* Darker background for the form card */
   padding: 2rem;
   border-radius: 10px;
   width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
+  height: 100%;
+
   display: flex;
   align-items: self-start;
   flex-direction: column;
-  gap: 1rem; /* Gap between major form sections (MAC field, port groups, button) */
-  margin-bottom: 6rem;
-  background: #bdc3c7; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to bottom,
-    #bdc3c7,
-    #2c3e50
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to bottom,
-    #bdc3c7,
-    #2c3e50
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  gap: 1rem;
 
   box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5);
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 16px;
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+}
+
+/* Keyframes for the scale animation */
+@keyframes scale {
+  to {
+    transform: translateY(0) scale(1); /* Slide to original position and scale to full size */
+  }
 }
 
 .form h3 {
-  color: #242b38;
+  color: #d1c8c8;
   margin-top: 0;
   margin-bottom: 0.5rem;
   text-align: center;
@@ -217,7 +239,7 @@
 /* Style for the single MAC address field container */
 .macField label {
   margin-right: 1rem;
-  color: #242b38 !important;
+  color: #d1c8c8;
 }
 
 .errorMessage {
