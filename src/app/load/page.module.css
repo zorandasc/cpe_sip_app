@@ -9,7 +9,7 @@
 }
 
 :global([data-theme="light"]) .pageContainer {
-  background-image: url("/test-invert.png");
+  background-image: url("/bcg-invert.png");
 }
 
 .pageContainer {
@@ -20,7 +20,7 @@
   display: flex;
   flex-direction: column;
   gap: 2rem; /* space between children like title and contentWrapper */
-  background-image: url("/test.png");
+  background-image: url("/bcg.png");
   background-size: contain;
   background-position: right top;
   background-repeat: no-repeat;

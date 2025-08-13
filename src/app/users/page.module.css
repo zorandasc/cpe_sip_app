@@ -1,7 +1,7 @@
 
 
 :global([data-theme="light"]) .pageContainer {
-   background-image: url("/test-invert.png");
+   background-image: url("/bcg-invert.png");
 }
 
 :global([data-theme="light"]) .userTable {
@@ -50,7 +50,7 @@
   justify-content: flex-start;
   align-items: center;
   gap: 2rem;
-  background-image: url("/test.png");
+  background-image: url("/bcg.png");
   background-size: contain;
   background-position: right top;
   background-repeat: no-repeat;

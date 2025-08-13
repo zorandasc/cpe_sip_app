@@ -1,5 +1,5 @@
 :global([data-theme="light"]) .pageContainer {
-  background-image: url("/test-invert.png");
+  background-image: url("/bcg-invert.png");
   background-color: var(--background);
   transition: all 0.3s ease;
 }
@@ -21,7 +21,7 @@
 .pageContainer {
   color: #e2e8f0;
   position: relative;
-  background-image: url("/test.png");
+  background-image: url("/bcg.png");
   background-size: contain;
   background-position: right top;
   background-repeat: no-repeat;

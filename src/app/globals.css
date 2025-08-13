@@ -3,6 +3,8 @@
   --foreground: #eae3da;
 }
 
+/*ROSA BOJA #e0bfad/*
+
 /* Manual light theme override */
 [data-theme="light"] {
   --background: #eae3da;
