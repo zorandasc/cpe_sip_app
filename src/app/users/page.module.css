@@ -1,11 +1,7 @@
-:global([data-theme="light"]) .contentWrapper {
-  background: #ffefba; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    #ffefba,
-    #ffffff
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #ffefba, #ffffff);
+
+
+:global([data-theme="light"]) .pageContainer {
+   background-image: url("/test-invert.png");
 }
 
 :global([data-theme="light"]) .userTable {
@@ -54,6 +50,10 @@
   justify-content: flex-start;
   align-items: center;
   gap: 2rem;
+  background-image: url("/test.png");
+  background-size: contain;
+  background-position: right top;
+  background-repeat: no-repeat;
 }
 
 /* Responsive padding */
@@ -74,20 +74,13 @@
 .contentWrapper {
   width: 80%; /* max-w-4xl */
   border-radius: 0.5rem; /* rounded-lg */
-  box-shadow: #6c9cc6 0px 7px 29px 0px;
   padding: 1.5rem; /* p-6 */
-  background: -webkit-linear-gradient(
-    to bottom,
-    #bdc3c7,
-    #2c3e50
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to bottom,
-    #bdc3c7,
-    #2c3e50
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
   box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.5);
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 16px;
+  backdrop-filter: blur(7.1px);
+  -webkit-backdrop-filter: blur(7.1px);
+  border: 1px solid rgba(255, 255, 255, 0.45);
 }
 
 .title {
