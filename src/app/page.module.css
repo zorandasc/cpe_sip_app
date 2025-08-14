@@ -26,7 +26,6 @@
 
 :global([data-theme="light"]) .portErrorMessage {
   color: tomato;
- 
 }
 .main {
   padding: 2rem;
@@ -230,7 +229,7 @@
 }
 
 .form h3 {
-  color: #d1c8c8;
+  color: #f0e7e7;
   margin-top: 0;
   margin-bottom: 0.5rem;
   text-align: center;
@@ -239,7 +238,7 @@
 /* Style for the single MAC address field container */
 .macField label {
   margin-right: 1rem;
-  color: #d1c8c8;
+  color: #f0e7e7;
 }
 
 .errorMessage {
