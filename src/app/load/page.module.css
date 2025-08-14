@@ -23,7 +23,7 @@
   background-image: url("/bcg.png");
   background-size: contain;
   background-position: right top;
-  background-repeat: no-repeat;
+  background-repeat: repeat-y;
 }
 
 .contentWrapper {
