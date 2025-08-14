@@ -3,14 +3,14 @@
 }
 
 :global([data-theme="light"]) .portGroup {
-  background-color: #90969c;
+  background-color: #6b808c;
 }
 :global([data-theme="light"]) .form h3 {
-  color: #242b38;
+  color: #3c495f;
 }
 
 :global([data-theme="light"]) .macField label {
-  color: #242b38;
+  color: #3c495f;
 }
 
 :global([data-theme="light"]) .portGroup label {
@@ -18,15 +18,15 @@
 }
 
 :global([data-theme="light"]) .phonePrefix {
-  color: #89cffe;
+  color: whitesmoke;
 }
 :global([data-theme="light"]) .portHeading {
   color: #89cffe;
 }
 
 :global([data-theme="light"]) .portErrorMessage {
-  color: #9c0b27;
-  text-shadow: 1px 1px 1px #a98282;
+  color: tomato;
+ 
 }
 .main {
   padding: 2rem;

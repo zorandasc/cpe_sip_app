@@ -43,7 +43,9 @@ export async function POST(req) {
     // Ensure the directory exists
     await fs.mkdir(saveDirectory, { recursive: true });
 
-    // Match prefix + MAC (12 hex chars) + extension
+    //SEPARATE: PREFIX+BASENAME+EXTENZION
+    //CONVERT BASENAME TO LOWER/UPPER CASE
+    //Match prefix + MAC (12 hex chars) + extension
     const regex = /^(.*)([0-9A-Fa-f]{12})(.*)$/;
     const match = fileName.match(regex);
 
