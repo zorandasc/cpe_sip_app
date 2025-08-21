@@ -5,7 +5,7 @@ import { exec } from "child_process";
 import { promisify } from "util"; //FOR PROMISIFIKACIJU execa
 import { phoneConfig } from "@/utils/phoneConfig";
 
-const PASSWORD = process.env.OPEN_SSL_PAS; // 🔐 Hardcoded password
+const PASSWORD = process.env.OPEN_SSL_PASS; // 🔐 Hardcoded password
 
 //BECKEND API ROUTA ZA CUVANJE EDITOVANOG VOIP KONFIG FAJLA
 export async function POST(req) {
@@ -94,8 +94,8 @@ export async function POST(req) {
       const execAsync = promisify(exec);
 
       //CLI COMMAND FOR ENCRYPTION
-      const cmdUpper = `openssl enc -e -aes-256-cbc -salt -md md5 -in "${filePathUpper}" -out "${encryptedPathUpper}" -pass pass:"${PASSWORD}"`;
-      const cmdLower = `openssl enc -e -aes-256-cbc -salt -md md5 -in "${filePathLower}" -out "${encryptedPathLower}" -pass pass:"${PASSWORD}"`;
+      const cmdUpper = `openssl enc -e -aes-256-cbc -salt -md md5 -in "${filePathUpper}" -out "${encryptedPathUpper}" -pass pass:${PASSWORD}`;
+      const cmdLower = `openssl enc -e -aes-256-cbc -salt -md md5 -in "${filePathLower}" -out "${encryptedPathLower}" -pass pass:${PASSWORD}`;
 
       await execAsync(cmdUpper);
       await execAsync(cmdLower);

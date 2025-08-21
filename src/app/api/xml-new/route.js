@@ -36,24 +36,18 @@ export async function POST(request) {
 
     //const fullPhone = { ...selectedPhone, ...config };
 
-    //exec(cmd, callback) is asynchronous. The try/catch only wraps
-    //synchronous code and awaited promises.
-    //pa iz tog razloga vrsimo:
-    //Wrap exec() in a Promise and await it
-    const execAsync = promisify(exec);
-
     //KREIRAJ XML FAJL
     for (const output of config.outputs) {
       const xmlContent = output.generator(selectedPhone, mac, portConfigs);
 
-      //LOWER MAC ADDRESS
-      let filename = `${output.prefix}${mac.replace(/[^a-zA-Z0-9]/g, "_")}${
-        output.extension
-      }`;
-
       //UPPER MAC ADDRESS
-      let filenameUpper = `${output.prefix}${mac
+      let fileNameUpper = `${output.prefix}${mac
         .toUpperCase()
+        .replace(/[^a-zA-Z0-9]/g, "_")}${output.extension}`;
+
+      //LOWER MAC ADDRESS
+      let fileNameLower = `${output.prefix}${mac
+        .toLowerCase()
         .replace(/[^a-zA-Z0-9]/g, "_")}${output.extension}`;
 
       // Define the directory where files will be saved
@@ -63,15 +57,15 @@ export async function POST(request) {
       // Ensure the directory exists, CREATE DIRECTORY
       await fs.mkdir(saveDirectory, { recursive: true });
 
-      const filePath = path.join(saveDirectory, filename);
-      const filePathUpper = path.join(saveDirectory, filenameUpper);
+      const filePathUpper = path.join(saveDirectory, fileNameUpper);
+      const filePathLower = path.join(saveDirectory, fileNameLower);
 
       // Write the XML content to the file
-      await fs.writeFile(filePath, xmlContent);
-      await fs.copyFile(filePath, filePathUpper);
+      await fs.writeFile(filePathUpper, xmlContent);
+      await fs.copyFile(filePathUpper, filePathLower);
 
-      console.log(`Saved: ${filePath}`);
-      console.log(`Saved: ${filePathUpper}`);
+      console.log(`Successfully saved XML to: ${filePathUpper}`);
+      console.log(`Successfully saved XML to: ${filePathLower}`);
 
       //PETLJA ZA ENKRIPCIJU
       if (config.encrypt) {
@@ -83,18 +77,25 @@ export async function POST(request) {
         // Ensure the directory exists
         await fs.mkdir(encryptedDirectory, { recursive: true });
 
-        const encryptedPath = path.join(encryptedDirectory, filename);
-        const encryptedPathUpper = path.join(encryptedDirectory, filenameUpper);
+        const encryptedPathUpper = path.join(encryptedDirectory, fileNameUpper);
+        const encryptedPathLower = path.join(encryptedDirectory, fileNameLower);
 
-        //CLI COMMAND FOR ENCRYPTION
-        const cmd = `openssl enc -e -aes-256-cbc -salt -md md5 -in "${filePath}" -out "${encryptedPath}" -pass pass:"${PASSWORD}"`;
-        const cmdUpper = `openssl enc -e -aes-256-cbc -salt -md md5 -in "${filePathUpper}" -out "${encryptedPathUpper}" -pass pass:"${PASSWORD}"`;
+        //exec(cmd, callback) is asynchronous. The try/catch only wraps
+        //synchronous code and awaited promises.
+        //pa iz tog razloga vrsimo:
+        //Wrap exec() in a Promise and await it
+        const execAsync = promisify(exec);
 
-        await execAsync(cmd);
+        ///CLI COMMAND FOR ENCRYPTION
+        const cmdUpper = `openssl enc -e -aes-256-cbc -salt -md md5 -in "${filePathUpper}" -out "${encryptedPathUpper}" -pass pass:${PASSWORD}`;
+        const cmdLower = `openssl enc -e -aes-256-cbc -salt -md md5 -in "${filePathLower}" -out "${encryptedPathLower}" -pass pass:${PASSWORD}`;
+
         await execAsync(cmdUpper);
+        await execAsync(cmdLower);
 
-        console.log(`Encrypted: ${encryptedPath}`);
-        console.log(`Encrypted: ${encryptedPathUpper}`);
+        console.log(`Successfully encrypted XML to: ${encryptedPathUpper}`);
+        console.log(`Successfully encrypted XML to: ${encryptedPathLower}`);
+        //END OF ENCRYPTION LOGIC
       }
     }
     return NextResponse.json({ message: "✅ All files created and saved." });
