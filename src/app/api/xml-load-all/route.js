@@ -78,21 +78,21 @@ export async function GET(req) {
       }
     }
 
-    //SEARCHING
+    //1.SEARCHING
     const filteredFiles = uniqueXmlFiles.filter((file) =>
       file.name.toLowerCase().includes(search)
     );
 
     const totalCount = filteredFiles.length;
 
-    //PAGINATION
+    //2.SORTING Sort by time (descending — newest first)
+    filteredFiles.sort((a, b) => b.time - a.time);
+
+    //3.PAGINATION
     const filesToSend = filteredFiles.slice(offset, offset + limit);
 
     // Check if more item exist after this page
     const hasMore = offset + filesToSend.length < totalCount;
-
-    //SORTING Sort by time (descending — newest first)
-    filesToSend.sort((a, b) => b.time - a.time);
 
     return NextResponse.json(
       { files: filesToSend, hasMore, totalCount },
