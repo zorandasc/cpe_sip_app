@@ -1,5 +1,6 @@
 export default function createGrandstreamXml(selectedPhone, mac, portConfigs) {
   let xmlContent = `<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n`;
+  xmlContent += `<!-- Grandstream XML Provisioning Configuration -->\n`;
   if (selectedPhone.port === 1) {
     //SINGLE PORT GRANDSTREAM
     let config = portConfigs[0];
@@ -20,8 +21,6 @@ export default function createGrandstreamXml(selectedPhone, mac, portConfigs) {
     let sipDisplay = config.brojTelefona ? `0${config.brojTelefona}` : " ";
 
     //KREIRAJ XML FAJL
-    
-    xmlContent += `<!-- Grandstream XML Provisioning Configuration -->\n`;
     xmlContent += `<gs_provision version=\"1\">\n`;
     xmlContent += `<mac>${mac}</mac>\n`;
 
@@ -49,7 +48,7 @@ export default function createGrandstreamXml(selectedPhone, mac, portConfigs) {
     return `${xmlContent}${SINGLE_PORT_BASE_TEMPLATE}`;
   } else {
     //MULTI PORT GRANDSTREAM, RGW
-    xmlContent = `<gs_provision version=\"1\">\n`;
+    xmlContent += `<gs_provision version=\"1\">\n`;
     xmlContent += ` <mac>${mac}</mac>\n`;
     xmlContent += ` <config version=\"1\">\n`;
 
