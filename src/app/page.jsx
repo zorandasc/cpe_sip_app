@@ -380,7 +380,7 @@ export default function Home() {
                     <input
                       type="text"
                       minLength={8}
-                      maxLength={8}
+                      maxLength={12}
                       id={`sifra-${index}`}
                       value={config.sifra}
                       onChange={(e) =>
