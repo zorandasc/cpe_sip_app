@@ -6,7 +6,6 @@ import { UserProvider } from "@/context/UserContext";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { Toaster } from "react-hot-toast";
 import ThemeToggle from "@/components/ThemeToggle";
-import SessionTimer from "@/components/SessionTimer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
