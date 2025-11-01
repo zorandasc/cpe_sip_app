@@ -43,7 +43,10 @@ const NavbarBottom = () => {
     <nav className={styles.nav}>
       <ul className={styles.menu}>
         {user && (
-          <li className={styles.user}>
+          <li
+            className={styles.user}
+            title="Korisnik admin. Vaša sesija ističe za:"
+          >
             <UserIcon></UserIcon>
             <p>{user?.username}</p>
             <p>
