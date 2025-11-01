@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 
 //FRONTEND STRANICA ZA LOGOVANJE
 export default function LoginPage() {
-  const { setUser } = useUserContext();
+  const { setUser, setExpiresAt } = useUserContext();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -39,6 +39,8 @@ export default function LoginPage() {
 
       // OPTIMIZATION: update CONTEXT LOGOVANIM KORISNIKOM
       setUser(data.user);
+      //SAVE TOKEN EXPIRATION TO CONTEXT AND LOCALSTORAGE
+      setExpiresAt(data.expiresAt);
 
       //NAVIGACIJA PREMA HOME PAGE
       setTimeout(() => {

@@ -4,6 +4,8 @@ import jwt from "jsonwebtoken";
 import { openDb } from "@/utils/db";
 
 const JWT_SECRET = process.env.JWT_SECRET;
+const expiresInSeconds = 60 * 60; // 60 minutes
+const expiresAt = Date.now() + expiresInSeconds * 1000;
 
 if (!JWT_SECRET) {
   throw new Error("JWT_SECRET is not defined in environment variables");
@@ -65,7 +67,7 @@ export async function POST(req) {
     { id: user.id, username: user.username, role: user.role },
     JWT_SECRET,
     {
-      expiresIn: "30min",
+      expiresIn: expiresInSeconds,
     }
   );
 
@@ -73,6 +75,7 @@ export async function POST(req) {
   const response = NextResponse.json({
     message: `Dobro došli ${user.username}`,
     user: { id: user.id, username: user.username, role: user.role },
+    expiresAt, // 🕒 Send expiration timestamp
   });
   response.cookies.set("token", token, {
     httpOnly: true, // Prevents client-side JavaScript from accessing the cookie

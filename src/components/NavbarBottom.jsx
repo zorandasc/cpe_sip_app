@@ -1,11 +1,9 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./navbarBottom.module.css"; // Adjust the path as necessary
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-import toast from "react-hot-toast";
 
 import HomeIcon from "./icons/HomeIcon";
 import UsersIcon from "./icons/UsersIcon";
@@ -18,34 +16,28 @@ import { useUserContext } from "@/context/UserContext";
 const NavbarBottom = () => {
   const pathname = usePathname();
 
-  const { user } = useUserContext();
+  const { user, expiresAt, handleLogout } = useUserContext();
 
-  //LOGOUT, POSALJI REQUEST SERVERU PREMA API RUTI /api/logout
-  //KOJA CE DA OBRISE JWT TOKEN
-  const handleLogout = async () => {
-    try {
-      const res = await fetch("/api/logout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+  const [remaining, setRemaining] = useState(0);
 
-      if (res.ok) {
-        toast.success("Buy, buy.");
+  useEffect(() => {
+    if (!expiresAt) return;
 
-        //NAVIGACIJA PREMA LOGIN PAGE
-        setTimeout(() => {
-          window.location.href = "/login";
-        }, 1500);
-      } else {
-        console.error("Logout failed");
+    const interval = setInterval(() => {
+      const diff = Number(expiresAt) - Date.now();
+      setRemaining(diff);
+
+      if (diff <= 0) {
+        clearInterval(interval);
+        handleLogout();
       }
-    } catch (error) {
-      console.error("Error during logout:", error);
-      toast.error(`Error during logout: ${error}`);
-    }
-  };
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [expiresAt]);
+
+  const minutes = Math.floor(remaining / 60000);
+  const seconds = Math.floor((remaining % 60000) / 1000);
 
   return (
     <nav className={styles.nav}>
@@ -54,6 +46,9 @@ const NavbarBottom = () => {
           <li className={styles.user}>
             <UserIcon></UserIcon>
             <p>{user?.username}</p>
+            <p>
+              (⏳{minutes}:{seconds.toString().padStart(2, "0")})
+            </p>
           </li>
         )}
         <li

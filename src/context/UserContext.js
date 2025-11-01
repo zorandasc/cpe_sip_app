@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 //UserProvider's useEffect (Primary Source of Truth):
 //Your UserProvider (from the user-context immersive) has a useEffect that
@@ -22,6 +23,11 @@ export function useUserContext() {
 export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loadingUser, setLoadingUser] = useState(true);
+  const [expiresAt, setExpiresAt] = useState(
+    typeof window !== "undefined"
+      ? Number(localStorage.getItem("expiresAt"))
+      : null
+  );
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -45,13 +51,51 @@ export function UserProvider({ children }) {
     fetchUser();
   }, []);
 
+  //settuje expiresAt in localstorage
+  useEffect(() => {
+    if (expiresAt) {
+      localStorage.setItem("expiresAt", expiresAt);
+    } else {
+      localStorage.removeItem("expiresAt");
+    }
+  }, [expiresAt]);
+
+  //handleLogout KORISTIOM U DVE KOMPONENTE NAVBAR I SESSIONTIMER
+  const handleLogout = async () => {
+    try {
+      //POSALJI REQUEST SERVERU PREMA API RUTI /api/logout
+      //KOJA CE DA OBRISE JWT TOKEN N SERVERU
+      await fetch("/api/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    } catch (error) {
+      console.error("Logout API call failed:", error);
+    }
+
+    toast.success("Buy, buy.");
+
+    setUser(null);
+    setExpiresAt(null);
+    localStorage.removeItem("expiresAt");
+
+    //NAVIGACIJA TO LOGIN PAGE WITH DELAY
+    setTimeout(() => {
+      window.location.href = "/login";
+    }, 1500);
+  };
+
   // You can optionally render a loading spinner or null while user data is being fetched
   if (loadingUser) {
     return <div className="loading-screen">Loading application...</div>;
   }
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider
+      value={{ user, setUser, expiresAt, setExpiresAt, handleLogout }}
+    >
       {children}
     </UserContext.Provider>
   );
