@@ -22,12 +22,13 @@ const NavbarBottom = () => {
 
   useEffect(() => {
     if (!expiresAt) return;
-
+    //INTERVALNA PROVJERA ISTEKA SESIJE KORISNIKA
     const interval = setInterval(() => {
       const diff = Number(expiresAt) - Date.now();
       setRemaining(diff);
 
       if (diff <= 0) {
+        //SESIJA ISTEKLA, LOGOUT
         clearInterval(interval);
         handleLogout();
       }
