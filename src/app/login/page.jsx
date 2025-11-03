@@ -40,7 +40,7 @@ export default function LoginPage() {
       // OPTIMIZATION: update CONTEXT LOGOVANIM KORISNIKOM
       setUser(data.user);
       //SAVE TOKEN EXPIRATION TO CONTEXT AND LOCALSTORAGE
-      setExpiresAt(data.expiresAt);
+      setExpiresAt(Number(data.expiresAt));
 
       //NAVIGACIJA PREMA HOME PAGE
       setTimeout(() => {

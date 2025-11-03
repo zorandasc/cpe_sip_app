@@ -4,8 +4,6 @@ import jwt from "jsonwebtoken";
 import { openDb } from "@/utils/db";
 
 const JWT_SECRET = process.env.JWT_SECRET;
-const expiresInSeconds = 60 * 60; // 60 minutes
-const expiresAt = Date.now() + expiresInSeconds * 1000;
 
 if (!JWT_SECRET) {
   throw new Error("JWT_SECRET is not defined in environment variables");
@@ -61,6 +59,9 @@ export async function POST(req) {
       { status: 401 }
     );
   }
+
+  const expiresInSeconds = 60 * 60; // 60 minutes
+  const expiresAt = Date.now() + expiresInSeconds * 1000;
 
   //USERNAM I PASSWORD SU UREDNI SADA FORMIRAJ TOKEN
   const token = jwt.sign(

@@ -62,6 +62,9 @@ export function UserProvider({ children }) {
 
   //handleLogout KORISTIOM U DVE KOMPONENTE NAVBAR I SESSIONTIMER
   const handleLogout = async () => {
+    setUser(null);
+    setExpiresAt(null);
+    localStorage.removeItem("expiresAt");
     try {
       //POSALJI REQUEST SERVERU PREMA API RUTI /api/logout
       //KOJA CE DA OBRISE JWT TOKEN N SERVERU
@@ -76,15 +79,13 @@ export function UserProvider({ children }) {
     }
 
     toast.success("Buy, buy.");
-
-    setUser(null);
-    setExpiresAt(null);
-    localStorage.removeItem("expiresAt");
+   
 
     //NAVIGACIJA TO LOGIN PAGE WITH DELAY
+
     setTimeout(() => {
       window.location.href = "/login";
-    }, 1500);
+    }, 1000);
   };
 
   // You can optionally render a loading spinner or null while user data is being fetched
