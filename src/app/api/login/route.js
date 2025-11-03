@@ -60,7 +60,7 @@ export async function POST(req) {
     );
   }
 
-  const expiresInSeconds = 2 * 60; // 60 minutes
+  const expiresInSeconds = 60 * 60; // 60 minutes
   const expiresAt = Date.now() + expiresInSeconds * 1000;
 
   //USERNAM I PASSWORD SU UREDNI SADA FORMIRAJ TOKEN

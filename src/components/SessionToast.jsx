@@ -10,7 +10,8 @@ const SessionToastContent = ({ remaining, onClose }) => {
   return (
     <div>
       <p>
-        ⏳ Vaša sesija ističe za: {minutes}:{seconds.toString().padStart(2, "0")}
+        ⏳ Vaša sesija ističe za: {minutes}min:
+        {seconds.toString().padStart(2, "0")}s
       </p>
       <button
         onClick={onClose}
@@ -42,7 +43,8 @@ const SessionToast = () => {
       const diff = Number(expiresAt) - Date.now();
 
       // Show toast initially when session < 5min
-      if (diff <= 1 * 60 * 1000 && diff > 0 && toastIdRef.current === null) {
+      const GRACE_PERIOD = 5 * 60 * 1000;
+      if (diff <= GRACE_PERIOD && diff > 0 && toastIdRef.current === null) {
         toastIdRef.current = toast(
           <SessionToastContent
             remaining={diff}
