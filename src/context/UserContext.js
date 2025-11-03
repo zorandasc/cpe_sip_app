@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "react-hot-toast";
 
 //UserProvider's useEffect (Primary Source of Truth):
 //Your UserProvider (from the user-context immersive) has a useEffect that
@@ -79,7 +79,6 @@ export function UserProvider({ children }) {
     }
 
     toast.success("Buy, buy.");
-   
 
     //NAVIGACIJA TO LOGIN PAGE WITH DELAY
 

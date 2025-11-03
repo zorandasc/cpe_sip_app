@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
+import SessionToast from "../components/SessionToast";
 import NavbarBottom from "../components/NavbarBottom";
 import { UserProvider } from "@/context/UserContext";
 import { ThemeProvider } from "@/context/ThemeContext";
@@ -30,6 +31,7 @@ export default function RootLayout({ children }) {
           <ThemeProvider>
             <ThemeToggle></ThemeToggle>
             {children}
+            <SessionToast></SessionToast>
             <NavbarBottom></NavbarBottom>
             <Toaster
               position="top-center"

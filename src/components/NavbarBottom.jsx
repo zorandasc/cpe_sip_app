@@ -1,5 +1,6 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React from "react";
+
 import styles from "./navbarBottom.module.css"; // Adjust the path as necessary
 
 import Link from "next/link";
@@ -16,29 +17,7 @@ import { useUserContext } from "@/context/UserContext";
 const NavbarBottom = () => {
   const pathname = usePathname();
 
-  const { user, expiresAt, handleLogout } = useUserContext();
-
-  const [remaining, setRemaining] = useState(0);
-
-  useEffect(() => {
-    if (!expiresAt) return;
-    //INTERVALNA PROVJERA ISTEKA SESIJE KORISNIKA
-    const interval = setInterval(() => {
-      const diff = Number(expiresAt) - Date.now();
-      setRemaining(diff);
-
-      if (diff <= 0) {
-        //SESIJA ISTEKLA, LOGOUT
-        clearInterval(interval);
-        handleLogout();
-      }
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [expiresAt]);
-
-  const minutes = Math.floor(remaining / 60000);
-  const seconds = Math.floor((remaining % 60000) / 1000);
+  const { user, handleLogout } = useUserContext();
 
   return (
     <nav className={styles.nav}>
@@ -50,9 +29,6 @@ const NavbarBottom = () => {
           >
             <UserIcon></UserIcon>
             <p>{user?.username}</p>
-            <p>
-              (⏳{minutes}:{seconds.toString().padStart(2, "0")})
-            </p>
           </li>
         )}
         <li

@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef } from "react";
 import Image from "next/image";
-import toast from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import SendIcon from "@/components/icons/SendIcon";
 import { phones, phoneTypes } from "@/utils/phoneOptions";
 import styles from "./page.module.css";

@@ -8,7 +8,7 @@ import Paginator from "@/components/Paginator";
 //["xmlconfigs/Grandstream", "xmlconfigs/", "xmlconfigs/Cisco502G", "xmlconfigs/Cisco512G"]
 import { phoneFolders } from "@/utils/phoneConfig";
 
-import toast from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-xml";
 import "ace-builds/src-noconflict/theme-merbivore_soft";

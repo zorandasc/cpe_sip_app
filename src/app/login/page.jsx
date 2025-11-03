@@ -3,7 +3,7 @@
 import { useState } from "react";
 import styles from "./page.module.css";
 import { useUserContext } from "@/context/UserContext";
-import toast from "react-hot-toast";
+import { toast } from "react-hot-toast";
 
 //FRONTEND STRANICA ZA LOGOVANJE
 export default function LoginPage() {
