@@ -42,8 +42,10 @@ export default function RootLayout({ children }) {
                     secondary: "black",
                   },
                   style: {
+                    whiteSpace: "pre-wrap", // keep newlines
+                    wordBreak: "break-word", // prevent horizontal overflow
                     background: "#44A08D",
-
+                    maxWidth: "400px",
                     background: "linear-gradient(to bottom, #093637, #44A08D)",
 
                     color: "whitesmoke",

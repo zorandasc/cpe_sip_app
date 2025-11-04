@@ -49,14 +49,6 @@ const NavbarBottom = () => {
             <SearchIcon></SearchIcon>
           </Link>
         </li>
-        <li
-          title="Delete File"
-          className={`${styles.link} ${
-            pathname === "/delete" ? styles.active : ""
-          }`}
-        >
-          <Link href="/delete">Delete</Link>
-        </li>
 
         {user && user.role === "admin" && (
           <li

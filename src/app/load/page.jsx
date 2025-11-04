@@ -6,6 +6,7 @@ import SaveIcon from "@/components/icons/SaveIcon";
 import TrashIcon from "@/components/icons/TrashIcon";
 import Paginator from "@/components/Paginator";
 
+//{path:"folderPath", folderName:"folderName"}
 //["xmlconfigs/Grandstream", "xmlconfigs/", "xmlconfigs/Cisco502G", "xmlconfigs/Cisco512G"]
 import { phoneFolders } from "@/utils/phoneConfig";
 
@@ -153,7 +154,58 @@ export default function Load() {
     }
   };
 
-  const handleDelete = async () => {};
+  const handleDelete = async () => {
+    try {
+      const res = await fetch("/api/xml-delete", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fileName: selectedFile,
+          folderPath: selectedFolder.path,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        toast.error(`${data.message}`);
+        return;
+      }
+
+      // Helper: extract "parentFolder/fileName" from full path
+      const trimPath = (fullPath) => {
+        if (!fullPath) return "";
+        const parts = fullPath.split(/[/\\]+/); // split by / or \
+        const len = parts.length;
+        return len >= 2
+          ? `${parts[len - 2]}/${parts[len - 1]}`
+          : parts[len - 1];
+      };
+
+      const deleted = (data.deleted || []).map(trimPath);
+      const notFound = (data.notFound || []).map(trimPath);
+
+      const deletedList =
+        deleted.length > 0 ? `🗑️ Deleted: ${deleted.join(", ")}` : "";
+      const notFoundList =
+        notFound.length > 0 ? `❌ Not found: ${notFound.join(", ")}` : "";
+
+      toast.success(`${data.message}\n${deletedList}\n${notFoundList}`, {
+        position: "top-left",
+        duration: 8000,
+      });
+      //CLEAR EVERYTHING
+      setRawXmlContent(null);
+      closeModal();
+      //re-fetch file list so the deleted file disappears
+      loadFilesFromFolder(selectedFolder);
+    } catch (error) {
+      console.log("Something went wrong", error);
+      toast.error(`Something went wrong", ${error}`);
+    }
+  };
 
   //CLOSE XML
   const closeModal = () => {
@@ -164,6 +216,7 @@ export default function Load() {
     }, 300); // match duration of animation
   };
 
+  //PROMJENA TAB FOLDERA
   const loadFilesFromFolder = async (folder) => {
     //KOD PROMJENA FOLDERA SET PAGE TO 0
     //A SAMIM TIM I OFFSET. NESTO STATE KASNI
@@ -346,14 +399,15 @@ export default function Load() {
                 <h2 className={styles.modalTitle}>Editing File</h2>
                 <p className={styles.filename}>{selectedFile}</p>
               </div>
-              <button onClick={handleDelete} className={styles.deleteButton}>
-                Delete <TrashIcon></TrashIcon>
-              </button>
+
               <button
                 onClick={handleToggleTheme}
                 className={styles.themeButton}
               >
                 {theme === "merbivore_soft" ? "☀️" : "🌙"}
+              </button>
+              <button onClick={handleDelete} className={styles.deleteButton}>
+                Delete <TrashIcon></TrashIcon>
               </button>
             </div>
 
