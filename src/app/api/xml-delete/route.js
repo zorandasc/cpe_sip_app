@@ -52,7 +52,7 @@ export async function POST(req) {
     try {
       await fs.unlink(filePath);
       deletedFiles.push(filePath);
-    } catch (error) {
+    } catch (err) {
       if (err.code !== "ENOENT") {
         missingFiles.push(filePath);
         console.warn(`⚠️ Failed to delete ${filePath}: ${err.message}`);
