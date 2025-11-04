@@ -2,13 +2,10 @@
 
 import { useState, useEffect } from "react";
 import styles from "./page.module.css";
-import SaveIcon from "@/components/icons/SaveIcon";
-import TrashIcon from "@/components/icons/TrashIcon";
-import Paginator from "@/components/Paginator";
 
 //["xmlconfigs/Grandstream", "xmlconfigs/", "xmlconfigs/Cisco502G", "xmlconfigs/Cisco512G"]
 import { phoneFolders } from "@/utils/phoneConfig";
-
+import SaveIcon from "@/components/icons/SaveIcon";
 import { toast } from "react-hot-toast";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-xml";
@@ -17,7 +14,7 @@ import "ace-builds/src-noconflict/theme-kuroir";
 import "ace-builds/src-noconflict/ext-searchbox";
 
 //FRONTEND STRANICA SVIH VOIP KONFIG FAJLOVA
-export default function Load() {
+export default function DeletePage() {
   const [allFiles, setAllFiles] = useState([]);
 
   const [selectedFile, setSelectedFile] = useState(null);
@@ -34,21 +31,13 @@ export default function Load() {
   //FOR ANIMATION OF CLOSING MODAL
   const [isClosing, setIsClosing] = useState(false);
 
-  //FOR PAGINATION
-  const [page, setPage] = useState(0);
-  const [hasMore, setHasMore] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
 
   const [theme, setTheme] = useState("kuroir");
 
-  const LIMIT = 50;
-  const totalPages = Math.ceil(totalCount / LIMIT);
-
   //LOCAL SEARCH
   const handleSearchFile = (value) => {
     setSearchFile(value);
-
-    setPage(0);
   };
 
   //FETCH XML FROM NETWORK
@@ -111,49 +100,10 @@ export default function Load() {
     handleLoadSingleXml(fileName);
   };
 
-  //SAVE AND SAND EDITED XML
-  //RETURN EDITED XML TO NETWORK
-  const handleSaveAndSendXml = async (e) => {
+  //DELETE XML
+  const handleDeleteXml = async (e) => {
     e.preventDefault();
-
-    const isXml = selectedFile.slice(-4).toLowerCase() === ".xml";
-
-    //AKO POSTOJI GRESKA U XML STRUKTURI RETURN
-    if (isXml && !parseAndValidateXml(rawXmlContent)) return;
-
-    try {
-      const res = await fetch("/api/xml-edit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          fileName: selectedFile,
-          folderPath: selectedFolder.path,
-          xml: rawXmlContent,
-        }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        toast.error(`${data.message}`);
-        return;
-      }
-
-      toast.success(`${data.message}`, {
-        position: "top-left",
-      });
-      //CLEAR EVERYTHING
-      setRawXmlContent(null);
-      closeModal();
-    } catch (error) {
-      console.log("Something went wrong", error);
-      toast.error(`Something went wrong", ${error}`);
-    }
   };
-
-  const handleDelete = async () => {};
 
   //CLOSE XML
   const closeModal = () => {
@@ -165,63 +115,9 @@ export default function Load() {
   };
 
   const loadFilesFromFolder = async (folder) => {
-    //KOD PROMJENA FOLDERA SET PAGE TO 0
-    //A SAMIM TIM I OFFSET. NESTO STATE KASNI
-    setPage(0);
-
     //SAVE SELECTED SUBFOLDER THIS WE ARE USING FOR SAVING XML TO NETWORK
     setSelectedFolder(folder);
-
-    const params = new URLSearchParams({
-      limit: LIMIT,
-      offset: 0,
-      folderPath: folder.path,
-      search: searchFile,
-    });
-
-    try {
-      const res = await fetch(`/api/xml-load-all?${params}`);
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || "Failed to fetch filess");
-      }
-
-      //SET NEW FILES FROM SUBFOLDER
-      setAllFiles(data.files);
-      setHasMore(data.hasMore);
-      setTotalCount(data.totalCount);
-    } catch (error) {
-      setAllFiles([]);
-      setTotalCount(0);
-      console.log("Could not retrieve file in folder:", error);
-      toast.error(`Could not retrieve file in folder:", ${error}`, {
-        position: "top-left",
-      });
-    }
   };
-
-  //HEPLER FUNCTION
-  //CONVERT STRING TO XML FORMAT
-  //This converts the string into a DOM object to extract fields.
-  //AND TO VALIDATE XML OBJECT
-  const parseAndValidateXml = (xmlString) => {
-    const parser = new DOMParser();
-    const parsed = parser.parseFromString(xmlString, "application/xml");
-    const errorNode = parsed.querySelector("parsererror");
-    if (errorNode) {
-      toast.error(`XML Error: ${errorNode.textContent}`);
-      return null;
-    }
-
-    return parsed;
-  };
-
-  const handleLeftClick = () => setPage((prev) => Math.max(prev - 1, 0));
-
-  const handleRightClick = () =>
-    setPage((prev) => Math.min(prev + 1, totalPages - 1));
 
   const handleToggleTheme = () => {
     setTheme((prev) =>
@@ -230,9 +126,11 @@ export default function Load() {
   };
 
   useEffect(() => {
+    if (!searchFile) {
+      setAllFiles([]);
+      return;
+    }
     const params = new URLSearchParams({
-      limit: LIMIT,
-      offset: page * LIMIT,
       folderPath: selectedFolder.path,
       search: searchFile,
     });
@@ -255,7 +153,7 @@ export default function Load() {
         } else {
           const data = await res.json();
           setAllFiles(data.files);
-          setHasMore(data.hasMore);
+
           setTotalCount(data.totalCount);
         }
       } catch (err) {
@@ -267,7 +165,7 @@ export default function Load() {
     };
 
     fetchFiles();
-  }, [page, searchFile]);
+  }, [searchFile, selectedFolder]);
 
   return (
     <div className={styles.pageContainer}>
@@ -322,15 +220,6 @@ export default function Load() {
               <p className={styles.loadingText}>Loading resurces...</p>
             </div>
           )}
-          <Paginator
-            loading={loading}
-            page={page}
-            totalPages={totalPages}
-            hasMore={hasMore}
-            totalCount={totalCount}
-            handleLeftClick={handleLeftClick}
-            handleRightClick={handleRightClick}
-          ></Paginator>
         </div>
       </div>
       {selectedFile && (
@@ -343,12 +232,9 @@ export default function Load() {
           >
             <div className={styles.modalHeader}>
               <div>
-                <h2 className={styles.modalTitle}>Editing File</h2>
+                <h2 className={styles.modalTitle}>Delete File</h2>
                 <p className={styles.filename}>{selectedFile}</p>
               </div>
-              <button onClick={handleDelete} className={styles.deleteButton}>
-                Delete <TrashIcon></TrashIcon>
-              </button>
               <button
                 onClick={handleToggleTheme}
                 className={styles.themeButton}
@@ -398,9 +284,9 @@ export default function Load() {
               <button
                 type="button"
                 className={styles.saveButton}
-                onClick={handleSaveAndSendXml}
+                onClick={handleDeleteXml}
               >
-                Save <SaveIcon></SaveIcon>
+                Delete <SaveIcon></SaveIcon>
               </button>
               <button
                 type="button"
