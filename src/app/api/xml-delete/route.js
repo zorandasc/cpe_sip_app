@@ -45,6 +45,7 @@ export async function POST(req) {
 
   const deletedFiles = [];
   const missingFiles = [];
+  
   // helper to safely delete files
   //Catches and ignores missing files (ENOENT).
   //Logs others but doesn’t stop execution.

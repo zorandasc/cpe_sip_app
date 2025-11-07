@@ -155,6 +155,10 @@ export default function Load() {
   };
 
   const handleDelete = async () => {
+    const confirmed = window.confirm(
+      `Dali ste sigurni da želite da obrišete ${selectedFile} fajl?`
+    );
+    if (!confirmed) return;
     try {
       const res = await fetch("/api/xml-delete", {
         method: "POST",
