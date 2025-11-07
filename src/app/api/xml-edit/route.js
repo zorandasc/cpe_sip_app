@@ -70,8 +70,8 @@ export async function POST(req) {
     await fs.writeFile(filePathUpper, xml);
     await fs.copyFile(filePathUpper, filePathLower);
 
-    console.log(`Successfully saved XML to: ${filePathUpper}`);
-    console.log(`Successfully saved XML to: ${filePathLower}`);
+    console.log(`Successfully edited XML to: ${filePathUpper}`);
+    console.log(`Successfully edited XML to: ${filePathLower}`);
 
     //ENKTIPCIJA .xml FAJLA
     if (config.encrypt) {

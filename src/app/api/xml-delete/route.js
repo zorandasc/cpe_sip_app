@@ -45,7 +45,7 @@ export async function POST(req) {
 
   const deletedFiles = [];
   const missingFiles = [];
-  
+
   // helper to safely delete files
   //Catches and ignores missing files (ENOENT).
   //Logs others but doesn’t stop execution.
@@ -74,6 +74,15 @@ export async function POST(req) {
           ]
         : []),
     ]);
+
+    console.log(`Successfully deleted XML: ${fileNameUpper}`);
+    console.log(`Successfully deleted XML: ${fileNameLower}`);
+    console.log(
+      `Successfully deleted XML: ${path.join(encryptedDir, fileNameUpper)}`
+    );
+    console.log(
+      `Successfully deleted XML: ${path.join(encryptedDir, fileNameLower)}`
+    );
 
     return NextResponse.json({
       message: "🧹 Delete operation complete.",
