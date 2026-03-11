@@ -50,6 +50,7 @@ services:
       - ../var/www/html/:/app/xmlconfigs
       - ../var/lib/tftpboot:/app/tftpboot
       - ../var/SQLitedatabase/:/app/data
+      - ../var/generators/:/app/src/utils/generators
     restart: always # Keep the container running
     env_file:
       - .env.development.local

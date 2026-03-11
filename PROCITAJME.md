@@ -252,3 +252,24 @@ I KOJI SE UPDEJTUJE Iz API ROUTE
 
 /src/middleware.js: PRESRETAC NETWORK REQUESTA. SVAKA API RUTA ILI PAGE KOJI ODGOVARA MACHERU
 ZASTICEN JE AUTENTIFIKACIJOM (JWT TOKENOM KOJI BROWSER AUTOMATSKI SALJE)
+
+# --------------------------------------------------------------------------
+
+# mapped volumens
+
+- ../var/www/html/:/app/xmlconfigs
+  - ../var/lib/tftpboot:/app/tftpboot
+  - ../var/SQLitedatabase/:/app/data
+  - ../var/generators/:/app/src/utils/generators
+
+- ../var/generators/:/app/src/utils/generators
+
+In Production (npm start): Next.js typically compiles everything during the build step. If you change a .js file inside /src after the app has started, Node.js has already cached that module in memory. Changes on the host will likely not reflect in the app until you restart the container.
+
+[!IMPORTANT]
+
+# To apply changes made to the .js files on the host, you will need to run:
+
+```bash
+docker compose restart nextjs-app
+```
